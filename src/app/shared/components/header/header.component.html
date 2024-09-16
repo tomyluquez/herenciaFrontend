@@ -1,0 +1,58 @@
+<block-ui>
+
+    <header class="w-full fixed px-6 py-4 flex justify-between items-center shadow-lg relative">
+
+        @if(!isMobile){
+        <div class="flex items-center justify-center gap-8">
+            <h3>Herencia</h3>
+
+            <nav>
+                <ul class="flex gap-4 text-[1rem]">
+                    @for (menu of menues; track $index) {
+                    <li
+                        class="flex gap-[5px] items-center justify-center hover:text-primary hover:scale-110 duration-300">
+                        <i [ngClass]="menu.Icon" class="text-primary"></i>
+                        <a [href]="menu.Href">{{menu.Name}}</a>
+                    </li>
+                    }
+                </ul>
+            </nav>
+        </div>
+
+        <div class="flex items-center justify-center gap-4">
+            <i class="fa-solid fa-magnifying-glass text-primary cursor-pointer hover:scale-110 duration-300"></i>
+            <i class="fa-solid fa-cart-shopping text-primary cursor-pointer hover:scale-110 duration-300"></i>
+            <i class="fa-solid fa-user text-primary cursor-pointer hover:scale-110 duration-300"></i>
+        </div>
+        }@else {
+        <h3>Herencia</h3>
+        <i class='fa-solid fa-hamburger' (click)="toggleMenuMobile()"></i>
+        <nav class="absolute w-full left-0 top-14 bg-primary duration-300"
+            [ngClass]="isOpenMenuMobile ? 'p-4 h-[280px]' : 'h-0 overflow-hidden p-0'">
+            <ul class="flex flex-col gap-4 text-[1rem] items-center justify-center">
+                <li class="flex gap-[5px] items-center justify-center">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <a>Buscar</a>
+                </li>
+                <li class="flex gap-[5px] items-center justify-center">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <a>Mi carrito</a>
+                </li>
+                <li class="flex gap-[5px] items-center justify-center">
+                    <i class="fa-solid fa-user"></i>
+                    <a>Mi perfil</a>
+                </li>
+
+                @for (menu of menues; track $index) {
+                <li class="flex gap-[5px] items-center justify-center">
+                    <i [ngClass]="menu.Icon"></i>
+                    <a [href]="menu.Href">{{menu.Name}}</a>
+                </li>
+                }
+            </ul>
+        </nav>
+        }
+
+    </header>
+
+</block-ui>
