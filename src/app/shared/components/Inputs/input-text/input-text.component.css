@@ -1,0 +1,11 @@
+.input-text {
+  @apply bg-white rounded-md px-2 py-2 w-full border border-slate-300;
+}
+
+.input-text::placeholder {
+  @apply text-slate-400 text-sm;
+}
+
+.input-text::focus {
+  @apply outline-none border-slate-400;
+}

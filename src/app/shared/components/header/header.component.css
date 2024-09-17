@@ -1,0 +1,31 @@
+.header-container {
+  @apply w-full fixed px-6 py-4 flex justify-between items-center shadow-lg relative;
+}
+
+.container-header {
+  @apply flex items-center justify-center gap-8;
+}
+
+.ul-nav {
+  @apply flex gap-4 text-[1rem];
+}
+
+.ul-nav-mobile {
+  @apply flex flex-col gap-4 text-[1rem];
+}
+
+.ul-nav li {
+  @apply flex gap-[5px] items-center justify-center hover:text-primary hover:scale-110 duration-300;
+}
+
+.container-icons {
+  @apply flex items-center justify-center gap-8;
+}
+
+.icon {
+  @apply text-primary cursor-pointer hover:scale-110 duration-300;
+}
+
+.nav-mobile {
+  @apply w-full p-4;
+}

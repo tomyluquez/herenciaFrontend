@@ -19,6 +19,6 @@ export class HeaderServiceService {
   }
 
   getMenuHeaderLocal(): IMenuVM[] {
-    return JSON.parse(localStorage.getItem('menu')!);
+    return JSON.parse(localStorage.getItem('header-menu')!);
   }
 }

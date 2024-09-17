@@ -1,0 +1,6 @@
+<app-shadow-bg [isOpen]="isOpen" />
+<section class="container-modal" [ngClass]="{ 'top-[-100%]': !isOpen, 'top-[50%]': isOpen}">
+    <i class="fa-solid fa-xmark icon-close" (click)="closeSidebar()"></i>
+    <h3 class="title-modal">{{title}}</h3>
+    <ng-content></ng-content>
+</section>
