@@ -23,7 +23,7 @@
 }
 
 .icon {
-  @apply text-primary cursor-pointer hover:scale-110 duration-300;
+  @apply text-slate-600 cursor-pointer hover:scale-110 duration-300 relative;
 }
 
 .nav-mobile {

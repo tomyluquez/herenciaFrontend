@@ -7,11 +7,15 @@
 
 * {
   font-family: "Poppins", sans-serif;
-  font-size: 14px;
+  /* font-size: 14px; */
 }
 
 /*  Estilos compartidos */
 
 .icon-close {
   @apply absolute top-2 right-6 text-slate-600 cursor-pointer;
+}
+
+.primary-button {
+  @apply w-full bg-slate-900 hover:bg-slate-700 text-white text-center py-2 rounded-md;
 }

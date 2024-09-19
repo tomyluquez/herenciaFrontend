@@ -1,0 +1,19 @@
+<div [ngClass]="isOpen ? 'absolute right-0 top-8 w-48' : 'hidden'" class="z-2">
+    <ul class="border border-gray-200 bg-white rounded-lg shadow-lg p-2 text-sm text-gray-700">
+        @if(isLoggin){
+        <div class="flex justify-between items-center">
+            <p>IMG PROD</p>
+            <p>x1</p>
+        </div>
+        <app-divider />
+        <button class="primary-button">Ver mi Carrito</button>
+        } @else {
+        <div class="text-center">
+            <p class="mb-2">¡Hola! Para poder ver o agregar productos a tu carrito, inicia sesión.</p>
+            <button class="primary-button">Iniciar sesión</button>
+            <p class="mt-2 text-gray-500">¿No tienes cuenta? <a href="/register" class="text-blue-500">Regístrate
+                    aquí</a></p>
+        </div>
+        }
+    </ul>
+</div>

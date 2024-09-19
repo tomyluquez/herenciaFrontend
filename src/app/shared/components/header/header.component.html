@@ -15,7 +15,7 @@
     <app-modal title="Busqueda">
         <div class="w-full flex flex-col gap-2">
             <app-input-text placeholder="Buscar productos" />
-            <app-button text="Buscar" />
+            <button class="primary-button">Buscar</button>
         </div>
     </app-modal>
 
@@ -40,8 +40,15 @@
         </div>
         <div class="container-icons">
             <i class="fa-solid fa-magnifying-glass icon" (click)="openModal()"></i>
-            <i class="fa-solid fa-cart-shopping icon"></i>
-            <i class="fa-regular fa-user icon"></i>
+            <div class="relative">
+                <i class="fa-solid fa-cart-shopping icon" (click)="toggleDropdownCart()"></i>
+                <app-cart-dropdown [isOpen]="isOpenDropdownCart" [isLoggin]="isLoggin" />
+            </div>
+            <div class="relative">
+                <i class="fa-regular fa-user icon" (click)="toggleDropdownUser()"></i>
+                <app-user-dropdown [isOpen]="isOpenDropdownUser" [isLoggin]="isLoggin" />
+
+            </div>
         </div>
 
 

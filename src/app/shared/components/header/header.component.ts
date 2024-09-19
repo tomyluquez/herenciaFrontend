@@ -8,7 +8,9 @@ import { LSidebarComponent } from '../lsidebar/lsidebar.component';
 import { ModalComponent } from '../modal/modal.component';
 import { ModalService } from '../../../services/modal.service';
 import { InputTextComponent } from '../Inputs/input-text/input-text.component';
-import { ButtonComponent } from '../button/button.component';
+import { DividerComponent } from '../divider/divider.component';
+import { CartDropdownComponent } from '../Dropdowns/cart-dropdown/cart-dropdown.component';
+import { UserDropdownComponent } from '../Dropdowns/user-dropdown/user-dropdown.component';
 
 @Component({
   selector: 'app-header',
@@ -19,7 +21,9 @@ import { ButtonComponent } from '../button/button.component';
     LSidebarComponent,
     ModalComponent,
     InputTextComponent,
-    ButtonComponent,
+    DividerComponent,
+    CartDropdownComponent,
+    UserDropdownComponent,
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
@@ -31,6 +35,10 @@ export class HeaderComponent {
   isMobile = false;
 
   isOpenMenuMobile = false;
+  isOpenDropdownUser = false;
+  isOpenDropdownCart = false;
+
+  isLoggin = false;
 
   constructor(
     private _headerService: HeaderServiceService,
@@ -71,5 +79,15 @@ export class HeaderComponent {
 
   openModal() {
     this._modalService.toggleModal();
+  }
+
+  toggleDropdownUser() {
+    this.isOpenDropdownCart = false;
+    this.isOpenDropdownUser = !this.isOpenDropdownUser;
+  }
+
+  toggleDropdownCart() {
+    this.isOpenDropdownUser = false;
+    this.isOpenDropdownCart = !this.isOpenDropdownCart;
   }
 }
