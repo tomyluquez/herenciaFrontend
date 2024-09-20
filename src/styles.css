@@ -10,6 +10,10 @@
   /* font-size: 14px; */
 }
 
+:root {
+  --header-height: 65px;
+}
+
 /*  Estilos compartidos */
 
 .icon-close {
@@ -18,4 +22,54 @@
 
 .primary-button {
   @apply w-full bg-slate-900 hover:bg-slate-700 text-white text-center py-2 rounded-md;
+}
+
+.container-gral {
+  @apply w-full py-8 md:py-12 px-12 md:px-24;
+}
+
+.title {
+  @apply self-start text-3xl font-bold text-slate-800 my-4;
+}
+
+/* Estilos flex */
+
+.flex-column {
+  @apply flex flex-col;
+}
+
+.flex-center {
+  @apply flex justify-center items-center;
+}
+
+.flex-center-wrap {
+  @apply flex justify-center items-center flex-wrap;
+}
+
+.flex-start-wrap {
+  @apply flex justify-start items-center flex-wrap;
+}
+
+.flex-center-col {
+  @apply flex justify-center items-center flex-col;
+}
+
+.flex-between {
+  @apply flex justify-between items-center;
+}
+
+.flex-between-col {
+  @apply flex justify-between items-center flex-col;
+}
+
+.flex-start {
+  @apply flex justify-start items-start;
+}
+
+.flex-start-col {
+  @apply flex justify-center items-start flex-col;
+}
+
+.flex-end {
+  @apply flex justify-end items-center;
 }

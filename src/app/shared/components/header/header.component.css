@@ -1,9 +1,5 @@
 .header-container {
-  @apply w-full fixed px-6 py-4 flex justify-between items-center shadow-lg relative;
-}
-
-.container-header {
-  @apply flex items-center justify-center gap-8;
+  @apply w-full fixed px-6 py-4 shadow-lg bg-white top-0 z-10;
 }
 
 .ul-nav {
@@ -11,19 +7,15 @@
 }
 
 .ul-nav-mobile {
-  @apply flex flex-col gap-4 text-[1rem];
+  @apply gap-4 text-[1rem];
 }
 
 .ul-nav li {
-  @apply flex gap-[5px] items-center justify-center hover:text-primary hover:scale-110 duration-300;
-}
-
-.container-icons {
-  @apply flex items-center justify-center gap-8;
+  @apply gap-[5px] text-slate-500 hover:text-black duration-300;
 }
 
 .icon {
-  @apply text-slate-600 cursor-pointer hover:scale-110 duration-300 relative;
+  @apply text-slate-500 hover:text-black cursor-pointer duration-300 relative;
 }
 
 .nav-mobile {

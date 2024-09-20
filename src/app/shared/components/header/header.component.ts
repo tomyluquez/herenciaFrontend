@@ -49,21 +49,7 @@ export class HeaderComponent {
   ngOnInit(): void {
     this.blockUI.start('Cargando...');
     this.menues = this._headerService.getMenuHeaderLocal();
-    if (!this.menues) {
-      this._headerService.getMenuHeaderDB().subscribe((data: MenuVM) => {
-        if (data.HasErrors) {
-          return;
-        }
-        if (data.HasWarnings) {
-          return;
-        }
-        if (data.HasSuccess) {
-        }
-        this.menues = data.Items;
-        localStorage.setItem('header-menu', JSON.stringify(this.menues));
-        this.blockUI.stop();
-      });
-    }
+    console.log(this.menues);
     this.isMobile = window.innerWidth < 992;
     this.blockUI.stop();
   }

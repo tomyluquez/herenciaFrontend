@@ -1,0 +1,2 @@
+- [] Simplificar las clases del dropdown en el style.css
+- [] Agregar el menu del header en el Front en un json y no traerlo desde el backend.

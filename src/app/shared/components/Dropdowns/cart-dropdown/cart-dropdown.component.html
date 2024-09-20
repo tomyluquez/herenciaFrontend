@@ -1,7 +1,7 @@
-<div [ngClass]="isOpen ? 'absolute right-0 top-8 w-48' : 'hidden'" class="z-2">
-    <ul class="border border-gray-200 bg-white rounded-lg shadow-lg p-2 text-sm text-gray-700">
+<div [ngClass]="isOpen ? 'openDropdown' : 'hidden'" class="z-10">
+    <ul class="container-dropdown">
         @if(isLoggin){
-        <div class="flex justify-between items-center">
+        <div class="flex-between">
             <p>IMG PROD</p>
             <p>x1</p>
         </div>

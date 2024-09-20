@@ -1,0 +1,16 @@
+{
+    "Items": [
+        {
+            "Name": "Diseños únicos y llenos de amor",
+            "Icon": "fa-regular fa-heart"
+        },
+        {
+            "Name": "Materiales de primera calidad",
+            "Icon" : "fa-regular fa-bookmark"
+        },
+        {
+            "Name": "Envios a todo el país",
+            "Icon": "fa-solid fa-truck"
+        }
+    ]
+}

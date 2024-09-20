@@ -3,12 +3,14 @@ import { Injectable } from '@angular/core';
 import { environmentDev } from '../../environment/environment.develop';
 import { Observable } from 'rxjs';
 import { IMenuVM, MenuVM } from '../interfaces/Menu.Interfaces';
+import Menus from '../data/menues.json';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HeaderServiceService {
   apiUrl = environmentDev.apiUrl;
+  menues = Menus.Items;
 
   constructor(private _http: HttpClient) {}
 
@@ -19,6 +21,6 @@ export class HeaderServiceService {
   }
 
   getMenuHeaderLocal(): IMenuVM[] {
-    return JSON.parse(localStorage.getItem('header-menu')!);
+    return this.menues;
   }
 }

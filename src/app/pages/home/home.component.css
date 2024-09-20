@@ -1,0 +1,15 @@
+.container-grid-fit {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  margin-top: var(--header-height);
+}
+
+.container-grid-fill {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+}
+
+.image-hero {
+  @apply max-h-[500px] aspect-[2/2] object-cover w-full md:w-[90%] m-auto md:m-0 rounded-lg;
+  filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.5));
+}

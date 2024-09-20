@@ -1,0 +1,15 @@
+.openDropdown {
+  @apply absolute right-0 top-8 w-48;
+}
+
+.container-dropdown {
+  @apply border border-gray-200 bg-white rounded-lg shadow-lg p-2 text-sm text-gray-700;
+}
+
+.dropdown-row {
+  @apply hover:bg-gray-100 rounded-md;
+}
+
+.dropdown-row-value {
+  @apply block px-4 py-2 whitespace-nowrap;
+}

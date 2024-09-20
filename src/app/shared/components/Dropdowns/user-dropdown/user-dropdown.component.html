@@ -1,13 +1,13 @@
-<div [ngClass]="isOpen ? 'absolute right-0 top-8 w-48' : 'hidden'" class="z-2">
-    <ul class="border border-gray-200 bg-white rounded-lg shadow-lg p-2 text-sm text-gray-700">
-        <li class="hover:bg-gray-100 rounded-md">
-            <a *ngIf="isLoggin" href="#" class="block px-4 py-2 whitespace-nowrap"><i
-                    class="fa-regular fa-circle-user mr-2"></i> Mi Perfil</a>
+<div [ngClass]="isOpen ? 'openDropdown' : 'hidden'" class="z-10">
+    <ul class="container-dropdown">
+        <li class="dropdown-row">
+            <a *ngIf="isLoggin" href="#" class="dropdown-row-value"><i class="fa-regular fa-circle-user mr-2"></i> Mi
+                Perfil</a>
         </li>
-        <li class="hover:bg-gray-100 rounded-md">
-            <a *ngIf="!isLoggin" href="#" class="block px-4 py-2 whitespace-nowrap"><i
+        <li class="dropdown-row">
+            <a *ngIf="!isLoggin" href="#" class="dropdown-row-value"><i
                     class="fa-solid fa-arrow-right-to-bracket mr-2"></i> Iniciar sesión</a>
-            <a *ngIf="isLoggin" href="#" class="block px-4 py-2 whitespace-nowrap"><i
+            <a *ngIf="isLoggin" href="#" class="dropdown-row-value"><i
                     class="fa-solid fa-arrow-right-from-bracket mr-2"></i> Cerrar sesión</a>
         </li>
     </ul>

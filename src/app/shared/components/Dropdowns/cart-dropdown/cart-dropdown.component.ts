@@ -7,7 +7,7 @@ import { DividerComponent } from '../../divider/divider.component';
   standalone: true,
   imports: [CommonModule, DividerComponent],
   templateUrl: './cart-dropdown.component.html',
-  styleUrl: './cart-dropdown.component.css',
+  styleUrl: '../dropdown.css',
 })
 export class CartDropdownComponent {
   @Input({ required: true }) isOpen = false;

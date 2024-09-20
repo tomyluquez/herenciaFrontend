@@ -1,6 +1,6 @@
 <block-ui>
     <app-lsidebar>
-        <nav class="nav-mobile">
+        <nav class="nav-mobile flex-column">
             <ul class="ul-nav-mobile w-full">
                 @for (menu of menues; track $index) {
                 <li>
@@ -20,9 +20,9 @@
     </app-modal>
 
 
-    <header class="header-container">
+    <header class="header-container flex-between">
 
-        <div class="container-header">
+        <div class="flex-between gap-8">
             <i *ngIf="isMobile" class='fa-solid fa-bars' (click)="openMobileMenu()"></i>
             <h3>Herencia</h3>
 
@@ -30,7 +30,7 @@
                 <ul class="ul-nav">
                     <!-- Agregar al hacer click en los menues derivar al href y cerrar el sidebar -->
                     @for (menu of menues; track $index) {
-                    <li>
+                    <li class="flex-center">
                         <!-- <i [ngClass]="menu.Icon" class="text-primary"></i> -->
                         <a [href]="menu.Href">{{menu.Name}}</a>
                     </li>
@@ -38,8 +38,7 @@
                 </ul>
             </nav>
         </div>
-        <div class="container-icons">
-            <i class="fa-solid fa-magnifying-glass icon" (click)="openModal()"></i>
+        <div class="flex-between gap-8">
             <div class="relative">
                 <i class="fa-solid fa-cart-shopping icon" (click)="toggleDropdownCart()"></i>
                 <app-cart-dropdown [isOpen]="isOpenDropdownCart" [isLoggin]="isLoggin" />
@@ -49,6 +48,7 @@
                 <app-user-dropdown [isOpen]="isOpenDropdownUser" [isLoggin]="isLoggin" />
 
             </div>
+            <i class="fa-solid fa-magnifying-glass icon" (click)="openModal()"></i>
         </div>
 
 

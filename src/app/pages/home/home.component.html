@@ -1,0 +1,44 @@
+<main class="container-gral container-grid-fit gap-2">
+    <div class="flex flex-col items-start justify-between gap-4 mb-8 md:mb-0">
+        <h1 class="text-4xl font-bold text-primary md:text-6xl">
+            HERENCIA <span class="block text-slate-800">Tienda de Bebé</span>
+        </h1>
+        <p class="text-slate-600 w-3/4">
+            En HERENCIA, creamos ropa de bebé de alta calidad, sostenible y llena de ternura.
+            Nuestras prendas están diseñadas para acompañar a tu bebé en cada etapa de su crecimiento.
+        </p>
+        <div class="flex flex-col gap-4">
+            @for (item of items; track $index) {
+            <div class="flex-start gap-2">
+                <i [ngClass]="item.Icon" class="text-primary text-xl w-[25px]"></i>
+                <p>{{item.Name}}</p>
+            </div>
+            }
+        </div>
+        <div class="w-full md:w-1/2">
+            <button class="primary-button">Descrubí nuestra coleccion</button>
+        </div>
+    </div>
+    <div class="flex-end">
+        <img src="../../../assets/ImgHero.jpeg" alt="Imagen de portada" class="image-hero">
+    </div>
+</main>
+<app-divider />
+<main class="container-gral">
+    <h3 class="title">Nuestras categorías</h3>
+    <div class="container-grid-fill gap-4">
+        @for (category of categories; track $index) {
+        <div><app-card [title]="category.Name" [loading]="loadingCategories" /></div>
+        }
+    </div>
+</main>
+<app-divider />
+<main class="container-gral">
+    <h3 class="title">Productos promocionales</h3>
+    <div class="container-grid-fill gap-4">
+        @for (product of promotionalProducts; track $index) {
+        <div><app-card [title]="product.Name" [loading]="loadingProducts" [subtitle]="product.CategoryName"
+                [price]="product.Price" /></div>
+        }
+    </div>
+</main>
