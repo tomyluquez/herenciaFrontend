@@ -49,7 +49,6 @@ export class HeaderComponent {
   ngOnInit(): void {
     this.blockUI.start('Cargando...');
     this.menues = this._headerService.getMenuHeaderLocal();
-    console.log(this.menues);
     this.isMobile = window.innerWidth < 992;
     this.blockUI.stop();
   }

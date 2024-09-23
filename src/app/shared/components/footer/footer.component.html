@@ -1,0 +1,72 @@
+<section class="container-footer">
+
+    <div class="footer flex-between-wrap">
+        <div class="column-footer flex-start-col">
+            <h3 class="title-footer">CATEGORIAS</h3>
+            <ul>
+                <li>
+                    <a href="#" class="footer-link">CATEGORIA 1</a>
+                </li>
+                <li>
+                    <a href="#" class="footer-link">CATEGORIA 1</a>
+                </li>
+                <li>
+                    <a href="#" class="footer-link">CATEGORIA 1</a>
+                </li>
+            </ul>
+        </div>
+        <div class="column-footer flex-start-col">
+            <h3 class="title-footer">CATEGORIAS</h3>
+            <ul>
+                <li>
+                    <a href="#" class="footer-link">CATEGORIA 1</a>
+                </li>
+                <li>
+                    <a href="#" class="footer-link">CATEGORIA 1</a>
+                </li>
+                <li>
+                    <a href="#" class="footer-link">CATEGORIA 1</a>
+                </li>
+            </ul>
+        </div>
+        <div class="column-footer flex-start-col">
+            <h3 class="title-footer">CATEGORIAS</h3>
+            <ul>
+                <li>
+                    <a href="#" class="footer-link">CATEGORIA 1</a>
+                </li>
+                <li>
+                    <a href="#" class="footer-link">CATEGORIA 1</a>
+                </li>
+                <li>
+                    <a href="#" class="footer-link">CATEGORIA 1</a>
+                </li>
+            </ul>
+        </div>
+        <div class="column-footer flex-start-col">
+            <h3 class="title-footer">CATEGORIAS</h3>
+            <ul>
+                <li>
+                    <a href="#" class="footer-link">CATEGORIA 1</a>
+                </li>
+                <li>
+                    <a href="#" class="footer-link">CATEGORIA 1</a>
+                </li>
+                <li>
+                    <a href="#" class="footer-link">CATEGORIA 1</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <app-divider />
+    <div class="flex-between-wrap">
+        <p>© 2023 HERENCIA.</p>
+        <div>
+            @if (companyInfo && companyInfo.length > 0) {
+            @for (info of companyInfo; track $index) {
+            <a href="{{info.Value}}" class="footer-link"><i [ngClass]="info.Icon"></i>{{info.Name}}</a>
+            }
+            }
+        </div>
+    </div>
+</section>

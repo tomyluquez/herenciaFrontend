@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environmentDev } from '../../environment/environment.develop';
+import { environment } from '../../environment/environment';
 import { Observable } from 'rxjs';
 import { IMenuVM, MenuVM } from '../interfaces/Menu.Interfaces';
 import Menus from '../data/menues.json';
@@ -9,7 +9,7 @@ import Menus from '../data/menues.json';
   providedIn: 'root',
 })
 export class HeaderServiceService {
-  apiUrl = environmentDev.apiUrl;
+  apiUrl = environment.apiUrl;
   menues = Menus.Items;
 
   constructor(private _http: HttpClient) {}

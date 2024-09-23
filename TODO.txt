@@ -1,2 +1,3 @@
-- [] Simplificar las clases del dropdown en el style.css
-- [] Agregar el menu del header en el Front en un json y no traerlo desde el backend.
+- [] Que el modal se acomode en la mitad de la pantalla.
+- [] Acomodar el menu del sidebar.
+- [] Ajustar el footer y conseguir los iconos de las apps.

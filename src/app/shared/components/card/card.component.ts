@@ -15,10 +15,5 @@ export class CardComponent {
   @Input() subtitle?: string;
   @Input() price?: number;
 
-  constructor() {
-    console.log(this.title);
-    console.log(this.subtitle);
-    console.log(this.loading);
-    console.log(this.price);
-  }
+  constructor() {}
 }
