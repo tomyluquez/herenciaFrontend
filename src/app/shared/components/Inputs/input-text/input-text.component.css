@@ -1,5 +1,5 @@
 .input-text {
-  @apply bg-white rounded-md px-2 py-2 w-full border border-slate-300;
+  @apply bg-white rounded-md px-2 py-2 w-full border border-slate-300 text-slate-700 bg-primary-50;
 }
 
 .input-text::placeholder {
@@ -7,5 +7,5 @@
 }
 
 .input-text::focus {
-  @apply outline-none border-slate-400;
+  @apply outline-none border border-primary-400;
 }

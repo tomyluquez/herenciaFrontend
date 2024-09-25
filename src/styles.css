@@ -7,7 +7,23 @@
 
 * {
   font-family: "Poppins", sans-serif;
+
   /* font-size: 14px; */
+}
+
+/* Define las pseudoclases con CSS nativo */
+*::-webkit-scrollbar {
+  width: 8px; /* Ajusta el ancho del scrollbar si es necesario */
+}
+
+*::-webkit-scrollbar-thumb {
+  @apply bg-primary-200 rounded;
+}
+
+body {
+  scroll-behavior: smooth;
+
+  @apply bg-primary-50;
 }
 
 :root {
@@ -15,18 +31,39 @@
 }
 
 /*  Estilos compartidos */
+/* Icons */
 
 .icon-close {
-  @apply absolute top-2 right-6 text-slate-600 cursor-pointer;
+  @apply absolute top-2 right-6 text-primary-600 cursor-pointer;
 }
 
-.primary-button {
-  @apply w-full bg-slate-900 hover:bg-slate-700 text-white text-center py-2 rounded-md;
-}
+/* Containers */
 
 .container-gral {
   @apply w-full py-8 md:py-12 px-12 md:px-24;
 }
+
+.container-grid-fit {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  margin-top: var(--header-height);
+}
+
+.container-grid-fill {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+/* Buttons */
+.primary-button {
+  @apply w-full bg-primary-600 hover:bg-primary-500 duration-300 text-white text-center p-2 rounded-md;
+}
+
+.secondary-button {
+  @apply w-full bg-white text-slate-900 hover:bg-slate-100 text-center py-2 rounded-md;
+}
+
+/* Text */
 
 .title {
   @apply self-start text-3xl font-bold text-slate-800 my-4;
@@ -67,11 +104,15 @@
 }
 
 .flex-start {
-  @apply flex justify-start items-start;
+  @apply flex justify-start items-center;
 }
 
 .flex-start-col {
   @apply flex justify-center items-start flex-col;
+}
+
+.flex-all-start-col {
+  @apply flex justify-start items-start flex-col;
 }
 
 .flex-end {

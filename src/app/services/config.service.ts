@@ -8,7 +8,7 @@ import { map, Observable, of } from 'rxjs';
   providedIn: 'root',
 })
 export class ConfigService {
-  private cacheKey = 'companyInfo'; // Clave de almacenamiento local
+  private cacheKey = 'hci'; // Clave de almacenamiento local
   private companyInfo!: ICompanyInfoVM[]; // Cache en memoria
 
   constructor(private _http: HttpClient) {}

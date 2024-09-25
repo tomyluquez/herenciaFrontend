@@ -8,7 +8,7 @@ import Menus from '../data/menues.json';
 @Injectable({
   providedIn: 'root',
 })
-export class HeaderServiceService {
+export class HeaderService {
   apiUrl = environment.apiUrl;
   menues = Menus.Items;
 

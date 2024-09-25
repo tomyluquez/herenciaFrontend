@@ -1,0 +1,23 @@
+.container-products {
+  margin-top: var(--header-height);
+  width: 100%;
+  display: grid;
+  grid-template-columns: 350px 1fr;
+}
+
+/* Define el contenedor con Tailwind */
+.container-filters {
+  @apply lg:block p-4 max-h-[800px] overflow-y-auto;
+}
+
+.reset-filters {
+  @apply text-slate-400 text-sm cursor-pointer ml-2;
+}
+
+.filter {
+  @apply gap-2 bg-primary-200 px-4 py-2 w-full md:w-3/4 rounded-lg cursor-pointer hover:bg-primary-400 duration-300;
+}
+
+.active {
+  @apply bg-primary-400;
+}

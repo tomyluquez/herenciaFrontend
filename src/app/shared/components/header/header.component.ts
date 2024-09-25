@@ -1,5 +1,5 @@
 import { Component, HostListener } from '@angular/core';
-import { HeaderServiceService } from '../../../services/header-service.service';
+import { HeaderService } from '../../../services/header-service.service';
 import { IMenuVM, MenuVM } from '../../../interfaces/Menu.Interfaces';
 import { BlockUI, BlockUIModule, NgBlockUI } from 'ng-block-ui';
 import { CommonModule } from '@angular/common';
@@ -11,6 +11,7 @@ import { InputTextComponent } from '../Inputs/input-text/input-text.component';
 import { DividerComponent } from '../divider/divider.component';
 import { CartDropdownComponent } from '../Dropdowns/cart-dropdown/cart-dropdown.component';
 import { UserDropdownComponent } from '../Dropdowns/user-dropdown/user-dropdown.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -24,6 +25,7 @@ import { UserDropdownComponent } from '../Dropdowns/user-dropdown/user-dropdown.
     DividerComponent,
     CartDropdownComponent,
     UserDropdownComponent,
+    RouterModule,
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
@@ -41,7 +43,7 @@ export class HeaderComponent {
   isLoggin = false;
 
   constructor(
-    private _headerService: HeaderServiceService,
+    private _headerService: HeaderService,
     private _sidebarService: LSidebarService,
     private _modalService: ModalService
   ) {}

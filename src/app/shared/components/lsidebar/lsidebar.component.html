@@ -1,5 +1,5 @@
 <app-shadow-bg [isOpen]="isOpen" />
-<section class="container-sidebar-l flex-start-col" [ngClass]="{ 'left-[-100%]': !isOpen, 'left-0': isOpen}">
+<section class="container-sidebar-l" [ngClass]="{ 'left-[-100%]': !isOpen, 'left-0': isOpen}">
     <i class="fa-solid fa-xmark icon-close" (click)="closeSidebar()"></i>
     <ng-content></ng-content>
 </section>

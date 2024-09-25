@@ -1,3 +1,4 @@
 - [] Que el modal se acomode en la mitad de la pantalla.
-- [] Acomodar el menu del sidebar.
-- [] Ajustar el footer y conseguir los iconos de las apps.
+- [] Armar currency para pesos argentinos.
+- [] Simplificar las clases del card y skeleton.
+- [] Agregar pantalla de contacto y Faq.

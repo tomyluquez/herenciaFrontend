@@ -3,13 +3,13 @@
 }
 
 .container-dropdown {
-  @apply border border-gray-200 bg-white rounded-lg shadow-lg p-2 text-sm text-gray-700;
+  @apply border border-gray-200 bg-primary-50 rounded-lg shadow-lg p-2 text-sm text-gray-700;
 }
 
 .dropdown-row {
-  @apply hover:bg-gray-100 rounded-md;
+  @apply hover:bg-primary-100 rounded-md;
 }
 
 .dropdown-row-value {
-  @apply block px-4 py-2 whitespace-nowrap;
+  @apply block px-4 py-2 whitespace-nowrap text-primary-600;
 }

@@ -1,5 +1,5 @@
 .header-container {
-  @apply w-full fixed px-6 py-4 shadow-lg bg-white top-0 z-10;
+  @apply w-full fixed px-6 py-4 shadow-lg bg-primary-50 top-0 z-10;
 }
 
 .ul-nav {
@@ -11,11 +11,11 @@
 }
 
 .ul-nav li {
-  @apply gap-[5px] text-slate-500 hover:text-black duration-300;
+  @apply gap-[5px] text-primary-400 hover:text-primary-800 duration-300;
 }
 
 .icon {
-  @apply text-slate-500 hover:text-black cursor-pointer duration-300 relative;
+  @apply text-primary-400 hover:text-primary-800 cursor-pointer duration-300 relative;
 }
 
 .nav-mobile {

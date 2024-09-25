@@ -1,70 +1,61 @@
-<section class="container-footer">
+<section class="container-footer" id="footer">
 
-    <div class="footer flex-between-wrap">
-        <div class="column-footer flex-start-col">
-            <h3 class="title-footer">CATEGORIAS</h3>
+    <div class="footer container-grid-fit !mt-0">
+        <div class="flex-start-col">
+            <h3 class="title-col-footer">Navegación</h3>
+            <ul class="">
+                @for (menu of menues; track $index) {
+                <li>
+                    <!-- <i [ngClass]="menu.Icon" class="text-primary"></i> -->
+                    <a [href]="menu.Href">{{menu.Name}}</a>
+                </li>
+                }
+            </ul>
+        </div>
+        <div class="flex-start-col">
+            <h3 class="title-col-footer">Ayuda</h3>
             <ul>
                 <li>
-                    <a href="#" class="footer-link">CATEGORIA 1</a>
+                    <a href="#" class="footer-link">Faq</a>
                 </li>
                 <li>
-                    <a href="#" class="footer-link">CATEGORIA 1</a>
+                    <a href="#" class="footer-link">Envíos</a>
                 </li>
                 <li>
-                    <a href="#" class="footer-link">CATEGORIA 1</a>
+                    <a href="#" class="footer-link">Devoluciones</a>
                 </li>
             </ul>
         </div>
-        <div class="column-footer flex-start-col">
-            <h3 class="title-footer">CATEGORIAS</h3>
+        <div class="flex-start-col">
+            <h3 class="title-col-footer">Contacto</h3>
             <ul>
                 <li>
-                    <a href="#" class="footer-link">CATEGORIA 1</a>
+                    <a href="#" class="footer-link">Dirección</a>
                 </li>
                 <li>
-                    <a href="#" class="footer-link">CATEGORIA 1</a>
+                    <a href="#" class="footer-link">Telefono</a>
                 </li>
                 <li>
-                    <a href="#" class="footer-link">CATEGORIA 1</a>
+                    <a href="#" class="footer-link">Mail</a>
                 </li>
             </ul>
         </div>
-        <div class="column-footer flex-start-col">
-            <h3 class="title-footer">CATEGORIAS</h3>
-            <ul>
-                <li>
-                    <a href="#" class="footer-link">CATEGORIA 1</a>
-                </li>
-                <li>
-                    <a href="#" class="footer-link">CATEGORIA 1</a>
-                </li>
-                <li>
-                    <a href="#" class="footer-link">CATEGORIA 1</a>
-                </li>
-            </ul>
-        </div>
-        <div class="column-footer flex-start-col">
-            <h3 class="title-footer">CATEGORIAS</h3>
-            <ul>
-                <li>
-                    <a href="#" class="footer-link">CATEGORIA 1</a>
-                </li>
-                <li>
-                    <a href="#" class="footer-link">CATEGORIA 1</a>
-                </li>
-                <li>
-                    <a href="#" class="footer-link">CATEGORIA 1</a>
-                </li>
-            </ul>
+        <div class="flex-start-col">
+            <h3 class="title-col-footer">Suscribete</h3>
+            <p>Recibe nuestras ofertas y novedades</p>
+            <div class="w-1/2 flex-center-col gap-2">
+                <app-input-text placeholder="Ingresa tu correo" />
+                <button class="secondary-button">Suscribete</button>
+            </div>
         </div>
     </div>
     <app-divider />
     <div class="flex-between-wrap">
-        <p>© 2023 HERENCIA.</p>
-        <div>
+        <p>© 2023 HERENCIA.Todos los derechos reservados</p>
+        <div class="flex-center gap-4">
             @if (companyInfo && companyInfo.length > 0) {
             @for (info of companyInfo; track $index) {
-            <a href="{{info.Value}}" class="footer-link"><i [ngClass]="info.Icon"></i>{{info.Name}}</a>
+            <a target="_blank" href="{{info.Value}}" class="footer-link"><i [ngClass]="info.Icon"></i></a>
             }
             }
         </div>

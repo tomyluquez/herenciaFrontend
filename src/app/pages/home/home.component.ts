@@ -15,11 +15,17 @@ import {
   PromotionalProductsVM,
 } from '../../interfaces/Products.interfaces';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { CardSkeletonComponent } from '../../shared/components/loaders/card-skeleton/card-skeleton.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, DividerComponent, CardComponent],
+  imports: [
+    CommonModule,
+    DividerComponent,
+    CardComponent,
+    CardSkeletonComponent,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })

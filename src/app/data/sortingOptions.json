@@ -1,0 +1,20 @@
+{
+  "Options": [
+    {
+      "Value": "asc",
+      "Name": "A - Z"
+    },
+    {
+      "Value": "desc",
+      "Name": "Z - A"
+    },
+    {
+      "Value": "lower",
+      "Name": "Menor precio"
+    },
+    {
+      "Value": "higher",
+      "Name": "Mayor precio"
+    }
+  ]
+}

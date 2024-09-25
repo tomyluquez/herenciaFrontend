@@ -6,11 +6,11 @@
     },
     {
       "Name": "Productos",
-      "Href": "/"
+      "Href": "/Products"
     },
     {
       "Name": "Contacto",
-      "Href": "/"
+      "Href": "#footer"
     }
   ]
 }

@@ -1,7 +1,11 @@
 .container-footer {
-  @apply bg-black text-white w-full py-12 px-4;
+  @apply bg-slate-950 text-white w-full py-12 px-4;
 }
 
 .footer {
-  @apply w-full gap-12 md:gap-4;
+  @apply w-full gap-12 md:gap-4 items-start;
+}
+
+.title-col-footer {
+  @apply text-xl font-bold mb-2;
 }
