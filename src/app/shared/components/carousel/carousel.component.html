@@ -1,0 +1,24 @@
+<div class="grid grid-cols-1 md:grid-cols-[100px_1fr] gap-2">
+    <div class="hidden md:flex md:flex-col md:w-full justify-between md:justify-start mt-4">
+        @for (urlImage of images; track urlImage; let
+        index = $index) {
+        <div class="miniature" [ngClass]="{'selected' : imageSelected === urlImage}" (click)="selectImage(index)">
+            <img src="{{urlImage}}" alt="">
+        </div>
+        }
+    </div>
+    <div class="relative w-full h-full">
+        <img [src]="imageSelected" alt="product image" class="w-full aspect-[8/7] rounded-lg shadow-lg" />
+        <div *ngIf="images.length > 1" class="absolute left-2 top-1/2 transform -translate-y-1/2" (click)="prevImage()">
+            <button class="flex-center pagination-button">
+                <i class="fa-solid fa-chevron-left h-4 w-4"></i>
+            </button>
+        </div>
+        <div *ngIf="images.length > 1" class="absolute right-2 top-1/2 transform -translate-y-1/2"
+            (click)="nextImage()">
+            <button class="flex-center pagination-button">
+                <i class="fa-solid fa-chevron-right h-4 w-4"></i>
+            </button>
+        </div>
+    </div>
+</div>

@@ -5,6 +5,7 @@ import { environment } from '../../environment/environment';
 import {
   ProductPagedListSearchDTO,
   ProductPagedListVM,
+  ProductVM,
   PromotionalProductsVM,
 } from '../interfaces/Products.interfaces';
 
@@ -34,5 +35,12 @@ export class ProductService {
       `${environment.apiUrl}/products/pagedList`,
       { params }
     );
+  }
+
+  getProductById(productId: number): Observable<ProductVM> {
+    const params = new HttpParams().set('id', productId.toString());
+    return this._http.get<ProductVM>(`${environment.apiUrl}/products/product`, {
+      params,
+    });
   }
 }

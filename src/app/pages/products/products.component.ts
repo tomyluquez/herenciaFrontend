@@ -61,7 +61,7 @@ export class ProductsComponent implements OnInit {
   sortingOptions: NameAndValue[] = sortingOptions.Options;
 
   page = 1;
-  limit = 7;
+  limit = 2;
 
   constructor(
     private _sidebarService: RSidebarService,
@@ -154,6 +154,7 @@ export class ProductsComponent implements OnInit {
 
   // Al cambiar la categoría, actualizar la URL
   onCategoryChange(id: string) {
+    this.page = 1;
     if (!this.categoriesSeleted.includes(id)) {
       this.categoriesSeleted.push(id);
     } else {
@@ -166,6 +167,7 @@ export class ProductsComponent implements OnInit {
 
   // Al cambiar el talle, actualizar la URL
   onSizeChange(id: number) {
+    this.page = 1;
     if (!this.sizeSelected.includes(id.toString())) {
       this.sizeSelected.push(id.toString());
     } else {
@@ -228,5 +230,9 @@ export class ProductsComponent implements OnInit {
     event.stopPropagation();
     this.sizeSelected = this.sizeSelected.filter((s) => s !== size.toString());
     this.updateUrlParams();
+  }
+
+  seeProduct(productId: number) {
+    this._router.navigate([`Product/${productId}`]);
   }
 }

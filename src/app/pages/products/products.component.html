@@ -99,7 +99,8 @@
             </div>
             } @else {
             @for (product of products; track $index) {
-            <app-card [title]="product.Name" [subtitle]="product.CategoryName" [price]="product.Price" />
+            <app-card [title]="product.Name" [subtitle]="product.CategoryName" [price]="product.Price"
+                (click)="seeProduct(product.Id)" />
             }
             }
             }

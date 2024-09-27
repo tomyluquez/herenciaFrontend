@@ -1,0 +1,12 @@
+<div class="flex-start-col gap-4">
+    <div class="flex-start gap-4">
+        <button class="flex-center pagination-button" (click)="decrement()">
+            <i class="fa-solid fa-minus"></i>
+        </button>
+        <input type="text" class="counter-input" [(ngModel)]="quantity" readonly />
+        <button class="flex-center pagination-button" (click)="increment()">
+            <i class="fa-solid fa-plus"></i>
+        </button>
+    </div>
+    <span class="text-sm text-slate-400">Dispobles: {{maxValue}}</span>
+</div>

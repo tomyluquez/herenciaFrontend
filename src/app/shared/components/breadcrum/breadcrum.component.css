@@ -1,0 +1,8 @@
+/* Breadcrumb  */
+.selectable {
+  @apply capitalize  cursor-pointer hover:text-primary-600 duration-300;
+}
+
+.not-selectable {
+  @apply capitalize pointer-events-none;
+}

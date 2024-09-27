@@ -36,7 +36,8 @@
         <app-card-skeleton />
         }@else {
         @for (category of categories; track $index) {
-        <div><app-card [title]="category.Name" [loading]="loadingCategories" /></div>
+        <div><app-card [title]="category.Name" [loading]="loadingCategories"
+                (click)="searchByCategory(category.Name)" /></div>
         }
         }
     </div>
@@ -55,7 +56,7 @@
         } @else {
         @for (product of promotionalProducts; track $index) {
         <div><app-card [title]="product.Name" [loading]="loadingProducts" [subtitle]="product.CategoryName"
-                [price]="product.Price" /></div>
+                [price]="product.Price" (click)="seeProduct(product.Id)" /></div>
         }
         }
     </div>

@@ -16,6 +16,7 @@ import {
 } from '../../interfaces/Products.interfaces';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { CardSkeletonComponent } from '../../shared/components/loaders/card-skeleton/card-skeleton.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -40,7 +41,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private _categoryService: CategoryService,
-    private _productService: ProductService
+    private _productService: ProductService,
+    private _router: Router
   ) {}
 
   ngOnInit(): void {
@@ -48,7 +50,7 @@ export class HomeComponent implements OnInit {
     this.loadingProducts = true;
     this.blockUI.start('Cargando...');
     this._categoryService
-      .getAllCategories()
+      .getAllCategories('active')
       .subscribe((res: CategoryListVM) => {
         if (res.HasErrors || res.HasWarnings) {
           return;
@@ -69,5 +71,13 @@ export class HomeComponent implements OnInit {
         this.loadingProducts = false;
       });
     this.blockUI.stop();
+  }
+
+  searchByCategory(categoryName: string) {
+    this._router.navigateByUrl(`Products?categories=${categoryName}`);
+  }
+
+  seeProduct(productId: number) {
+    this._router.navigateByUrl(`Product/${productId}`);
   }
 }

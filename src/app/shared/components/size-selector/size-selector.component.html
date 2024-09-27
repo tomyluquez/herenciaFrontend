@@ -1,0 +1,18 @@
+<div class="mb-6 flex-start-col gap-2">
+    <!-- <h2 class="text-lg font-semibold mb-2">Seleccionar Talle</h2> -->
+    <div value={selectedSize} onValueChange={setSelectedSize}>
+        <div class="flex space-x-2">
+            @for (size of sizes; track $index) {
+            <div (click)="size.Stock > 0 && selectSize(size)">
+                <label class="avaible"
+                    [ngClass]="{'not-avaible':size.Stock <= 0, 'selected' : sizeSelected && sizeSelected.SizeId === size.SizeId}">
+                    {{size.Name}}
+                </label>
+            </div>
+            }
+        </div>
+    </div>
+    @if(sizeSelected){
+    <app-counter [maxValue]="sizeSelected.Stock" (quantityEmit)="setVariant($event)" />
+    }
+</div>

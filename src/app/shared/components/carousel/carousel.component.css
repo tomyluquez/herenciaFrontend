@@ -1,0 +1,7 @@
+.miniature {
+  @apply w-full aspect-[2/1] border-2 hover:border-primary-400 duration-300;
+}
+
+.selected {
+  @apply border-2 border-primary-400;
+}

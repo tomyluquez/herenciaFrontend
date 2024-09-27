@@ -40,7 +40,8 @@ body {
 /* Containers */
 
 .container-gral {
-  @apply w-full py-8 md:py-12 px-12 md:px-24;
+  @apply w-full py-8  px-12 md:px-24;
+  margin-top: var(--header-height);
 }
 
 .container-grid-fit {
@@ -59,8 +60,16 @@ body {
   @apply w-full bg-primary-600 hover:bg-primary-500 duration-300 text-white text-center p-2 rounded-md;
 }
 
+.primary-button-disabled {
+  @apply w-full bg-slate-300 text-slate-500 text-center p-2 rounded-md;
+}
+
 .secondary-button {
   @apply w-full bg-white text-slate-900 hover:bg-slate-100 text-center py-2 rounded-md;
+}
+
+.pagination-button {
+  @apply py-2 px-4 w-[40px] bg-primary-100 rounded-full cursor-pointer hover:bg-primary-300 duration-300;
 }
 
 /* Text */
