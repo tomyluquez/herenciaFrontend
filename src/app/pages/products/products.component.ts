@@ -61,7 +61,7 @@ export class ProductsComponent implements OnInit {
   sortingOptions: NameAndValue[] = sortingOptions.Options;
 
   page = 1;
-  limit = 2;
+  limit = 10;
 
   constructor(
     private _sidebarService: RSidebarService,

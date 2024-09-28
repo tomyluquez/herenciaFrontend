@@ -4,12 +4,11 @@
             <h3 class="title">Categorias <span *ngIf="categoriesSeleted.length > 0" class="reset-filters"
                     (click)="resetCategories()">Restablecer</span></h3>
             @for (category of categories; track $index) {
-            <div class="flex-start filter" [ngClass]="{'active': checkedCategorySelected(category.Name)}"
+            <div class="flex-between filter" [ngClass]="{'active': checkedCategorySelected(category.Name)}"
                 (click)="onCategoryChange(category.Name)">
-                <p class="capitalize">{{category.Name}} <i *ngIf="checkedCategorySelected(category.Name)"
-                        class="fa-solid fa-xmark text-sm text-slate-700"
-                        (click)="removeCategory(category.Name, $event)"></i>
-                </p>
+                <p class="capitalize">{{category.Name}} </p>
+                <i *ngIf="checkedCategorySelected(category.Name)" class="fa-solid fa-xmark text-sm text-slate-700"
+                    (click)="removeCategory(category.Name, $event)"></i>
             </div>
             }
         </div>
@@ -17,11 +16,11 @@
             <h3 class="title">Talles <span *ngIf="sizeSelected.length > 0" class="reset-filters"
                     (click)="resetSizes()">Restablecer</span></h3>
             @for (size of sizes; track $index) {
-            <div class="flex-start filter" [ngClass]="{'active': checkedSizeSelected(size.Id)}"
+            <div class="flex-between filter" [ngClass]="{'active': checkedSizeSelected(size.Id)}"
                 (click)="onSizeChange(size.Id)">
-                <p class="capitalize">{{size.Name}} <i *ngIf="checkedSizeSelected(size.Id)"
-                        class="fa-solid fa-xmark text-sm text-slate-700" (click)="removeSize(size.Id, $event)"></i>
-                </p>
+                <p class="capitalize">{{size.Name}} </p>
+                <i *ngIf="checkedSizeSelected(size.Id)" class="fa-solid fa-xmark text-sm text-slate-700"
+                    (click)="removeSize(size.Id, $event)"></i>
             </div>
             }
         </div>
@@ -37,12 +36,11 @@
             <h3 class="title">Categorias <span *ngIf="categoriesSeleted.length > 0" class="reset-filters"
                     (click)="resetCategories()">Restablecer</span></h3>
             @for (category of categories; track $index) {
-            <div class="flex-start filter" [ngClass]="{'active': checkedCategorySelected(category.Name)}"
+            <div class="flex-between filter" [ngClass]="{'active': checkedCategorySelected(category.Name)}"
                 (click)="onCategoryChange(category.Name)">
-                <p class="capitalize">{{category.Name}} <i *ngIf="checkedCategorySelected(category.Name)"
-                        class="fa-solid fa-xmark text-sm text-slate-700"
-                        (click)="removeCategory(category.Name, $event)"></i>
-                </p>
+                <p class="capitalize">{{category.Name}} </p>
+                <i *ngIf="checkedCategorySelected(category.Name)" class="fa-solid fa-xmark text-sm text-slate-700"
+                    (click)="removeCategory(category.Name, $event)"></i>
             </div>
             }
         </div>
@@ -50,11 +48,11 @@
             <h3 class="title">Talles <span *ngIf="sizeSelected.length > 0" class="reset-filters"
                     (click)="resetSizes()">Restablecer</span></h3>
             @for (size of sizes; track $index) {
-            <div class="flex-start filter" [ngClass]="{'active': checkedSizeSelected(size.Id)}"
+            <div class="flex-between filter" [ngClass]="{'active': checkedSizeSelected(size.Id)}"
                 (click)="onSizeChange(size.Id)">
-                <p class="capitalize">{{size.Name}} <i *ngIf="checkedSizeSelected(size.Id)"
-                        class="fa-solid fa-xmark text-sm text-slate-700" (click)="removeSize(size.Id, $event)"></i>
-                </p>
+                <p class="capitalize">{{size.Name}} </p>
+                <i *ngIf="checkedSizeSelected(size.Id)" class="fa-solid fa-xmark text-sm text-slate-700"
+                    (click)="removeSize(size.Id, $event)"></i>
             </div>
             }
         </div>

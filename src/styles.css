@@ -23,7 +23,7 @@
 body {
   scroll-behavior: smooth;
 
-  @apply bg-primary-50;
+  @apply bg-white;
 }
 
 :root {
@@ -57,19 +57,31 @@ body {
 
 /* Buttons */
 .primary-button {
-  @apply w-full bg-primary-600 hover:bg-primary-500 duration-300 text-white text-center p-2 rounded-md;
+  @apply w-full bg-primary-500 hover:bg-primary-600 duration-300 text-white text-center p-2 rounded-md;
 }
 
 .primary-button-disabled {
-  @apply w-full bg-slate-300 text-slate-500 text-center p-2 rounded-md;
+  @apply w-full bg-slate-300 text-slate-500 text-center p-2 rounded-md hover:bg-slate-300 cursor-not-allowed;
 }
 
 .secondary-button {
-  @apply w-full bg-white text-slate-900 hover:bg-slate-100 text-center py-2 rounded-md;
+  @apply w-full border-2 border-primary-500 bg-white text-slate-900 hover:bg-primary-100 duration-300 text-center py-2 rounded-md;
+}
+
+.secondary-button-disabled {
+  @apply w-full border-2 border-slate-300 bg-slate-100 text-slate-400 hover:bg-slate-100 text-center py-2 rounded-md cursor-not-allowed;
+}
+
+.tertiary-button {
+  @apply w-full bg-white text-slate-900 hover:bg-primary-100 duration-300 text-center py-2 rounded-md;
+}
+
+.tertiary-button-disabled {
+  @apply w-full text-slate-400 text-center py-2 rounded-md cursor-not-allowed;
 }
 
 .pagination-button {
-  @apply py-2 px-4 w-[40px] bg-primary-100 rounded-full cursor-pointer hover:bg-primary-300 duration-300;
+  @apply py-2 px-4 w-[40px] bg-primary-50 rounded-full cursor-pointer hover:bg-primary-200 duration-300;
 }
 
 /* Text */
@@ -126,4 +138,8 @@ body {
 
 .flex-end {
   @apply flex justify-end items-center;
+}
+
+.flex-end-col {
+  @apply flex justify-end items-center flex-col;
 }

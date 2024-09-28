@@ -15,9 +15,9 @@
 }
 
 .filter {
-  @apply gap-2 bg-primary-200 px-4 py-2 w-full md:w-3/4 rounded-lg cursor-pointer hover:bg-primary-400 duration-300;
+  @apply gap-2 bg-primary-50 px-4 py-2 w-full md:w-3/4 rounded-lg cursor-pointer hover:bg-primary-200 duration-300;
 }
 
 .active {
-  @apply bg-primary-400;
+  @apply bg-primary-300;
 }

@@ -1,5 +1,6 @@
 <div class="grid grid-cols-1 md:grid-cols-[100px_1fr] gap-2">
-    <div class="hidden md:flex md:flex-col md:w-full justify-between md:justify-start mt-4">
+    <div
+        class="hidden md:flex md:flex-col md:w-full justify-between md:justify-start gap-2 mt-4 max-h-[600px] overflow-auto">
         @for (urlImage of images; track urlImage; let
         index = $index) {
         <div class="miniature" [ngClass]="{'selected' : imageSelected === urlImage}" (click)="selectImage(index)">
@@ -8,7 +9,17 @@
         }
     </div>
     <div class="relative w-full h-full">
-        <img [src]="imageSelected" alt="product image" class="w-full aspect-[8/7] rounded-lg shadow-lg" />
+        <img [src]="imageSelected" alt="product image relative" class="w-full aspect-[8/7] rounded-lg shadow-lg" />
+        <div
+            class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex-center gap-2 bg-slate-100 px-2 p-1 rounded-full opacity-50">
+            @for (urlImage of images; track urlImage; let
+            index = $index) {
+            <span
+                class="w-[6px] md:w-[10px] h-[6px] md:h-[10px] text-slate-500 cursor-pointer duration-300 border-2 border-slate-600 rounded-full"
+                [ngClass]="imageSelected === urlImage ? 'bg-slate-800' : 'bg-slate-100'"
+                (click)="selectImage(index)"></span>
+            }
+        </div>
         <div *ngIf="images.length > 1" class="absolute left-2 top-1/2 transform -translate-y-1/2" (click)="prevImage()">
             <button class="flex-center pagination-button">
                 <i class="fa-solid fa-chevron-left h-4 w-4"></i>
