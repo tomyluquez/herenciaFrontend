@@ -13,9 +13,9 @@ export class InputTextComponent {
 
   @Output() inputText: EventEmitter<string> = new EventEmitter();
 
-  constructor() {}
+  constructor() { }
 
   onChange(event: Event) {
-    this.inputText.emit((event.target as HTMLInputElement).value);
+    setTimeout(() => this.inputText.emit((event.target as HTMLInputElement).value), 100);
   }
 }

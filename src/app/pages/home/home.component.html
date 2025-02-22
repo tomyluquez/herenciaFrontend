@@ -15,7 +15,7 @@
             </div>
             }
         </div>
-        <div class="w-full md:w-1/2">
+        <div class="w-full md:w-1/2" (click)="goToProducts()">
             <button class="primary-button">Descrubí nuestra coleccion</button>
         </div>
     </div>
@@ -24,40 +24,8 @@
     </div>
 </main>
 <app-divider />
-<main class="container-gral">
-    <h3 class="title">Nuestras categorías</h3>
-
-    <div class="container-grid-fill gap-4">
-        @if(loadingCategories){
-        <app-card-skeleton />
-        <app-card-skeleton />
-        <app-card-skeleton />
-        <app-card-skeleton />
-        <app-card-skeleton />
-        }@else {
-        @for (category of categories; track $index) {
-        <div><app-card [title]="category.Name" [loading]="loadingCategories"
-                (click)="searchByCategory(category.Name)" /></div>
-        }
-        }
-    </div>
-</main>
+<app-container-cards-home [data]="categories" [isLoading]="loadingCategories" (clickCard)="searchByCategory($event)"
+    (changeLimit)="changeLimitCategories($event)" />
 <app-divider />
-<main class="container-gral">
-    <h3 class="title">Productos promocionales</h3>
-
-    <div class="container-grid-fill gap-4">
-        @if(loadingProducts){
-        <app-card-skeleton />
-        <app-card-skeleton />
-        <app-card-skeleton />
-        <app-card-skeleton />
-        <app-card-skeleton />
-        } @else {
-        @for (product of promotionalProducts; track $index) {
-        <div><app-card [title]="product.Name" [loading]="loadingProducts" [subtitle]="product.CategoryName"
-                [price]="product.Price" (click)="seeProduct(product.Id)" /></div>
-        }
-        }
-    </div>
-</main>
+<app-container-cards-home [data]="promotionalProducts" [isLoading]="loadingProducts" (clickCard)="seeProduct($event)"
+    (changeLimit)="changeLimitProducts($event)" />

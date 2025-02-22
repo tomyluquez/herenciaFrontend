@@ -24,7 +24,7 @@
             <h3>Herencia</h3>
 
             <nav *ngIf="!isMobile">
-                <ul class="ul-nav">
+                <ul class="ul-nav" *ngIf="menues && menues.length > 0">
                     <!-- Agregar al hacer click en los menues derivar al href y cerrar el sidebar -->
                     @for (menu of menues; track $index) {
                     <li class="flex-center">

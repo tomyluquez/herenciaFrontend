@@ -4,6 +4,7 @@ import { ResponseMessages } from './ResponseMessages.Interface';
 
 export class PromotionalProductsVM extends ResponseMessages {
   Items!: IPromotionalProduct[];
+  TotalItems!: number;
 }
 
 export class ProductPagedListVM extends ResponseMessages {

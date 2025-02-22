@@ -4,7 +4,7 @@ import { DividerComponent } from '../../shared/components/divider/divider.compon
 import { PrimaryButtonComponent } from '../../shared/components/buttons/primary-button/primary-button.component';
 import { AuthService } from '../../services/auth.service';
 import { AlertService } from '../../services/alert.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import {
   FormControl,
@@ -14,12 +14,12 @@ import {
 } from '@angular/forms';
 import { UserTokenVM } from '../../models/User/User.Token.model';
 import { CartService } from '../../services/cart.service';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
-    InputTextComponent,
     DividerComponent,
     PrimaryButtonComponent,
     ReactiveFormsModule,
@@ -28,6 +28,8 @@ import { CartService } from '../../services/cart.service';
   styleUrl: './login.component.css',
 })
 export class LoginComponent implements OnInit {
+  @BlockUI() blockUI!: NgBlockUI;
+
   isLoading = false;
   isSubmitted = false;
 
@@ -36,9 +38,9 @@ export class LoginComponent implements OnInit {
   constructor(
     private _authService: AuthService,
     private _alertService: AlertService,
-    private _location: Location,
+    private _router: Router,
     private _cartService: CartService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.formLogin = new FormGroup({
@@ -51,7 +53,7 @@ export class LoginComponent implements OnInit {
     this.isSubmitted = true;
     if (this.formLogin.valid) {
       this.isLoading = true;
-
+      this.blockUI.start('Cargando...');
       const email = this.formLogin.get('email')?.value;
       const password = this.formLogin.get('password')?.value;
 
@@ -70,9 +72,11 @@ export class LoginComponent implements OnInit {
           }
 
           this._authService.setToken(res.Token);
-          this._authService.setRole(res.Role);
+          this._authService.setRole(String(res.Role));
+          this._authService.setLoggedIn();
           this._cartService.updateCartItems();
-          this._location.back();
+          this._router.navigate(['/Home']);
+          this.blockUI.stop();
         });
     }
   }

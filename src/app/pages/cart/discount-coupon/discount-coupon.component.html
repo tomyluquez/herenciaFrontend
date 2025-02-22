@@ -1,0 +1,9 @@
+<div class="flex-start-col w-full">
+    <p class="text-center w-full">¿Tienes un cupón de descuento?</p>
+    <div class="flex-center-col gap-2 w-full">
+        <input class="input-text" type="text" placeholder="Ingresa tu cupón" [(ngModel)]="coupon" />
+        <button [ngClass]="!coupon ? 'black-button-disabled' : 'black-button'" [disabled]="coupon === ''"
+            (click)="addCoupon()">Agregar
+            cupón</button>
+    </div>
+</div>

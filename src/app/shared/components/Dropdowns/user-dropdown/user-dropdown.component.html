@@ -2,11 +2,10 @@
     <ul class="container-dropdown">
         @if(isLoggin){
         <li class="dropdown-row">
-            <a *ngIf="isLoggin && role && role.toLowerCase() !== 'admin'" class="dropdown-row-value"><i
-                    class="fa-regular fa-circle-user mr-2"></i> Mi
+            <a *ngIf="!isAdmin()" class="dropdown-row-value"><i class="fa-regular fa-circle-user mr-2"></i> Mi
                 Perfil</a>
-            <a (click)="goTo(routesModels.ControlPanel)" *ngIf="isLoggin && role && role.toLowerCase() === 'admin'"
-                class="dropdown-row-value"><i class="fa-regular fa-circle-user mr-2"></i> Panel de control</a>
+            <a (click)="goTo(routesModels.ControlPanel)" *ngIf="isAdmin()" class="dropdown-row-value"><i
+                    class="fa-regular fa-circle-user mr-2"></i> Panel de control</a>
         </li>
         }
         <li class="dropdown-row">

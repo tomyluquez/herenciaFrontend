@@ -8,16 +8,18 @@ import {
   ProductVM,
   PromotionalProductsVM,
 } from '../interfaces/Products.interfaces';
+import { PaginationEnum } from '../enums/pagination-enum';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
-  constructor(private _http: HttpClient) {}
+  constructor(private _http: HttpClient) { }
 
-  getPromotionalProducts(): Observable<PromotionalProductsVM> {
+  getPromotionalProducts(page = PaginationEnum.Page): Observable<PromotionalProductsVM> {
+    let params = new HttpParams().set('limit', page * PaginationEnum.Limit);
     return this._http.get<PromotionalProductsVM>(
-      `${environment.apiUrl}/products/promotional`
+      `${environment.apiUrl}/products/promotional`, { params }
     );
   }
 

@@ -12,10 +12,10 @@ export class HeaderService {
   apiUrl = environment.apiUrl;
   menues = Menus.Items;
 
-  constructor(private _http: HttpClient) {}
+  constructor(private _http: HttpClient) { }
 
-  getMenuHeaderDB(): Observable<MenuVM> {
-    let params = new HttpParams().set('status', 'inactive');
+  getMenuHeaderDB(userRole = 0): Observable<MenuVM> {
+    let params = new HttpParams().set('userRole', userRole);
 
     return this._http.get<MenuVM>(`${this.apiUrl}/config/menuInfo`, { params });
   }

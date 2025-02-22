@@ -1,0 +1,33 @@
+@if(data){
+<main class="container-gral">
+    <h3 class="title">{{data.Title}}</h3>
+
+    <div class="container-grid-fill gap-4">
+        @if(isLoading){
+        <app-card-skeleton />
+        <app-card-skeleton />
+        <app-card-skeleton />
+        <app-card-skeleton />
+        <app-card-skeleton />
+        }@else {
+        @for (item of data.Items; track $index) {
+        <div><app-card [title]="item.Name" [loading]="isLoading" (click)="search(item.Id)" /></div>
+        }
+        }
+    </div>
+
+    @if(data.QuantityPages > 1 && data.QuantityPages > currentPage){
+    <div class="flex items-center justify-center mt-12">
+        <button class="text-primary-300 hover:text-primary-400 !w-[200px]" (click)="showMore()"><i
+                class="fa-solid fa-chevron-down"></i> Mostrar más</button>
+    </div>
+    }
+
+    @if(data.QuantityPages === currentPage && data.QuantityPages > 1){
+    <div class="flex items-center justify-center mt-12">
+        <button class="text-primary-300 hover:text-primary-400 !w-[200px]" (click)="showLess()"><i
+                class="fa-solid fa-chevron-up"></i> Mostrar menos</button>
+    </div>
+    }
+</main>
+}

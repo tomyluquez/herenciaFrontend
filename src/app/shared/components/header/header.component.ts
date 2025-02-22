@@ -15,6 +15,7 @@ import { RouterModule } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { SearchModalComponent } from '../modal/search-modal/search-modal.component';
+import { RoleEnum } from '../../../enums/role-enum';
 
 @Component({
   selector: 'app-header',
@@ -44,7 +45,7 @@ export class HeaderComponent {
 
   // tiene que estar escuchando el servicio de auth para actualizar si esta logueado o no
   isLoggin = false;
-  role!: string;
+  role!: number;
 
   constructor(
     private _headerService: HeaderService,
@@ -52,19 +53,22 @@ export class HeaderComponent {
     private _modalService: ModalService,
     private _authService: AuthService
   ) {
-    this._authService.isLogged$.subscribe((isLogged) => {
-      this.isLoggin = isLogged;
-      if (isLogged) {
-        this.role = this._authService.Role;
+    effect(() => {
+      this.isLoggin = this._authService.getLoggedIn();
+      if (this.isLoggin) {
+        this.role = this._authService.getRole();
       }
-    });
+    })
+
   }
 
   ngOnInit(): void {
     this.blockUI.start('Cargando...');
-    this.menues = this._headerService.getMenuHeaderLocal();
     this.isMobile = window.innerWidth < 992;
-    this.blockUI.stop();
+    this._headerService.getMenuHeaderDB().subscribe((res: MenuVM) => {
+      this.menues = res.Items;
+      this.blockUI.stop();
+    });
   }
 
   @HostListener('window:resize', ['$event'])

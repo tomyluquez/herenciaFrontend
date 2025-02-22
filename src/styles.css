@@ -87,6 +87,14 @@ body {
   @apply w-full text-slate-400 text-center py-2 rounded-md cursor-not-allowed;
 }
 
+.black-button {
+  @apply w-full bg-slate-800 hover:bg-slate-900 duration-300 text-white text-center p-2 rounded-md;
+}
+
+.black-button-disabled {
+  @apply w-full bg-slate-300 text-slate-500 text-center p-2 rounded-md hover:bg-slate-300 cursor-not-allowed;
+}
+
 .pagination-button {
   @apply py-2 px-4 w-[40px] bg-primary-50 rounded-full cursor-pointer hover:bg-primary-200 duration-300;
 }
