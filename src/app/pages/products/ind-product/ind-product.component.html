@@ -13,13 +13,15 @@
                 {{product.Description}}
             </p>
 
+            @if(product.Variants && product.Variants.length > 0){
             <app-size-selector [sizes]="product.Variants || []" (variantEmit)="setVariant($event)" />
+            }
 
             <div class="w-full md:w-1/2">
                 <button [disabled]="!selectedVariant"
                     [ngClass]="!selectedVariant ? 'primary-button-disabled' : 'primary-button'"
                     class="sticky bottom-0 left-0 md:static" (click)="addToCart()">
-                    Agregar al carrito
+                    {{product.Variants && product.Variants.length > 0 ? 'Añadir al carrito' : 'Sin stock'}}
                 </button>
             </div>
 

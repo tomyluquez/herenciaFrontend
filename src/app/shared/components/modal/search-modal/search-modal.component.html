@@ -1,0 +1,5 @@
+<div class="w-full flex flex-col gap-2">
+    <input class="input-text" type="text" placeholder="Buscá por nombre o categoria" [(ngModel)]="search">
+    <button [ngClass]="!search ? 'disabled-primary-button' :'primary-button'" [disabled]="!search"
+        (click)="searchProducts()">Buscar</button>
+</div>

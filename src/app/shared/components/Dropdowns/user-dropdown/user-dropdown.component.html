@@ -1,13 +1,18 @@
 <div [ngClass]="isOpen ? 'openDropdown' : 'hidden'" class="z-10">
     <ul class="container-dropdown">
+        @if(isLoggin){
         <li class="dropdown-row">
-            <a *ngIf="isLoggin" href="#" class="dropdown-row-value"><i class="fa-regular fa-circle-user mr-2"></i> Mi
+            <a *ngIf="isLoggin && role && role.toLowerCase() !== 'admin'" class="dropdown-row-value"><i
+                    class="fa-regular fa-circle-user mr-2"></i> Mi
                 Perfil</a>
+            <a (click)="goTo(routesModels.ControlPanel)" *ngIf="isLoggin && role && role.toLowerCase() === 'admin'"
+                class="dropdown-row-value"><i class="fa-regular fa-circle-user mr-2"></i> Panel de control</a>
         </li>
+        }
         <li class="dropdown-row">
-            <a *ngIf="!isLoggin" href="#" class="dropdown-row-value"><i
+            <a *ngIf="!isLoggin" class="dropdown-row-value" (click)="goTo(routesModels.Login)"><i
                     class="fa-solid fa-arrow-right-to-bracket mr-2"></i> Iniciar sesión</a>
-            <a *ngIf="isLoggin" href="#" class="dropdown-row-value"><i
+            <a (click)="logOut()" *ngIf="isLoggin" class="dropdown-row-value"><i
                     class="fa-solid fa-arrow-right-from-bracket mr-2"></i> Cerrar sesión</a>
         </li>
     </ul>

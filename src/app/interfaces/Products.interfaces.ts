@@ -2,18 +2,18 @@ import { Product } from '../models/Product.model';
 import { PaginationDTO } from './pagination.interface';
 import { ResponseMessages } from './ResponseMessages.Interface';
 
-export interface PromotionalProductsVM extends ResponseMessages {
-  Items: IPromotionalProduct[];
+export class PromotionalProductsVM extends ResponseMessages {
+  Items!: IPromotionalProduct[];
 }
 
-export interface ProductPagedListVM extends ResponseMessages {
-  Items: IProductPagedListVM[];
-  TotalItems: number;
+export class ProductPagedListVM extends ResponseMessages {
+  Items!: IProductPagedListVM[];
+  TotalItems!: number;
 }
 
-export interface ProductVM extends ResponseMessages {
-  Items: IProductVM[];
-  TotalItems: number;
+export class ProductVM extends ResponseMessages {
+  Items!: IProductVM[];
+  TotalItems!: number;
 }
 
 export interface IProductPagedListVM {

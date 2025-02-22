@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, effect, HostListener } from '@angular/core';
 import { HeaderService } from '../../../services/header-service.service';
 import { IMenuVM, MenuVM } from '../../../interfaces/Menu.Interfaces';
 import { BlockUI, BlockUIModule, NgBlockUI } from 'ng-block-ui';
@@ -12,6 +12,9 @@ import { DividerComponent } from '../divider/divider.component';
 import { CartDropdownComponent } from '../Dropdowns/cart-dropdown/cart-dropdown.component';
 import { UserDropdownComponent } from '../Dropdowns/user-dropdown/user-dropdown.component';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
+import { FormsModule } from '@angular/forms';
+import { SearchModalComponent } from '../modal/search-modal/search-modal.component';
 
 @Component({
   selector: 'app-header',
@@ -21,11 +24,10 @@ import { RouterModule } from '@angular/router';
     BlockUIModule,
     LSidebarComponent,
     ModalComponent,
-    InputTextComponent,
-    DividerComponent,
     CartDropdownComponent,
     UserDropdownComponent,
     RouterModule,
+    SearchModalComponent,
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
@@ -40,13 +42,23 @@ export class HeaderComponent {
   isOpenDropdownUser = false;
   isOpenDropdownCart = false;
 
+  // tiene que estar escuchando el servicio de auth para actualizar si esta logueado o no
   isLoggin = false;
+  role!: string;
 
   constructor(
     private _headerService: HeaderService,
     private _sidebarService: LSidebarService,
-    private _modalService: ModalService
-  ) {}
+    private _modalService: ModalService,
+    private _authService: AuthService
+  ) {
+    this._authService.isLogged$.subscribe((isLogged) => {
+      this.isLoggin = isLogged;
+      if (isLogged) {
+        this.role = this._authService.Role;
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.blockUI.start('Cargando...');

@@ -39,9 +39,16 @@ body {
 
 /* Containers */
 
+.container-app {
+  display: grid;
+  min-height: 100vh;
+  grid-template-rows: var(--header-height) 1fr auto;
+}
+
 .container-gral {
   @apply w-full py-8  px-12 md:px-24;
   margin-top: var(--header-height);
+  min-height: 100%;
 }
 
 .container-grid-fit {
@@ -90,6 +97,10 @@ body {
   @apply self-start text-3xl font-bold text-slate-800 my-4;
 }
 
+.error-message {
+  @apply text-sm text-red-500;
+}
+
 /* Estilos flex */
 
 .flex-column {
@@ -124,6 +135,10 @@ body {
   @apply flex justify-between items-center flex-col;
 }
 
+.flex-between-col-reverse {
+  @apply flex justify-between items-center flex-col-reverse;
+}
+
 .flex-start {
   @apply flex justify-start items-center;
 }
@@ -142,4 +157,40 @@ body {
 
 .flex-end-col {
   @apply flex justify-end items-center flex-col;
+}
+
+/* Inputs */
+.input-text {
+  @apply bg-white rounded-md px-2 py-2 w-full border border-slate-300 text-slate-700 bg-primary-50;
+}
+
+.input-text::placeholder {
+  @apply text-slate-400 text-sm;
+}
+
+.input-text::focus {
+  @apply outline-none border border-primary-400;
+}
+
+/* Bordes */
+
+.border-full {
+  @apply border border-primary-400;
+}
+
+/* Dropdown */
+.openDropdown {
+  @apply absolute right-0 top-8 w-80;
+}
+
+.container-dropdown {
+  @apply border border-gray-200 bg-primary-50 rounded-lg shadow-lg p-2 text-sm text-gray-700;
+}
+
+.dropdown-row {
+  @apply hover:bg-primary-100 p-2 rounded-md cursor-pointer flex;
+}
+
+.dropdown-row-value {
+  @apply block px-4 py-2 whitespace-nowrap text-primary-600;
 }

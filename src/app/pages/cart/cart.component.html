@@ -1,0 +1,22 @@
+<section class="container-gral">
+    <div class="flex flex-col-reverse md:flex-row justify-between items-start gap-4">
+        <div class="container-cart-cards flex-start-col">
+            @for (cartItem of cartItems; track $index) {
+            <div class="flex-between !justify-start gap-8 w-full p-2">
+                <img *ngIf="cartItem.UrlImage" class="w-20 h-20" src="{{cartItem.UrlImage}}" alt="Imagen del producto">
+                <div *ngIf="!cartItem.UrlImage" class="w-20 h-20 border-2 border-white bg-gray-200"></div>
+                <p>{{cartItem.Quantity}} -</p>
+                <p>{{cartItem.ProductName}}</p>
+                <!-- //crear pipe para los precios -->
+                <p>{{cartItem.Price | currency: "$"}}</p>
+            </div>
+            }
+        </div>
+
+
+
+        <div class="container-cart-cards flex-start-col">
+            Aca va a ir el checkout
+        </div>
+    </div>
+</section>

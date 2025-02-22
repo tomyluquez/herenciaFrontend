@@ -1,5 +1,5 @@
 export interface VariantSelected {
-  SizeId: number;
+  VariantId: number;
   Quantity: number;
-  ProductId?: number;
+  UserId?: number;
 }

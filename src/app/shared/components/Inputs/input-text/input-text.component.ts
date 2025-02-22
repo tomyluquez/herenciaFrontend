@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-input-text',
@@ -9,6 +9,13 @@ import { Component, Input } from '@angular/core';
 })
 export class InputTextComponent {
   @Input() placeholder!: string;
+  @Input() isLoading: boolean = false;
+
+  @Output() inputText: EventEmitter<string> = new EventEmitter();
 
   constructor() {}
+
+  onChange(event: Event) {
+    this.inputText.emit((event.target as HTMLInputElement).value);
+  }
 }

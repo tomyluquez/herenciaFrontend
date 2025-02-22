@@ -1,17 +1,28 @@
 <div [ngClass]="isOpen ? 'openDropdown' : 'hidden'" class="z-10">
     <ul class="container-dropdown">
         @if(isLoggin){
-        <div class="flex-between">
-            <p>IMG PROD</p>
-            <p>x1</p>
-        </div>
+        @if(loadItems){
+        <p>Cargando...</p>
+        }@else {
+        @if(cartItems && cartItems.length > 0){
+        @for (cartItem of cartItems; track $index) {
+        <li class="dropdown-row justify-between">
+            <span>{{ cartItem.Quantity }}x </span>
+            <span>{{cartItem.ProductName}}</span>
+            <i (click)="removeCartItem(cartItem.Id)" class="fa-solid fa-trash text-primary-400"></i>
+        </li>
         <app-divider />
-        <button class="primary-button">Ver mi Carrito</button>
+        }
+        } @else {
+        <p>Tu carrito se encuentra vacío</p>
+        }
+        <button class="primary-button" (click)="seeCart()">Ver mi Carrito</button>
+        }
         } @else {
         <div class="text-center">
             <p class="mb-2">¡Hola! Para poder ver o agregar productos a tu carrito, inicia sesión.</p>
-            <button class="primary-button">Iniciar sesión</button>
-            <p class="mt-2 text-gray-500">¿No tienes cuenta? <a href="/register" class="text-blue-500">Regístrate
+            <button class="primary-button" (click)="redirectLogin()">Iniciar sesión</button>
+            <p class="mt-2 text-gray-500">¿No tienes cuenta? <a href="/Register" class="text-blue-500">Regístrate
                     aquí</a></p>
         </div>
         }

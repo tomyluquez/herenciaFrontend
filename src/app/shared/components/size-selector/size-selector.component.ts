@@ -20,10 +20,12 @@ export class SizeSelectorComponent {
 
   constructor() {}
 
+  ngOnInit() {}
+
   selectSize(size: IProductVariants) {
     this.sizeSelected = size;
     this.variantEmit.emit({
-      SizeId: this.sizeSelected.SizeId!,
+      VariantId: this.sizeSelected.Id!,
       Quantity: this.quantitySelected,
     });
   }
@@ -31,7 +33,7 @@ export class SizeSelectorComponent {
   setVariant(quantity: any) {
     this.quantitySelected = quantity;
     this.variantEmit.emit({
-      SizeId: this.sizeSelected.SizeId!,
+      VariantId: this.sizeSelected.Id!,
       Quantity: this.quantitySelected,
     });
   }

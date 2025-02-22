@@ -16,6 +16,7 @@ module.exports = {
           800: "#694e43",
           900: "#564138",
           950: "#2d211d",
+          whitefull: "#ffffff",
         },
         success: "#d2fbab",
         "success-message": "#4b8c0c",

@@ -1,0 +1,13 @@
+<section
+    class="flex flex-col fixed bottom-[20px] left-[50%] translate-x-[-50%] text-center z-10 w-[70%] md:w-[30%] rounded-lg duration-300"
+    [ngClass]="{ 'bottom-[20px] border-2': isVisible, 'bottom-[-100%]': !isVisible, 'text-green-800 border-green-800' : type === 'success', 'text-yellow-800 border-yellow-800' : type === 'warning', 'text-red-800 border-red-800' : type === 'error'}">
+    <div class="w-full p-[10px] text-[30px] rounded-lg flex items-center justify-around"
+        [ngClass]="{'bg-green-200' : type === 'success', 'bg-yellow-200' : type === 'warning', 'bg-red-200' : type === 'error'}">
+        <i
+            [ngClass]="{'fa-regular fa-circle-check text-3xl' : type === 'success', 'fa-solid fa-triangle-exclamation' : type === 'warning', 'fa-solid fa-xmark' : type === 'error'}"></i>
+        <div class="flex flex-col items-center justify-center">
+            <span class="text-2xl">{{primaryText}}</span>
+            <span class="text-[12px]">{{secondaryText}}</span>
+        </div>
+    </div>
+</section>

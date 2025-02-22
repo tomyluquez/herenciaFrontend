@@ -27,7 +27,6 @@ export class CarouselComponent implements OnChanges {
     const currentIndexImage = this.images.findIndex(
       (i) => i === this.imageSelected
     );
-    console.log(currentIndexImage);
 
     if (currentIndexImage === this.images.length - 1) {
       this.selectImage(0);

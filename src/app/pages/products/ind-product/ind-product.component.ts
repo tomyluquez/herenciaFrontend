@@ -9,6 +9,10 @@ import { BreadcrumItem } from '../../../interfaces/Shared.interfaces';
 import { CarouselComponent } from '../../../shared/components/carousel/carousel.component';
 import { SizeSelectorComponent } from '../../../shared/components/size-selector/size-selector.component';
 import { VariantSelected } from '../../../interfaces/Variant.interface';
+import { CartService } from '../../../services/cart.service';
+import { ResponseMessages } from '../../../interfaces/ResponseMessages.Interface';
+import { AlertService } from '../../../services/alert.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-ind-product',
@@ -33,7 +37,11 @@ export class IndProductComponent implements OnInit {
   selectedVariant!: VariantSelected;
   constructor(
     private _route: ActivatedRoute,
-    private _productsService: ProductService
+    private _productsService: ProductService,
+    private _cartService: CartService,
+    private _alertService: AlertService,
+    private _authService: AuthService,
+    private _router: Router
   ) {}
 
   ngOnInit(): void {
@@ -72,13 +80,24 @@ export class IndProductComponent implements OnInit {
   setVariant(variantSelected: VariantSelected) {
     this.selectedVariant = {
       ...variantSelected,
-      ProductId: this.product.Id,
     };
   }
 
-  addToCart() {
+  async addToCart() {
     if (!this.selectedVariant) return;
+    const token = this._authService.getToken();
+    const userId = this._authService.getUserIdByToken(token);
 
-    console.log(this.selectedVariant);
+    if (!userId) {
+      this._router.navigate(['/Login']);
+    }
+
+    this.selectedVariant.UserId = userId;
+
+    this._cartService
+      .addItemToCart(this.selectedVariant)
+      .subscribe((res: ResponseMessages) => {
+        this._alertService.showAlerts(res);
+      });
   }
 }

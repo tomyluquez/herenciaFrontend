@@ -1,0 +1,19 @@
+.loader {
+  display: flex;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 3px solid #f3f3f3; /* Light grey */
+  border-top: 3px solid; /* Blue */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  @apply border-t-primary-300;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

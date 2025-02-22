@@ -1,0 +1,36 @@
+{
+  "Items": [
+    {
+      "Name": "Productos",
+      "Href": "#Products"
+    },
+    {
+      "Name": "Stock",
+      "Href": "#Stock"
+    },
+    {
+      "Name": "Pedidos",
+      "Href": "#Sales"
+    },
+    {
+      "Name": "Categorias",
+      "Href": "#Categories"
+    },
+    {
+      "Name": "Talles",
+      "Href": "#Sizes"
+    },
+    {
+      "Name": "Lista de precios",
+      "Href": "#PriceList"
+    },
+    {
+      "Name": "Configuración",
+      "Href": "#Config"
+    },
+    {
+      "Name": "Dashboard",
+      "Href": "#Dash"
+    }
+  ]
+}

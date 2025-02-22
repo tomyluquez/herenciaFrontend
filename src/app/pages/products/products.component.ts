@@ -142,7 +142,8 @@ export class ProductsComponent implements OnInit {
           : null,
       sizes: this.sizeSelected.length > 0 ? this.sizeSelected.join(',') : null,
       order: this.sortSelected,
-      page: this.page, // Reiniciar a la primera página cada vez que se actualicen los filtros
+      page: this.page,
+      name: '',
     };
 
     this._router.navigate([], {

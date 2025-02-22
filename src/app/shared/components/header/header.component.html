@@ -13,10 +13,7 @@
     </app-lsidebar>
 
     <app-modal title="Busqueda">
-        <div class="w-full flex flex-col gap-2">
-            <app-input-text placeholder="Buscar productos" />
-            <button class="primary-button">Buscar</button>
-        </div>
+        <app-search-modal />
     </app-modal>
 
 
@@ -45,7 +42,7 @@
             </div>
             <div class="relative">
                 <i class="fa-regular fa-user icon" (click)="toggleDropdownUser()"></i>
-                <app-user-dropdown [isOpen]="isOpenDropdownUser" [isLoggin]="isLoggin" />
+                <app-user-dropdown [isOpen]="isOpenDropdownUser" [isLoggin]="isLoggin" [role]="role" />
 
             </div>
             <i class="fa-solid fa-magnifying-glass icon" (click)="openModal()"></i>
