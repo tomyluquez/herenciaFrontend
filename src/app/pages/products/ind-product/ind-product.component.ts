@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../../services/product.service';
-import { IProductVM, ProductVM } from '../../../interfaces/Products.interfaces';
+import { IProduct, Products } from '../../../interfaces/Products.interfaces';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { CommonModule } from '@angular/common';
 import { BreadcrumComponent } from '../../../shared/components/breadcrum/breadcrum.component';
@@ -10,9 +10,9 @@ import { CarouselComponent } from '../../../shared/components/carousel/carousel.
 import { SizeSelectorComponent } from '../../../shared/components/size-selector/size-selector.component';
 import { VariantSelected } from '../../../interfaces/Variant.interface';
 import { CartService } from '../../../services/cart.service';
-import { ResponseMessages } from '../../../interfaces/ResponseMessages.Interface';
 import { AlertService } from '../../../services/alert.service';
 import { AuthService } from '../../../services/auth.service';
+import { ResponseMessages } from '../../../interfaces/ResponseMessages.Interface';
 
 @Component({
   selector: 'app-ind-product',
@@ -28,7 +28,7 @@ import { AuthService } from '../../../services/auth.service';
 })
 export class IndProductComponent implements OnInit {
   @BlockUI() blockUI!: NgBlockUI;
-  product!: IProductVM;
+  product!: IProduct;
 
   loadingProduct = true;
 
@@ -42,14 +42,14 @@ export class IndProductComponent implements OnInit {
     private _alertService: AlertService,
     private _authService: AuthService,
     private _router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.blockUI.start('Cargando...');
     const productId = this._route.snapshot.params['productId'];
     this._productsService
       .getProductById(productId)
-      .subscribe((res: ProductVM) => {
+      .subscribe((res: Products) => {
         if (res.HasErrors || res.HasWarnings) {
           return;
         }

@@ -1,0 +1,50 @@
+<section *ngIf="data" class="w-full p-4 bg-white shadow-lg rounded-lg">
+    <table class="w-full border-collapse border border-primary-200">
+        <thead>
+            <tr class="bg-primary-100 text-primary-700 uppercase text-sm font-semibold">
+                @for (header of data.Headers; track $index) {
+                <th class="px-6 py-3 text-left border-b">{{ header.Value }}</th>
+                }
+                <th class="px-6 py-3 text-center border-b">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (data.Items && data.Items.length > 0) {
+            <tr *ngFor="let item of data.Items" class="border-b transition-all hover:bg-primary-50">
+                <td *ngFor="let header of data.Headers" class="px-6 py-4 text-primary-800">
+                    @if(header.Name === 'Image'){
+                    <img class="pre-image" [src]="item[header.Name]" alt="imagen de producto"
+                        *ngIf="header.Name === 'Image' && item[header.Name]">
+                    <div class="pre-image border-2 border-white bg-gray-200"
+                        *ngIf="header.Name === 'Image' && !item[header.Name]"></div>
+                    } @else if(header.Name === 'Price'){
+                    <p>{{item[header.Name] | currency : "$"}}</p>
+
+                    } @else if(header.Name === 'IsActive'){
+                    <p ngClass="{{item[header.Name] ? 'active' : 'inactive'}}">{{ item[header.Name] ? 'Activo' :
+                        'Inactivo' }}
+
+                        }@else {
+                    <p>{{item[header.Name]}}</p>
+
+                    }
+                </td>
+                <td class="px-6 py-4 text-center">
+                    <button *ngFor="let action of data.Actions" (click)="action.Handler(item.Id)"
+                        class="mx-1 p-2 rounded-lg border border-primary-300 bg-white hover:bg-primary-200 transition">
+                        <i [class]="action.Icon"></i>
+                    </button>
+                </td>
+            </tr>
+            } @else {
+            <tr>
+                <td colspan="100%" class="px-6 py-4 text-center text-primary-500">No hay resultados</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+    <div *ngIf="data.Items && data.Items.length > 0" class="flex justify-end w-full mt-4">
+        <app-pagination [page]="data.Page" [totalItems]="data.TotalItems" [limit]="data.Limit"
+            (onPageChangeNext)="nextPage()" (onPageChangePrev)="prevPage()" />
+    </div>
+</section>

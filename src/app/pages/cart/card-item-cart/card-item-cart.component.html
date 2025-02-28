@@ -1,9 +1,0 @@
-<div class="flex-between !justify-start gap-8 w-full p-2">
-    <img *ngIf="cartItem.UrlImage" class="w-20 h-20" src="{{cartItem.UrlImage}}" alt="Imagen del producto">
-    <div *ngIf="!cartItem.UrlImage" class="w-20 h-20 border-2 border-white bg-gray-200"></div>
-    <p>{{cartItem.Quantity}} -</p>
-    <p>{{cartItem.ProductName}}</p>
-    <p>{{cartItem.Price | currency: "$"}}</p>
-    <app-counter (quantityEmit)="changeQuantity($event)" [maxValue]="5" />
-    <i (click)="removeCartItem(cartItem.Id)" class="fa-solid fa-trash text-primary-400 cursor-pointer"></i>
-</div>

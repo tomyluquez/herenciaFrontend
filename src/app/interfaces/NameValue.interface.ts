@@ -1,4 +1,4 @@
 export interface NameAndValue {
   Name: string;
-  Value: string;
+  Value: string | number;
 }

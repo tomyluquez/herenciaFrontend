@@ -1,30 +1,33 @@
 import { Component, OnInit } from '@angular/core';
-import { CardSkeletonComponent } from '../../shared/components/loaders/card-skeleton/card-skeleton.component';
-import { RSidebarComponent } from '../../shared/components/rsidebar/rsidebar.component';
-import { RSidebarService } from '../../services/rsidebar.service';
-import { CategoryService } from '../../services/category.service';
+import { CardSkeletonComponent } from '../../../shared/components/loaders/card-skeleton/card-skeleton.component';
+import { RSidebarComponent } from '../../../shared/components/rsidebar/rsidebar.component';
+import { RSidebarService } from '../../../services/rsidebar.service';
+import { CategoryService } from '../../../services/category.service';
 import {
   CategoryListVM,
   ICategoryVM,
-} from '../../interfaces/Categories.interface';
+} from '../../../interfaces/Categories.interface';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
-import { SizesService } from '../../services/sizes.service';
-import { ISizeListVM, SizeLlistVM } from '../../interfaces/Size.interface';
-import { ActivatedRoute, Router } from '@angular/router';
+import { SizesService } from '../../../services/sizes.service';
+import { ISizeListVM, SizeLlistVM } from '../../../interfaces/Size.interface';
+import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import {
-  IProductPagedListVM,
-  ProductPagedListSearchDTO,
-  ProductPagedListVM,
-} from '../../interfaces/Products.interfaces';
-import { ProductService } from '../../services/product.service';
-import { CardComponent } from '../../shared/components/card/card.component';
-import sortingOptions from '../../data/sortingOptions.json';
-import { NameAndValue } from '../../interfaces/NameValue.interface';
+  IProductPagedList,
+  SearchProductPagedList,
+  ProductPagedList,
+} from '../../../interfaces/Products.interfaces';
+import { ProductService } from '../../../services/product.service';
+import { CardComponent } from '../../../shared/components/card/card.component';
+import sortingOptions from '../../../data/sortingOptions.json';
+import { NameAndValue } from '../../../interfaces/NameValue.interface';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
-import { PaginationComponent } from '../../shared/components/pagination/pagination.component';
+import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
 import { CommonModule } from '@angular/common';
-import { DividerComponent } from '../../shared/components/divider/divider.component';
+import { StatusEnum } from '../../../enums/status-enum';
+import productsRoutes from '../products.routes';
+import { productsRoutesModel, routesModel } from '../../../models/Routes.model';
+import { ProductNavigationService } from '../../../services/Tables/Product-table.service';
 
 @Component({
   selector: 'app-products',
@@ -37,7 +40,6 @@ import { DividerComponent } from '../../shared/components/divider/divider.compon
     FormsModule,
     PaginationComponent,
     CommonModule,
-    DividerComponent,
   ],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css',
@@ -47,14 +49,14 @@ export class ProductsComponent implements OnInit {
 
   categories!: ICategoryVM[];
   sizes!: ISizeListVM[];
-  products!: IProductPagedListVM[];
+  products!: IProductPagedList[];
   totalProducts!: number;
 
   categoriesSeleted: string[] = [];
   sizeSelected: string[] = [];
   sortSelected: string = 'asc';
 
-  params!: ProductPagedListSearchDTO;
+  params!: SearchProductPagedList;
 
   loading = true;
 
@@ -69,8 +71,9 @@ export class ProductsComponent implements OnInit {
     private _productsService: ProductService,
     private _sizesService: SizesService,
     private _route: ActivatedRoute,
-    private _router: Router
-  ) {}
+    private _router: Router,
+    private _productNavigation: ProductNavigationService
+  ) { }
 
   ngOnInit() {
     this.blockUI.start('Cargando...');
@@ -101,6 +104,7 @@ export class ProductsComponent implements OnInit {
                   Page: this.page,
                   Limit: this.limit,
                 },
+                Status: StatusEnum.Active
               };
               this.init();
             });
@@ -122,7 +126,7 @@ export class ProductsComponent implements OnInit {
     // Realizar la búsqueda usando los parámetros de la URL
     this._productsService
       .getPagedListProducts(this.params)
-      .subscribe((res: ProductPagedListVM) => {
+      .subscribe((res: ProductPagedList) => {
         if (res.HasErrors || res.HasWarnings) {
           // agregar una notificación
         }
@@ -234,6 +238,6 @@ export class ProductsComponent implements OnInit {
   }
 
   seeProduct(productId: number) {
-    this._router.navigate([`Product/${productId}`]);
+    this._productNavigation.toProductDetails(productId);
   }
 }

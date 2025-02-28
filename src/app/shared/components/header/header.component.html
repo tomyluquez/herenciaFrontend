@@ -19,8 +19,8 @@
 
     <header class="header-container flex-between">
 
+        <i *ngIf="isMobile" class='fa-solid fa-bars text-primary-400' (click)="openMobileMenu()"></i>
         <div class="flex-between gap-8">
-            <i *ngIf="isMobile" class='fa-solid fa-bars text-primary-400' (click)="openMobileMenu()"></i>
             <h3>Herencia</h3>
 
             <nav *ngIf="!isMobile">

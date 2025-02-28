@@ -20,7 +20,7 @@ export class ModalComponent {
     });
   }
 
-  closeSidebar() {
+  closeModal() {
     this._modalService.closeModal();
   }
 }

@@ -1,7 +1,7 @@
-import { ItemDataContainerCards } from "../interfaces/Others.interface";
+import { IItemDataContainerCards } from "../interfaces/Others.interface";
 
 export class DataContainerCards {
     Title!: string;
-    Items!: ItemDataContainerCards[];
+    Items!: IItemDataContainerCards[];
     QuantityPages!: number
 }

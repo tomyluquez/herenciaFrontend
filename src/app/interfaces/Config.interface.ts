@@ -1,4 +1,5 @@
-import { ResponseMessages } from './ResponseMessages.Interface';
+import { ResponseMessages } from "./ResponseMessages.Interface";
+
 export interface CompanyInfoVM extends ResponseMessages {
   Items: ICompanyInfoVM[];
 }

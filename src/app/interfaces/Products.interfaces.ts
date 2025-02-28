@@ -2,28 +2,29 @@ import { Product } from '../models/Product.model';
 import { PaginationDTO } from './pagination.interface';
 import { ResponseMessages } from './ResponseMessages.Interface';
 
-export class PromotionalProductsVM extends ResponseMessages {
+export class PromotionalProducts extends ResponseMessages {
   Items!: IPromotionalProduct[];
   TotalItems!: number;
 }
 
-export class ProductPagedListVM extends ResponseMessages {
-  Items!: IProductPagedListVM[];
+export class ProductPagedList extends ResponseMessages {
+  Items!: IProductPagedList[];
   TotalItems!: number;
 }
 
-export class ProductVM extends ResponseMessages {
-  Items!: IProductVM[];
+export class Products extends ResponseMessages {
+  Items!: IProduct[];
   TotalItems!: number;
 }
 
-export interface IProductPagedListVM {
+export interface IProductPagedList {
   Id: number;
   Name: string;
   CategoryName: string;
   Price: number;
   Image?: string;
   HasStock: boolean;
+  IsActive: boolean;
 }
 
 export interface IPromotionalProduct {
@@ -34,15 +35,16 @@ export interface IPromotionalProduct {
   Image: string;
 }
 
-export interface ProductPagedListSearchDTO {
+export interface SearchProductPagedList {
   Name: string;
   Categories: string;
   Sizes: string;
   Pagination: PaginationDTO;
   Order: string;
+  Status: number;
 }
 
-export interface IProductVM {
+export interface IProduct {
   Id: number;
   Name: string;
   Price: number;

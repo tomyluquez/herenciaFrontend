@@ -14,18 +14,9 @@ export const routes: Routes = [
   },
   {
     path: routesModel.Products,
-    loadComponent: () =>
-      import('./pages/products/products.component').then(
-        (m) => m.ProductsComponent
-      ),
+    loadChildren: () => import('./pages/products/products.routes')
   },
-  {
-    path: routesModel.Product,
-    loadComponent: () =>
-      import('./pages/products/ind-product/ind-product.component').then(
-        (m) => m.IndProductComponent
-      ),
-  },
+
   {
     path: routesModel.Contact,
     loadComponent: () =>

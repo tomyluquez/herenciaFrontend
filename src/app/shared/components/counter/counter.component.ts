@@ -9,11 +9,12 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './counter.component.css',
 })
 export class CounterComponent {
-  @Input() maxValue!: number;
+  @Input() maxValue: number = 100;
+  @Input() showDisponibility: boolean = true;
+  @Input() quantity = 1;
   @Output() quantityEmit: EventEmitter<number> = new EventEmitter();
-  quantity = 1;
 
-  constructor() {}
+  constructor() { }
 
   decrement() {
     if (this.quantity > 1) {

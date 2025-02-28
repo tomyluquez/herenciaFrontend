@@ -4,7 +4,6 @@ import { VariantSelected } from '../interfaces/Variant.interface';
 import { Router } from '@angular/router';
 import { environment } from '../../environment/environment';
 import { AuthService } from './auth.service';
-import { ResponseMessages } from '../interfaces/ResponseMessages.Interface';
 import {
   BehaviorSubject,
   catchError,
@@ -14,7 +13,8 @@ import {
   throwError,
 } from 'rxjs';
 import { UserCartItemsVM } from '../models/User/User.Cart.model';
-import { ICartItemsVM } from '../interfaces/Cart.interface';
+import { ICartItemsVM, UpdateQuantityCartItem } from '../interfaces/Cart.interface';
+import { ResponseMessages } from '../interfaces/ResponseMessages.Interface';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +28,7 @@ export class CartService {
     private _http: HttpClient,
     private _router: Router,
     private _authService: AuthService
-  ) {}
+  ) { }
 
   addItemToCart(
     variantSelected: VariantSelected
@@ -120,4 +120,40 @@ export class CartService {
         })
       );
   }
+
+  updateQuantityCartItem(
+    itemToUpdate: UpdateQuantityCartItem
+  ): Observable<ResponseMessages> {
+    const token = localStorage.getItem('token'); // Obtiene el token almacenado
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`, // Incluye el token en el encabezado
+    });
+
+    return this._http
+      .post<ResponseMessages>(
+        `${environment.apiUrl}/cart/cartItems`,
+        itemToUpdate,
+        { headers }
+      )
+      .pipe(
+        tap((response: ResponseMessages) => {
+          if (!response.HasErrors) {
+            // Si el producto se ha agregado exitosamente, volvemos a obtener los items del carrito
+            this.updateCartItems();
+          }
+        }),
+        catchError((error: any) => {
+          const response = new ResponseMessages();
+          response.HasErrors = true;
+          response.ErrorMessages = [
+            error.error.message || 'Ha ocurrido un error inesperado.',
+          ];
+          if (error.status === 401) {
+            this._router.navigate(['/Login']);
+          }
+          return of(response); // Devuelve un observable con el ResponseMessages
+        })
+      );
+  }
+
 }

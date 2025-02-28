@@ -1,33 +1,11 @@
 <section class="container-gral" *blockUI="'main'">
     <div class="flex flex-col-reverse md:flex-row justify-between items-start gap-6">
         <div class="container-cart-cards flex-start-col w-full md:w-[70%]" *blockUI="'items-cart'">
-            @for (cartItem of cartItems; track $index) {
-            <app-card-item-cart [cartItem]="cartItem" />
-            }
+            <app-table-items-cart [cartItems]="cartItems" class="w-full" />
         </div>
 
-
-
         <div class="container-cart-cards flex-start-col w-full md:w-[30%]">
-            <app-discount-coupon class="w-full" />
-            <div class="w-full flex items-center justify-between">
-                <p>Subtotal:</p>
-                <p>$15000</p>
-            </div>
-            <div class="w-full flex items-center justify-between">
-                <p>Costo de envio:</p>
-                <p>A confirmar</p>
-            </div>
-            <div class="w-full flex items-center justify-between">
-                <p>Descuento:</p>
-                <p>$1000</p>
-            </div>
-            <app-divider />
-            <div class="w-full flex items-center justify-between">
-                <strong>Total:</strong>
-                <strong>$14000</strong>
-            </div>
-            <button class="black-button w-full">Proceder al pago</button>
+            <app-cart-summary [cartItems]="cartItems" class="w-full" />
         </div>
     </div>
 </section>

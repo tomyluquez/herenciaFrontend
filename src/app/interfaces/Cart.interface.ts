@@ -6,3 +6,9 @@ export interface ICartItemsVM {
   SizeName: string;
   UrlImage: string;
 }
+
+export interface UpdateQuantityCartItem {
+  Quantity: number,
+  ItemId: number,
+  Action: number
+}

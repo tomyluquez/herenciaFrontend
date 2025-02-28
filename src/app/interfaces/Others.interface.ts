@@ -4,9 +4,14 @@ export interface ConfigurationAlert {
   type: 'error' | 'warning' | 'success' | 'info';
   duration?: number;
 }
-
-export interface ItemDataContainerCards {
+export interface IItemDataContainerCards {
   Id: number;
   Name: string;
   Image: string;
 }
+
+export interface ChangeStatus {
+  Id: number;
+  Status: number;
+}
+

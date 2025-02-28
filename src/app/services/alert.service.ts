@@ -12,7 +12,7 @@ export class AlertService {
   type = signal('');
   duration?: number;
 
-  constructor() {}
+  constructor() { }
 
   openAlert(configuration: ConfigurationAlert) {
     this.isVisible.set(true);

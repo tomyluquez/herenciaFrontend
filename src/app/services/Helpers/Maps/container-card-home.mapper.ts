@@ -1,6 +1,6 @@
-import { ItemDataContainerCards } from "../../../interfaces/Others.interface";
+import { IItemDataContainerCards } from "../../../interfaces/Others.interface"
 
-export const containerCardHomeMapper = (item: any[]): ItemDataContainerCards[] => {
+export const containerCardHomeMapper = (item: any[]): IItemDataContainerCards[] => {
     return item.map(i => {
         return {
             Id: i.Id,

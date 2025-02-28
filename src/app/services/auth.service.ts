@@ -5,10 +5,10 @@ import { CategoryListVM } from '../interfaces/Categories.interface';
 import { environment } from '../../environment/environment';
 import { Router } from '@angular/router';
 import { LoginUser, RegisterUser } from '../interfaces/User.interface';
-import { ResponseMessages } from '../interfaces/ResponseMessages.Interface';
 import { UserTokenVM } from '../models/User/User.Token.model';
 import { jwtDecode, JwtPayload } from 'jwt-decode';
 import { RoleEnum } from '../enums/role-enum';
+import { ResponseMessages } from '../interfaces/ResponseMessages.Interface';
 
 @Injectable({
   providedIn: 'root',

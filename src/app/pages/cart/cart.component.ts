@@ -6,12 +6,13 @@ import { BlockUI, BlockUIModule, NgBlockUI } from 'ng-block-ui';
 import { CommonModule } from '@angular/common';
 import { DiscountCouponComponent } from './discount-coupon/discount-coupon.component';
 import { DividerComponent } from '../../shared/components/divider/divider.component';
-import { CardItemCartComponent } from './card-item-cart/card-item-cart.component';
+import { TableItemsCartComponent } from './table-items-cart/table-items-cart.component';
+import { CartSummaryComponent } from './cart-summary/cart-summary.component';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CommonModule, DiscountCouponComponent, BlockUIModule, DividerComponent, CardItemCartComponent],
+  imports: [CommonModule, DiscountCouponComponent, BlockUIModule, DividerComponent, TableItemsCartComponent, CartSummaryComponent],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css',
 })
@@ -21,7 +22,7 @@ export class CartComponent implements OnInit {
   loadItems = true;
 
   private cartSubscription!: Subscription;
-  cartItems?: ICartItemsVM[];
+  cartItems: ICartItemsVM[] = [];
 
   constructor(private _cartService: CartService) { }
 
@@ -44,5 +45,9 @@ export class CartComponent implements OnInit {
       this.loadItems = false;
       this.itemsCartBlockUI.stop();
     });
+  }
+
+  proceedToPayment() {
+    //pasarle al endopint lo necesario para crear una nueva orden.
   }
 }

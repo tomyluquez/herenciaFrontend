@@ -28,6 +28,7 @@ body {
 
 :root {
   --header-height: 65px;
+  --footer-height: 290px;
 }
 
 /*  Estilos compartidos */
@@ -48,7 +49,7 @@ body {
 .container-gral {
   @apply w-full py-8  px-12 md:px-24;
   margin-top: var(--header-height);
-  min-height: 100%;
+  min-height: calc(100vh - var(--header-height) - var(--footer-height));
 }
 
 .container-grid-fit {
@@ -97,6 +98,10 @@ body {
 
 .pagination-button {
   @apply py-2 px-4 w-[40px] bg-primary-50 rounded-full cursor-pointer hover:bg-primary-200 duration-300;
+}
+
+.pagination-button-disabled {
+  @apply w-full text-slate-100 text-center py-2 rounded-md cursor-not-allowed;
 }
 
 /* Text */
@@ -169,7 +174,7 @@ body {
 
 /* Inputs */
 .input-text {
-  @apply bg-white rounded-md px-2 py-2 w-full border border-slate-300 text-slate-700 bg-primary-50;
+  @apply rounded-md py-1 px-2 w-full border border-slate-300 text-slate-700 bg-white;
 }
 
 .input-text::placeholder {
@@ -199,6 +204,35 @@ body {
   @apply hover:bg-primary-100 p-2 rounded-md cursor-pointer flex;
 }
 
+.panel-selected {
+  @apply bg-primary-200;
+}
+
 .dropdown-row-value {
   @apply block px-4 py-2 whitespace-nowrap text-primary-600;
+}
+
+/* Status */
+
+.active {
+  @apply text-green-500 bg-green-200 px-2 py-1 rounded-md text-center;
+}
+
+.inactive {
+  @apply text-red-500 bg-red-200 px-2 py-1 rounded-md text-center;
+}
+
+/* Images */
+
+.pre-image {
+  @apply w-20 h-20;
+}
+
+/* Modals */
+.container-modal {
+  @apply w-[80%] md:w-[30%] bg-primary-50 absolute left-[50%] right-[50%] translate-x-[-50%] translate-y-[-50%] duration-300 shadow-2xl z-30  items-center justify-start py-8 px-2;
+}
+
+.title-modal {
+  @apply font-bold text-black self-start mb-8;
 }

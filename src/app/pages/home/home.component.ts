@@ -12,14 +12,14 @@ import { CardComponent } from '../../shared/components/card/card.component';
 import { ProductService } from '../../services/product.service';
 import {
   IPromotionalProduct,
-  PromotionalProductsVM,
+  PromotionalProducts,
 } from '../../interfaces/Products.interfaces';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { CardSkeletonComponent } from '../../shared/components/loaders/card-skeleton/card-skeleton.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContainerCardsHomeComponent } from '../../shared/components/container-cards-home/container-cards-home.component';
 import { containerCardHomeMapper } from '../../services/Helpers/Maps/container-card-home.mapper';
-import { ItemDataContainerCards } from '../../interfaces/Others.interface';
+import { IItemDataContainerCards } from '../../interfaces/Others.interface';
 import { DataContainerCards } from '../../models/Order.model';
 import { GetQuantityPages } from '../../services/Helpers/getQuantityPages.service';
 import { PaginationEnum } from '../../enums/pagination-enum';
@@ -62,7 +62,7 @@ export class HomeComponent implements OnInit {
 
     this._productService
       .getPromotionalProducts(PaginationEnum.Page)
-      .subscribe((res: PromotionalProductsVM) => {
+      .subscribe((res: PromotionalProducts) => {
         this.setPromotionalProducts(res);
       });
     this.blockUI.stop();
@@ -91,7 +91,7 @@ export class HomeComponent implements OnInit {
     this.loadingProducts = true;
     this._productService
       .getPromotionalProducts(newLimit)
-      .subscribe((res: PromotionalProductsVM) => {
+      .subscribe((res: PromotionalProducts) => {
         this.setPromotionalProducts(res);
         this.loadingProducts = false;
       });
@@ -112,7 +112,7 @@ export class HomeComponent implements OnInit {
     this.loadingCategories = false;
   }
 
-  setPromotionalProducts(res: PromotionalProductsVM) {
+  setPromotionalProducts(res: PromotionalProducts) {
     if (res.HasErrors || res.HasWarnings) {
       return;
     }

@@ -5,8 +5,9 @@ import { Injectable, signal } from '@angular/core';
 })
 export class ModalService {
   isModalOpen = signal(false);
+  isConfirmOpen = signal(false);
 
-  constructor() {}
+  constructor() { }
 
   openModal() {
     this.isModalOpen.set(true);
@@ -18,5 +19,17 @@ export class ModalService {
 
   toggleModal() {
     this.isModalOpen.set(!this.isModalOpen());
+  }
+
+  openConfirm() {
+    this.isConfirmOpen.set(true);
+  }
+
+  closeConfirm() {
+    this.isConfirmOpen.set(false);
+  }
+
+  toggleConfirm() {
+    this.isConfirmOpen.set(!this.isConfirmOpen());
   }
 }

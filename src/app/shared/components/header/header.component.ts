@@ -63,6 +63,7 @@ export class HeaderComponent {
   }
 
   ngOnInit(): void {
+    this._modalService.closeModal();
     this.blockUI.start('Cargando...');
     this.isMobile = window.innerWidth < 992;
     this._headerService.getMenuHeaderDB().subscribe((res: MenuVM) => {

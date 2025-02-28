@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { DividerComponent } from '../../shared/components/divider/divider.component';
-import { InputTextComponent } from '../../shared/components/Inputs/input-text/input-text.component';
 import {
   FormControl,
   FormGroup,
@@ -11,14 +10,13 @@ import { AuthService } from '../../services/auth.service';
 import { AlertService } from '../../services/alert.service';
 import { CommonModule, Location } from '@angular/common';
 import { PrimaryButtonComponent } from '../../shared/components/buttons/primary-button/primary-button.component';
-import { ResponseMessages } from '../../interfaces/ResponseMessages.Interface';
 import { Router } from '@angular/router';
+import { ResponseMessages } from '../../interfaces/ResponseMessages.Interface';
 
 @Component({
   selector: 'app-register',
   standalone: true,
   imports: [
-    InputTextComponent,
     DividerComponent,
     ReactiveFormsModule,
     CommonModule,
@@ -37,7 +35,7 @@ export class RegisterComponent {
     private _authService: AuthService,
     private _alertService: AlertService,
     private _router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.formRegister = new FormGroup({
