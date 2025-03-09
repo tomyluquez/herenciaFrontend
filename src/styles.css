@@ -81,7 +81,7 @@ body {
 }
 
 .tertiary-button {
-  @apply w-full bg-white text-slate-900 hover:bg-primary-100 duration-300 text-center py-2 rounded-md;
+  @apply w-full bg-white border-primary-300 text-slate-900 hover:bg-primary-100 duration-300 text-center py-2 rounded-md;
 }
 
 .tertiary-button-disabled {
@@ -104,6 +104,10 @@ body {
   @apply w-full text-slate-100 text-center py-2 rounded-md cursor-not-allowed;
 }
 
+.remove-button {
+  @apply relative bg-primary-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-primary-600;
+}
+
 /* Text */
 
 .title {
@@ -112,6 +116,10 @@ body {
 
 .error-message {
   @apply text-sm text-red-500;
+}
+
+.crossed-out {
+  @apply text-slate-400 line-through;
 }
 
 /* Estilos flex */
@@ -222,17 +230,116 @@ body {
   @apply text-red-500 bg-red-200 px-2 py-1 rounded-md text-center;
 }
 
+.pending {
+  @apply text-pink-500 bg-pink-200 px-2 py-1 rounded-md text-center;
+}
+
+.preparation {
+  @apply text-orange-500 bg-orange-200 px-2 py-1 rounded-md text-center;
+}
+
+.prepared {
+  @apply text-yellow-500 bg-yellow-200 px-2 py-1 rounded-md text-center;
+}
+
+.delivered {
+  @apply text-green-500 bg-green-200 px-2 py-1 rounded-md text-center;
+}
+
+.canceled {
+  @apply text-red-500 bg-red-200 px-2 py-1 rounded-md text-center;
+}
+
 /* Images */
 
 .pre-image {
   @apply w-20 h-20;
 }
 
+.not-image {
+  @apply w-20 h-20 border-2 border-dashed border-gray-300 bg-gray-100 rounded-lg flex items-center justify-center text-gray-500 text-center;
+}
+
+.image {
+  @apply w-20 h-20 object-cover rounded-lg shadow-md;
+}
+
 /* Modals */
 .container-modal {
-  @apply w-[80%] md:w-[30%] bg-primary-50 absolute left-[50%] right-[50%] translate-x-[-50%] translate-y-[-50%] duration-300 shadow-2xl z-30  items-center justify-start py-8 px-2;
+  @apply w-[80%] md:w-[30%] bg-primary-50 fixed left-[50%] right-[50%] translate-x-[-50%] translate-y-[-50%] duration-300 shadow-2xl z-30  items-center justify-start py-8 px-2;
 }
 
 .title-modal {
   @apply font-bold text-black self-start mb-8;
+}
+
+/* Form */
+.custom-form {
+  @apply flex flex-col lg:flex-row items-center lg:items-start gap-6 w-full max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-xl;
+}
+
+.container-images-form {
+  @apply w-full lg:w-1/3 flex flex-col items-center gap-4;
+}
+
+.images-form {
+  @apply w-full flex-col gap-2 items-center justify-center;
+}
+
+.container-form {
+  @apply w-full lg:w-2/3 flex flex-col gap-4;
+}
+
+.container-input {
+  @apply flex flex-col gap-2;
+}
+
+.label-form {
+  @apply text-sm font-medium text-gray-700;
+}
+
+.icon-input-form {
+  @apply absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500;
+}
+
+.input-form {
+  @apply pl-10 pr-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300 w-full;
+}
+
+.input-form-error {
+  @apply pl-10 pr-4 py-2 border border-red-300 rounded-lg shadow-sm transition duration-300 w-full;
+}
+
+.checkbox-form {
+  @apply w-5 h-5 text-blue-500 rounded focus:ring-blue-500;
+}
+
+.select-form {
+  @apply w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300 pl-10;
+}
+
+/* Table */
+
+.container-table {
+  @apply p-4 bg-white shadow-lg rounded-lg;
+}
+
+.custom-table {
+  @apply w-full border-collapse border border-primary-200 overflow-auto;
+}
+
+.custom-table thead tr {
+  @apply bg-primary-100 text-primary-700 uppercase text-sm font-semibold;
+}
+
+.custom-table thead tr th {
+  @apply px-4 py-3 text-left border-b;
+}
+
+.custom-table tbody tr {
+  @apply border-b transition-all hover:bg-primary-50;
+}
+
+.custom-table tbody tr td {
+  @apply px-4 py-4 text-primary-400;
 }

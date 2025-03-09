@@ -1,5 +1,5 @@
 import { Component, effect, Input } from '@angular/core';
-import { ModalService } from '../../../services/modal.service';
+import { ModalService } from '../../../Modules/Other/Services/modal.service';
 import { CommonModule } from '@angular/common';
 import { ShadowBgComponent } from '../shadow-bg/shadow-bg.component';
 

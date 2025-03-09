@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { BreadcrumItem } from '../../../interfaces/Shared.interfaces';
+import { BreadcrumItem } from '../../../Modules/Other/Interface/Shared.interfaces';
 
 @Component({
   selector: 'app-breadcrum',
@@ -12,5 +12,5 @@ import { BreadcrumItem } from '../../../interfaces/Shared.interfaces';
 export class BreadcrumComponent {
   @Input() items!: BreadcrumItem[];
 
-  constructor() {}
+  constructor() { }
 }

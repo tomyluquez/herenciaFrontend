@@ -1,0 +1,28 @@
+@if(variant && !loading){
+<form class="custom-form" [formGroup]="form" (submit)="uploadStock()">
+    <div class="container-form !w-full" *blockUI="'stock-form'">
+        <div class="container-input">
+            <label class="label-form">Talle</label>
+            <div class="relative">
+                <div class="icon-input-form">
+                    <i class="fas fa-tag"></i>
+                </div>
+                <input class="input-form" type="text" [value]="variant.Name" disabled />
+            </div>
+        </div>
+        <div class="container-input">
+            <label class="label-form">Cantidad</label>
+            <div class="relative">
+                <div class="icon-input-form">
+                    <i class="fas fa-tag"></i>
+                </div>
+                <input [ngClass]="!form.controls['Quantity'].valid ? 'input-form-error' : ''" class="input-form"
+                    type="text" placeholder="Cantidad" formControlName="Quantity" />
+            </div>
+            <app-form-error [control]="form.controls['Quantity']"></app-form-error>
+        </div>
+        <button [ngClass]="form.valid ? 'secondary-button' : 'secondary-button-disabled'" type="submit"
+            [disabled]="form.invalid">Actualizar</button>
+    </div>
+</form>
+}

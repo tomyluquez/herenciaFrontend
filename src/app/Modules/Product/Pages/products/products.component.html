@@ -1,0 +1,111 @@
+<app-rsidebar>
+    <div class="p-4 w-full">
+        <div class="categories flex-start-col gap-2">
+            <h3 class="title">Categorias <span *ngIf="categoriesSeleted.length > 0" class="reset-filters"
+                    (click)="resetCategories()">Restablecer</span></h3>
+            @for (category of categories; track $index) {
+            <div class="flex-between filter" [ngClass]="{'active': checkedCategorySelected(category.Name)}"
+                (click)="onCategoryChange(category.Name)">
+                <p class="capitalize">{{category.Name}} </p>
+                <i *ngIf="checkedCategorySelected(category.Name)" class="fa-solid fa-xmark text-sm text-slate-700"
+                    (click)="removeCategory(category.Name, $event)"></i>
+            </div>
+            }
+        </div>
+        <div class="sizes flex-start-col gap-2">
+            <h3 class="title">Talles <span *ngIf="sizeSelected.length > 0" class="reset-filters"
+                    (click)="resetSizes()">Restablecer</span></h3>
+            @for (size of sizes; track $index) {
+            <div class="flex-between filter" [ngClass]="{'active': checkedSizeSelected(size.Id)}"
+                (click)="onSizeChange(size.Id)">
+                <p class="capitalize">{{size.Name}} </p>
+                <i *ngIf="checkedSizeSelected(size.Id)" class="fa-solid fa-xmark text-sm text-slate-700"
+                    (click)="removeSize(size.Id, $event)"></i>
+            </div>
+            }
+        </div>
+        <button class="primary-button mt-4" (click)="closeSidebar()">Aplicar</button>
+    </div>
+</app-rsidebar>
+
+
+<section class="container-products p-4">
+
+    <div class="hidden container-filters">
+        <div class="categories flex-start-col gap-2">
+            <h3 class="title">Categorias <span *ngIf="categoriesSeleted.length > 0" class="reset-filters"
+                    (click)="resetCategories()">Restablecer</span></h3>
+            @for (category of categories; track $index) {
+            <div class="flex-between filter" [ngClass]="{'active': checkedCategorySelected(category.Name)}"
+                (click)="onCategoryChange(category.Name)">
+                <p class="capitalize">{{category.Name}} </p>
+                <i *ngIf="checkedCategorySelected(category.Name)" class="fa-solid fa-xmark text-sm text-slate-700"
+                    (click)="removeCategory(category.Name, $event)"></i>
+            </div>
+            }
+        </div>
+        <div class="sizes flex-start-col gap-2">
+            <h3 class="title">Talles <span *ngIf="sizeSelected.length > 0" class="reset-filters"
+                    (click)="resetSizes()">Restablecer</span></h3>
+            @for (size of sizes; track $index) {
+            <div class="flex-between filter" [ngClass]="{'active': checkedSizeSelected(size.Id)}"
+                (click)="onSizeChange(size.Id)">
+                <p class="capitalize">{{size.Name}} </p>
+                <i *ngIf="checkedSizeSelected(size.Id)" class="fa-solid fa-xmark text-sm text-slate-700"
+                    (click)="removeSize(size.Id, $event)"></i>
+            </div>
+            }
+        </div>
+    </div>
+
+
+    <div class="products flex-all-start-col p-4 col-span-2 lg:col-span-1">
+        <div class="flex-between lg:flex-end w-full gap-2 mb-8">
+            <div class="w-[50%]">
+                <button class="primary-button lg:hidden" (click)="openSidebar()"><i class="fa-solid fa-filter"></i>
+                    Filtrar
+                </button>
+            </div>
+            <div class="w-[50%] lg:w-[20%]">
+                <ng-select class="w-full" [items]="sortingOptions" bindLabel="Name" bindValue="Value"
+                    placeholder="Ordenar por" (change)="sort($event.Value)" [(ngModel)]="sortSelected"
+                    [searchable]="false">
+                </ng-select>
+            </div>
+        </div>
+        <div class="container-product container-grid-fill w-full gap-4">
+            @if(loading){
+            <app-card-skeleton />
+            <app-card-skeleton />
+            <app-card-skeleton />
+            <app-card-skeleton />
+            <app-card-skeleton />
+            <app-card-skeleton />
+            <app-card-skeleton />
+            <app-card-skeleton />
+            <app-card-skeleton />
+            <app-card-skeleton />
+            <app-card-skeleton />
+            <app-card-skeleton />
+            <app-card-skeleton />
+            <app-card-skeleton />
+            } @else {
+            @if(products.length === 0){
+            <div class="flex-center-col col-span-10 w-full">
+                <img src="../../../assets/NotFound.png" alt="not found image" class="md:w-1/4 w-1/2">
+                <p class="text-slate-400"><span class="text-2xl">Ups! </span>No se encontraron resultados</p>
+            </div>
+            } @else {
+            @for (product of products; track $index) {
+            <app-card [title]="product.Name" [subtitle]="product.CategoryName" [price]="product.Price"
+                [promotionalPrice]="product.PromotionalPrice" (click)="seeProduct(product.Id)" />
+            }
+            }
+            }
+        </div>
+        <div *ngIf="!loading && products.length > 0" class="flex-end w-full mt-8">
+            <app-pagination [page]="page" [totalItems]="totalProducts" [limit]="limit" (onPageChangeNext)="nextPage()"
+                (onPageChangePrev)="prevPage()" />
+        </div>
+    </div>
+</section>

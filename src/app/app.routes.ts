@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { routesModel } from './models/Routes.model';
+import { routesModel } from './Routes.model';
 
 export const routes: Routes = [
   {
@@ -10,41 +10,45 @@ export const routes: Routes = [
   {
     path: routesModel.Home,
     loadComponent: () =>
-      import('./pages/home/home.component').then((m) => m.HomeComponent),
+      import('./Modules/Other/Pages/home/home.component').then((m) => m.HomeComponent),
   },
   {
     path: routesModel.Products,
-    loadChildren: () => import('./pages/products/products.routes')
+    loadChildren: () => import('../app/Modules/Product/Routes/products.routes')
+  },
+  {
+    path: routesModel.Stock,
+    loadChildren: () => import('./Modules/Variant/Routes/stock.routes')
   },
 
   {
     path: routesModel.Contact,
     loadComponent: () =>
-      import('./pages/contact/contact.component').then(
+      import('./Modules/Other/Pages/contact/contact.component').then(
         (m) => m.ContactComponent
       ),
   },
   {
     path: routesModel.Login,
     loadComponent: () =>
-      import('./pages/login/login.component').then((m) => m.LoginComponent),
+      import('./Modules/Auth/Pages/login/login.component').then((m) => m.LoginComponent),
   },
   {
     path: routesModel.Register,
     loadComponent: () =>
-      import('./pages/register/register.component').then(
+      import('./Modules/Auth/Pages/register/register.component').then(
         (m) => m.RegisterComponent
       ),
   },
   {
     path: routesModel.Cart,
     loadComponent: () =>
-      import('./pages/cart/cart.component').then((m) => m.CartComponent),
+      import('./Modules/Cart/Pages/Cart/cart.component').then((m) => m.CartComponent),
   },
   {
     path: routesModel.ControlPanel,
     loadComponent: () =>
-      import('./pages/control-panel/control-panel.component').then(
+      import('./Modules/Other/Pages/control-panel/control-panel.component').then(
         (m) => m.ControlPanelComponent
       ),
   },

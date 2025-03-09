@@ -1,0 +1,21 @@
+@if(order && !loading){
+<form class="custom-form" [formGroup]="form" (submit)="updateStatus()">
+    <div class="container-form !w-full" *blockUI="'order-status-form'">
+        <div class="container-input">
+            <label class="label-form">Seleccione un estado</label>
+            <div class="relative">
+                <div class="icon-input-form">
+                    <i class="fas fa-list"></i>
+                </div>
+                <ng-select [ngClass]="!form.controls['StatusId'].valid ? 'input-form-error' : ''" class="select-form"
+                    [items]="statesOptions" bindLabel="Name" bindValue="Id" placeholder="Seleccione un estado"
+                    [required]="true" formControlName="StatusId" [searchable]="true">
+                </ng-select>
+            </div>
+            <app-form-error [control]="form.controls['StatusId']"></app-form-error>
+        </div>
+        <button [ngClass]="form.valid ? 'secondary-button' : 'secondary-button-disabled'" type="submit"
+            [disabled]="form.invalid">Actualizar</button>
+    </div>
+</form>
+}

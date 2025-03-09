@@ -1,0 +1,54 @@
+<app-lsidebar>
+    <nav class="nav-mobile flex-column">
+        <ul class="ul-nav-mobile w-full">
+            @for (menu of menues; track $index) {
+            <li class="dropdown-row" (click)="selectPanel(menu.Href)">
+                <a><i class="fa-regular fa-circle-user mr-2"></i> {{menu.Name}}</a>
+            </li>
+            }
+        </ul>
+    </nav>
+</app-lsidebar>
+
+<div class="container-gral">
+    <i class='fa-solid fa-bars text-primary-400 md:hidden' (click)="openMobileMenu()"></i>
+    <h3 class="title">Panel de control</h3>
+    <div class="container-control-panel relative">
+        <div class="options-panel border-full">
+            <ul class="flex flex-col gap-4">
+                @for (menu of menues; track $index) {
+                <li class="dropdown-row" [ngClass]="panelSelected === menu.Href ? 'panel-selected' : ''"
+                    (click)="selectPanel(menu.Href)">
+                    <a><i class="fa-regular fa-circle-user mr-2"></i> {{menu.Name}}</a>
+                </li>
+                }
+            </ul>
+        </div>
+        <div class="info-panel border-full">
+            <div class="panel" *ngIf="panelSelected === '#Products'">
+                <app-product-list />
+            </div>
+            <div class="panel" *ngIf="panelSelected === '#Stock'">
+                <app-stock-list />
+            </div>
+            <div class="panel" *ngIf="panelSelected === '#Sales'">
+                <app-order-list />
+            </div>
+            <div class="panel" *ngIf="panelSelected === '#Categories'">
+                <app-category-list />
+            </div>
+            <div class="panel" *ngIf="panelSelected === '#Sizes'">
+                Aca van los Sizes
+            </div>
+            <div class="panel" *ngIf="panelSelected === '#PriceList'">
+                Aca van los PriceList
+            </div>
+            <div class="panel" *ngIf="panelSelected === '#Config'">
+                Aca van los Config
+            </div>
+            <div class="panel" *ngIf="panelSelected === '#Dash'">
+                Aca van los Dash
+            </div>
+        </div>
+    </div>
+</div>

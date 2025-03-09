@@ -1,0 +1,42 @@
+@if(!loading){
+<form class="custom-form" [formGroup]="form" (submit)="uploadStock()">
+    <div class="container-form !w-full" *blockUI="'stock-form'">
+        <div class="container-images-form !w-full">
+            <div class="images-form flex items-center">
+                @if(category && category.Image) {
+                <div class="grid grid-cols-2 gap-2">
+                    <div class="relative">
+                        <img class="image !w-32 !h-32" [src]="category.Image" alt="imagen de producto">
+                        <button class="remove-button !absolute top-0 right-0"
+                            (click)="removeImage(category.Id)">×</button>
+                    </div>
+                </div>
+                } @else {
+                <div class="not-image">
+                    Sin imagen
+                </div>
+                }
+                <input type="file" id="fileInput" class="hidden" (change)="onImageSelected($event)" multiple>
+            </div>
+            <label for="fileInput" class="mt-4 secondary-button cursor-pointer transition duration-300">
+                <span class="mr-2">+ Agregar imagen</span>
+            </label>
+        </div>
+        <div class="container-input">
+            <label class="label-form">Nombre</label>
+            <div class="relative">
+                <div class="icon-input-form">
+                    <i class="fas fa-tag"></i>
+                </div>
+                <input class="input-form" [ngClass]="!form.controls['Name'].valid ? 'input-form-error' : ''" type="text"
+                    placeholder="Nombre" formControlName="Name" />
+            </div>
+            <app-form-error [control]="form.controls['Name']"></app-form-error>
+
+        </div>
+
+        <button [ngClass]="form.valid ? 'secondary-button' : 'secondary-button-disabled'" type="submit"
+            [disabled]="form.invalid">{{category ? 'Editar' : 'Agregar'}}</button>
+    </div>
+</form>
+}

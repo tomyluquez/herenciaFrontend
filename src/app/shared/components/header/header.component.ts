@@ -1,21 +1,17 @@
 import { Component, effect, HostListener } from '@angular/core';
-import { HeaderService } from '../../../services/header-service.service';
-import { IMenuVM, MenuVM } from '../../../interfaces/Menu.Interfaces';
 import { BlockUI, BlockUIModule, NgBlockUI } from 'ng-block-ui';
 import { CommonModule } from '@angular/common';
-import { LSidebarService } from '../../../services/lsidebar.service';
+import { LSidebarService } from '../../../Modules/Other/Services/lsidebar.service';
 import { LSidebarComponent } from '../lsidebar/lsidebar.component';
 import { ModalComponent } from '../modal/modal.component';
-import { ModalService } from '../../../services/modal.service';
-import { InputTextComponent } from '../Inputs/input-text/input-text.component';
-import { DividerComponent } from '../divider/divider.component';
+import { ModalService } from '../../../Modules/Other/Services/modal.service';
 import { CartDropdownComponent } from '../Dropdowns/cart-dropdown/cart-dropdown.component';
 import { UserDropdownComponent } from '../Dropdowns/user-dropdown/user-dropdown.component';
 import { RouterModule } from '@angular/router';
-import { AuthService } from '../../../services/auth.service';
-import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../../Modules/Auth/Services/auth.service';
 import { SearchModalComponent } from '../modal/search-modal/search-modal.component';
-import { RoleEnum } from '../../../enums/role-enum';
+import { IMenuVM, MenuVM } from '../../../Modules/Menu/Interface/Menu.Interfaces';
+import { MenuService } from '../../../Modules/Menu/Services/menu-service.service';
 
 @Component({
   selector: 'app-header',
@@ -48,7 +44,7 @@ export class HeaderComponent {
   role!: number;
 
   constructor(
-    private _headerService: HeaderService,
+    private _menuService: MenuService,
     private _sidebarService: LSidebarService,
     private _modalService: ModalService,
     private _authService: AuthService
@@ -66,7 +62,7 @@ export class HeaderComponent {
     this._modalService.closeModal();
     this.blockUI.start('Cargando...');
     this.isMobile = window.innerWidth < 992;
-    this._headerService.getMenuHeaderDB().subscribe((res: MenuVM) => {
+    this._menuService.getMenuHeaderDB().subscribe((res: MenuVM) => {
       this.menues = res.Items;
       this.blockUI.stop();
     });

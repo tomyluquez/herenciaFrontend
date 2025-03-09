@@ -1,0 +1,36 @@
+@if(!loadingProduct){
+<section class="container-gral mx-auto px-4 py-8">
+    <app-breadcrum [items]="breadcrumItems" />
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <app-carousel [images]="product.Images" />
+        <div>
+            <h1 class="text-xl md:text-3xl font-bold mb-2">{{product.Name}}</h1>
+            <p class="text-2xl font-semibold mb-4" [ngClass]="{'crossed-out mb-0 text-sm': product.IsPromotional}">
+                {{product.Price |
+                currency: '$'}}</p>
+            <p *ngIf="product.IsPromotional" class="text-2xl font-semibold mb-4">
+                {{product.PromotionalPrice |
+                currency: '$'}}</p>
+            <p class="text-gray-600 mb-6">
+                {{product.Description}}
+            </p>
+
+            @if(product.Variants && product.Variants.length > 0){
+            <app-size-selector [sizes]="product.Variants || []" (variantEmit)="setVariant($event)" />
+            }
+
+            <div class="w-full md:w-1/2">
+                <button [disabled]="!selectedVariant"
+                    [ngClass]="!selectedVariant ? 'primary-button-disabled' : 'primary-button'"
+                    class="sticky bottom-0 left-0 md:static" (click)="addToCart()">
+                    {{product.Variants && product.Variants.length > 0 ? 'Añadir al carrito' : 'Sin stock'}}
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+}
+
+<!-- Anzalizar de descontar el stock disponible al agregar al carrito -->

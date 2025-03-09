@@ -1,0 +1,45 @@
+@if(orderSelected){
+<app-rsidebar>
+    <app-form-order-status [order]="orderSelected" (newStatus)="updateStatus($event)" />
+</app-rsidebar>
+}
+@if(orderDetailId){
+<app-rsidebar>
+    <app-order-detail [orderId]="orderDetailId" />
+</app-rsidebar>
+}
+
+
+<section *blockUI="'order-list'">
+
+    <div class="flex items-center justify-between">
+        <h3 class="title w-[70%]">Gestion de pedidos</h3>
+    </div>
+
+    <div class="flex flex-col">
+        <form class="w-full flex items-center justify-start gap-2" [formGroup]="form" (submit)="search()">
+            <div class="flex-center-col gap-2 w-full">
+                <input class="input-text" type="date" placeholder="Desde" formControlName="StartDate" />
+            </div>
+            <div class="flex-center-col gap-2 w-full">
+                <input class="input-text" type="date" placeholder="Hasta" formControlName="EndDate" />
+            </div>
+            <div class="flex-center-col gap-2 w-full">
+                <input class="input-text" type="text" placeholder="Buscar por nombre de cliente"
+                    formControlName="CustomerName" />
+            </div>
+            <div class="flex-center-col gap-2 w-full">
+                <input class="input-text" type="text" placeholder="Buscar por numero de pedido"
+                    formControlName="OrderNumber" />
+            </div>
+            <ng-select class="w-full" [items]="statesOptions" bindLabel="Name" bindValue="Id"
+                placeholder="Filtrar por estado" formControlName="OrderStatus" [(ngModel)]="defaultStatus"
+                [searchable]="false">
+            </ng-select>
+
+            <button class="primary-button">Buscar</button>
+        </form>
+        <app-general-table [data]="pagedList" />
+    </div>
+
+</section>

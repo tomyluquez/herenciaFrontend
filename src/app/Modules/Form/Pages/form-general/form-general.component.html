@@ -1,0 +1,119 @@
+<section class="container-gral">
+    <form [formGroup]="formInput.Form"
+        class="flex flex-col lg:flex-row items-center lg:items-start gap-6 w-full max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-xl"
+        (submit)="onSubmit()">
+        <!-- Contenedor de imágenes -->
+        @if (inputImages) {
+        <div class="w-full lg:w-1/3 flex flex-col items-center gap-4">
+            <div class="w-full flex-col gap-2 items-center justify-center">
+                @if(inputImages.Values && inputImages.Values.length > 0) {
+                <div class="grid grid-cols-2 gap-2">
+                    @for (image of inputImages.Values; track $index) {
+                    <div class="relative">
+                        <img class="w-32 h-32 object-cover rounded-lg shadow-md" [src]="image" alt="imagen de producto">
+                        <button
+                            class="absolute top-0 right-0 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600"
+                            (click)="removeImage($index)">×</button>
+                    </div>
+                    }
+                </div>
+                } @else {
+                <div
+                    class="w-32 h-32 border-2 border-dashed border-gray-300 bg-gray-100 rounded-lg flex items-center justify-center text-gray-500">
+                    Sin imagen
+                </div>
+                }
+                <input type="file" id="fileInput" class="hidden" (change)="onImageSelected($event)" multiple>
+                <label for="fileInput" class="mt-4 secondary-button cursor-pointer transition duration-300">
+                    <span class="mr-2">+ Agregar imagen</span>
+                </label>
+            </div>
+        </div>
+        }
+
+        <!-- Contenedor del formulario -->
+        <div class="w-full lg:w-2/3 flex flex-col gap-4">
+            @for(data of formInput.FormData; track $index) {
+            @if(data.Type === types.Text){
+            <div class="flex flex-col gap-2">
+                <label class="text-sm font-medium text-gray-700">{{data.Label}}</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3">
+                        <i [ngClass]="data.Icon" class="text-gray-500"></i>
+                    </div>
+                    <input
+                        class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300 w-full"
+                        type="text" [placeholder]="data.Placeholder" [formControlName]="data.Name" />
+                </div>
+            </div>
+            }
+            @if(data.Type === types.Checkbox){
+            <div class="flex items-center gap-2">
+                <input class="w-5 h-5 text-blue-500 rounded focus:ring-blue-500" type="checkbox"
+                    [formControlName]="data.Name" />
+                <label class="text-gray-700">{{data.Label}}</label>
+            </div>
+            }
+            @if(data.Type === types.Email){
+
+            }
+            @if(data.Type === types.MultiSelect){
+
+            }
+            @if(data.Type === types.Number){
+            <div class="flex flex-col gap-2">
+                <label class="text-sm font-medium text-gray-700">{{data.Label}}</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3">
+                        <i [ngClass]="data.Icon" class="text-gray-500"></i>
+                    </div>
+                    <input
+                        class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300 w-full"
+                        type="number" [placeholder]="data.Placeholder" [formControlName]="data.Name" />
+                </div>
+            </div>
+            }
+            @if(data.Type === types.Password){
+
+            }
+            @if(data.Type === types.Select){
+            <div class="flex flex-col gap-2">
+                <label class="text-sm font-medium text-gray-700">{{data.Label}}</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3">
+                        <i class="fas fa-list text-gray-500"></i>
+                    </div>
+                    <ng-select
+                        class="w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300 pl-10"
+                        [items]="data.Options!" bindLabel="Name" bindValue="Value" [placeholder]="data.Placeholder"
+                        [formControlName]="data.Name" [searchable]="true">
+                    </ng-select>
+                </div>
+            </div>
+            }
+            @if(data.Type === types.Textarea){
+            <div class="flex flex-col gap-2">
+                <label class="text-sm font-medium text-gray-700">{{data.Label}}</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3">
+                        <i [ngClass]="data.Icon" class="text-gray-500"></i>
+                    </div>
+                    <textarea
+                        class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300 w-full"
+                        [placeholder]="data.Placeholder" [formControlName]="data.Name"></textarea>
+                </div>
+            </div>
+            }
+
+            }
+            <div>
+                <button class="w-full secondary-button" type="submit">
+                    {{formInput.IsEdit ? 'Editar' : 'Agregar'}}
+                </button>
+            </div>
+        </div>
+
+    </form>
+
+
+</section>

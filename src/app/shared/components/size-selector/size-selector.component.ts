@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IProductVariants } from '../../../interfaces/Products.interfaces';
 import { FormsModule } from '@angular/forms';
 import { CounterComponent } from '../counter/counter.component';
-import { VariantSelected } from '../../../interfaces/Variant.interface';
+import { IProductVariants } from '../../../Modules/Product/Interface/Products.interfaces';
+import { VariantSelected } from '../../../Modules/Variant/Interface/Variant.interface';
 
 @Component({
   selector: 'app-size-selector',
@@ -18,9 +18,9 @@ export class SizeSelectorComponent {
   sizeSelected!: IProductVariants;
   quantitySelected = 1;
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   selectSize(size: IProductVariants) {
     this.sizeSelected = size;

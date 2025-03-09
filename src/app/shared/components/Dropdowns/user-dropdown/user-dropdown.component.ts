@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { AuthService } from '../../../../services/auth.service';
-import { routesModel } from '../../../../models/Routes.model';
-import { RoleEnum } from '../../../../enums/role-enum';
+import { AuthService } from '../../../../Modules/Auth/Services/auth.service';
+import { routesModel } from '../../../../Routes.model';
+import { UserRoleEnum } from '../../../../Modules/User/Enums/user-role-enum';
 
 @Component({
   selector: 'app-user-dropdown',
@@ -33,6 +33,6 @@ export class UserDropdownComponent {
   }
 
   isAdmin(): boolean {
-    return this.isLoggin && this.role !== undefined && this.role === RoleEnum.Admin
+    return this.isLoggin && this.role !== undefined && this.role === UserRoleEnum.Admin
   }
 }

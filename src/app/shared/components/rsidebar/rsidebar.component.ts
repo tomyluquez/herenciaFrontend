@@ -1,5 +1,5 @@
 import { Component, effect } from '@angular/core';
-import { RSidebarService } from '../../../services/rsidebar.service';
+import { RSidebarService } from '../../../Modules/Other/Services/rsidebar.service';
 import { CommonModule } from '@angular/common';
 import { ShadowBgComponent } from '../shadow-bg/shadow-bg.component';
 

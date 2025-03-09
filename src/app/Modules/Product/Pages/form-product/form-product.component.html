@@ -1,0 +1,198 @@
+@if(!loading){
+<section class="container-gral">
+    <form [formGroup]="form" class="custom-form" (submit)="onSubmit()">
+        <!-- Contenedor de imágenes -->
+        <div class="container-images-form">
+            <div class="images-form">
+                @if(product && product.Images && product.Images.length > 0) {
+                <div class="grid grid-cols-2 gap-2">
+                    @for (image of product.Images; track $index) {
+                    <div class="relative">
+                        <img class="image !w-32 !h-32" [src]="image" alt="imagen de producto">
+                        <button class="remove-button !absolute top-0 right-0" (click)="removeImage($index)">×</button>
+                    </div>
+                    }
+                </div>
+                } @else {
+                <div class="not-image">
+                    Sin imagen
+                </div>
+                }
+                <input type="file" id="fileInput" class="hidden" (change)="onImageSelected($event)" multiple>
+            </div>
+            <label for="fileInput" class="mt-4 secondary-button cursor-pointer transition duration-300">
+                <span class="mr-2">+ Agregar imagen</span>
+            </label>
+        </div>
+
+        <!-- Contenedor del formulario -->
+        <div class="container-form">
+            <!-- Contenedor Nombre -->
+            <div class="container-input">
+                <label class="label-form">Nombre</label>
+                <div class="relative">
+                    <div class="icon-input-form">
+                        <i class="fas fa-tag"></i>
+                    </div>
+                    <input [ngClass]="!form.controls['Name'].valid ? 'input-form-error' : ''" class="input-form"
+                        type="text" placeholder="Nombre" formControlName="Name" />
+                </div>
+                <app-form-error [control]="form.controls['Name']"></app-form-error>
+            </div>
+
+            <!-- Contenedor Costo de compra -->
+            <div class="container-input">
+                <label class="label-form">Costo de compra</label>
+                <div class="relative">
+                    <div class="icon-input-form">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <input [ngClass]="!form.controls['Cost'].valid ? 'input-form-error' : ''" class="input-form"
+                        type="text" placeholder="Costo de compra" formControlName="Cost" />
+                </div>
+                <app-form-error [control]="form.controls['Cost']"></app-form-error>
+            </div>
+
+            <!-- Contenedor Precio de venta -->
+            <div class="container-input">
+                <label class="label-form">Precio de venta</label>
+                <div class="relative">
+                    <div class="icon-input-form">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <input [ngClass]="!form.controls['Price'].valid ? 'input-form-error' : ''" class="input-form"
+                        type="text" placeholder="Precio de venta" formControlName="Price" />
+                </div>
+                <app-form-error [control]="form.controls['Price']"></app-form-error>
+            </div>
+
+            <!-- Contenedor Descripcion -->
+            <div class="container-input">
+                <label class="label-form">Descripción</label>
+                <div class="relative">
+                    <div class="icon-input-form">
+                        <i class="fas fa-align-left"></i>
+                    </div>
+                    <textarea class="input-form" placeholder="Descripción" formControlName="Description"></textarea>
+                </div>
+            </div>
+
+            <!-- Contenedor checkbox -->
+            <div class="flex items-center gap-2">
+                <input class="checkbox-form" type="checkbox" formControlName="IsPromotional" />
+                <label class="text-gray-700">Es un producto promcional?</label>
+            </div>
+
+
+            @if(form.controls['IsPromotional'].value){
+            <!-- Contenedor Descuento adicional -->
+            <div class="container-input">
+                <label class="label-form">Descuento adicional</label>
+                <div class="relative">
+                    <div class="icon-input-form">
+                        <i class="fas fa-percent"></i>
+                    </div>
+                    <input [ngClass]="!form.controls['Discount'].valid ? 'input-form-error' : ''" class="input-form"
+                        type="text" placeholder="Descuento adicional" formControlName="Discount"
+                        (change)="calculatePromotionalPrice()" />
+                </div>
+                <app-form-error [control]="form.controls['Discount']"></app-form-error>
+            </div>
+
+            <!-- Contenedor Precio promocional -->
+            <div class="container-input">
+                <label class="label-form">Precio promocional</label>
+                <div class="relative">
+                    <div class="icon-input-form">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <input [ngClass]="!form.controls['PromotionalPrice'].valid ? 'input-form-error' : ''"
+                        class="input-form" type="text" placeholder="Precio promocional"
+                        formControlName="PromotionalPrice" [disabled]="true" />
+                </div>
+                <app-form-error [control]="form.controls['PromotionalPrice']"></app-form-error>
+            </div>
+            }
+
+            <!-- Contenedor Categoria -->
+            <div class="container-input">
+                <label class="label-form">Seleccione una categoria</label>
+                <div class="relative">
+                    <div class="icon-input-form">
+                        <i class="fas fa-list"></i>
+                    </div>
+                    <ng-select [ngClass]="!form.controls['Category'].valid ? 'input-form-error' : ''"
+                        class="select-form" [items]="categories" bindLabel="Name" bindValue="Id"
+                        placeholder="Seleccione una categoria" [required]="true" formControlName="Category"
+                        [searchable]="true">
+                    </ng-select>
+                </div>
+                <app-form-error [control]="form.controls['Category']"></app-form-error>
+            </div>
+
+            <!-- Contenedor Talles -->
+            <form class="griid" [formGroup]="sizeForm" (submit)="addSize()">
+                <div>
+                    <label class="label-form">Seleccione un talle</label>
+                    <div class="relative">
+                        <div class="icon-input-form">
+                            <i class="fas fa-list"></i>
+                        </div>
+                        <ng-select class="select-form" [items]="sizes" bindLabel="Name" bindValue="Id"
+                            placeholder="Seleccione un talle" formControlName="Size" [searchable]="true">
+                        </ng-select>
+                    </div>
+                </div>
+                <div>
+                    <label class="label-form">Cantidad</label>
+                    <div class="relative">
+                        <div class="icon-input-form">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <input class="input-form" type="text" placeholder="Cantidad" formControlName="Quantity" />
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="secondary-button">+</button>
+                </div>
+            </form>
+            @if(sizesSelected && sizesSelected.length > 0)
+            {
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th>Talle</th>
+                        <th>Stock</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for(size of sizesSelected; track $index)
+                    {
+                    <tr>
+                        <td>{{ size.Name }}</td>
+                        <td>{{ size.Stock }}</td>
+                        <td>
+                            <button class="remove-button" (click)="removeSize(size.Id!)">×</button>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+            }
+
+
+
+            <div>
+                <button class="w-full" [ngClass]="form.invalid ? 'secondary-button-disabled' : 'secondary-button'"
+                    type="submit" [disabled]="form.invalid">
+                    {{product ? 'Editar' : 'Agregar'}}
+                </button>
+            </div>
+        </div>
+
+    </form>
+
+
+</section>
+}

@@ -1,9 +1,0 @@
-<app-shadow-bg [isOpen]="isOpen" />
-<section class="container-modal flex-column" [ngClass]="{ 'top-[-100%]': !isOpen, 'top-[50%]': isOpen}">
-    <i class="fa-solid fa-xmark icon-close" (click)="closeConfirm()"></i>
-    <h3 class="title-modal text-center w-full">{{title}}</h3>
-    <div class="flex-center gap-4 w-full">
-        <button class="primary-button" (click)="confirmAction()">Aceptar</button>
-        <button class="secondary-button" (click)="closeConfirm()">Cancelar</button>
-    </div>
-</section>

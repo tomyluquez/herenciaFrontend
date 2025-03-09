@@ -1,6 +1,6 @@
 import { Component, effect } from '@angular/core';
-import { AlertService } from '../../../services/alert.service';
 import { CommonModule } from '@angular/common';
+import { AlertService } from '../../../Modules/Other/Services/alert.service';
 
 @Component({
   selector: 'app-alert',

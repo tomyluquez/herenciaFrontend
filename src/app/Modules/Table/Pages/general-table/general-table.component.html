@@ -1,0 +1,61 @@
+<section *ngIf="data" class="container-table">
+    <table class="custom-table">
+        <thead>
+            <tr>
+                @for (header of data.Headers; track $index) {
+                <th>{{ header.Value }} <br> <span *ngIf="header.ShowTotal"
+                        class="text-sm text-primary-400">{{getTotal(header.Name)}}</span></th>
+                }
+                @if(data.Actions && data.Actions.length > 0) {
+                <th class="!text-center">Acciones</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @if (data.Items && data.Items.length > 0) {
+            <tr *ngFor="let item of data.Items">
+                <td *ngFor="let header of data.Headers">
+                    @if(header.Type === headerTypeEnum.Image){
+                    <img class="image" [src]="item[header.Name]" alt="imagen de producto"
+                        *ngIf="header.Type === headerTypeEnum.Image && item[header.Name]">
+                    <div class="not-image" *ngIf="header.Type === headerTypeEnum.Image && !item[header.Name]">Sin imagen
+                    </div>
+                    } @else if(header.Type === headerTypeEnum.Price){
+                    <p>{{item[header.Name] | currency : "$"}}</p>
+
+                    } @else if(header.Type === headerTypeEnum.Status){
+                    <p ngClass="{{item[header.Name] ? 'active' : 'inactive'}}">{{ item[header.Name] ? 'Activo' :
+                        'Inactivo' }}
+
+                        }@else if(header.Type === headerTypeEnum.Date){
+                    <p>{{item[header.Name] | date : "dd/MM/yyyy"}}</p>
+
+                    }
+                    @else if(header.Type === headerTypeEnum.OrderStatus){
+                    <p [class]="getClass(item[header.Name])">{{getName(item[header.Name])}}</p>
+
+                    }
+                    @else {
+                    <p>{{item[header.Name]}}</p>
+
+                    }
+                </td>
+                <td class="!text-center">
+                    <button *ngFor="let action of data.Actions" (click)="action.Handler(item.Id)"
+                        class="mx-1 p-2 rounded-lg border border-primary-300 bg-white hover:bg-primary-200 transition">
+                        <i [class]="action.Icon"></i>
+                    </button>
+                </td>
+            </tr>
+            } @else {
+            <tr>
+                <td colspan="100%" class="text-center text-primary-500">No hay resultados</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+    <div *ngIf="data.Items && data.Items.length > 0" class="flex justify-end w-full mt-4">
+        <app-pagination [page]="data.Page" [totalItems]="data.TotalItems" [limit]="data.Limit"
+            (onPageChangeNext)="nextPage()" (onPageChangePrev)="prevPage()" />
+    </div>
+</section>

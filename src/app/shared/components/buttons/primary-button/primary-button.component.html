@@ -1,4 +1,0 @@
-<button [ngClass]="isLoading ? 'primary-button-disabled' : 'primary-button'" (click)="onClick()">
-    <span *ngIf="isLoading" class="loader"></span>
-    <span *ngIf="!isLoading">{{ text }}</span>
-</button>

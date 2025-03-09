@@ -2,12 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { DividerComponent } from '../../divider/divider.component';
 import { Router, RouterModule } from '@angular/router';
-import { AuthService } from '../../../../services/auth.service';
-import { CartService } from '../../../../services/cart.service';
-import { UserCartItemsVM } from '../../../../models/User/User.Cart.model';
-import { ICartItemsVM } from '../../../../interfaces/Cart.interface';
-import { AlertService } from '../../../../services/alert.service';
+import { AuthService } from '../../../../Modules/Auth/Services/auth.service';
+import { ICartItemsVM } from '../../../../Modules/Cart/Interfaces/Cart.interface';
 import { Subscription } from 'rxjs';
+import { CartService } from '../../../../Modules/Cart/Services/cart.service';
+import { AlertService } from '../../../../Modules/Other/Services/alert.service';
 
 @Component({
   selector: 'app-cart-dropdown',
@@ -30,7 +29,7 @@ export class CartDropdownComponent implements OnInit {
     private _router: Router,
     private _cartService: CartService,
     private _alertService: AlertService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.cartSubscription = this._cartService.cartItems$.subscribe((items) => {

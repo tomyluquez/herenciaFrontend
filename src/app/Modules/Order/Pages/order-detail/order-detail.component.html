@@ -1,0 +1,30 @@
+@if(orderDetail){
+<section *blockUI="'order-detail'" class="w-full flex flex-col gap-2">
+    <div class="flex items-center">
+        <h3 class="title w-[70%]">Detalle de la orden N° {{orderDetail.OrderNumber}}</h3>
+    </div>
+
+    <div class="grid grid-cols-2 w-full items-center px-2">
+        <p class="text-sm">Cliente: {{orderDetail.CustomerName}}</p>
+        <p class="text-sm text-end">Total: {{orderDetail.Discount | currency : "$"}}</p>
+    </div>
+    <div class="grid grid-cols-2 w-full items-center px-2">
+        <p class="text-sm">Fecha: {{orderDetail.DateCreated | date: "dd/MM/yyyy"}}</p>
+        <p class="text-sm text-end">Total: {{orderDetail.Subtotal | currency : "$"}}</p>
+    </div>
+    <div class="grid grid-cols-2 w-full items-center px-2">
+        <p class="text-sm">Estado: {{orderDetail.OrderStatus}}</p>
+        <p class="text-sm text-end">Total: {{orderDetail.Total | currency : "$"}}</p>
+    </div>
+
+    @for (item of orderDetail.Details; track $index) {
+    <div class="grid grid-cols-2 w-full items-center px-2">
+        <div class="flex flex-col">
+            <p class="text-sm font-bold">{{item.Name}} - {{item.Size}}</p>
+            <p class="text-sm text-gray-500">x {{item.Quantity}}</p>
+        </div>
+        <p class="text-sm text-end">Total: {{item.TotalPrice| currency : "$"}}</p>
+    </div>
+    }
+</section>
+}

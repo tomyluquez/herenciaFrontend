@@ -1,5 +1,5 @@
 import { Component, effect } from '@angular/core';
-import { LSidebarService } from '../../../services/lsidebar.service';
+import { LSidebarService } from '../../../Modules/Other/Services/lsidebar.service';
 import { CommonModule } from '@angular/common';
 import { ShadowBgComponent } from '../shadow-bg/shadow-bg.component';
 
