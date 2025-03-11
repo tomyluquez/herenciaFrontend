@@ -1,0 +1,68 @@
+@if(!loading && product){
+<form class="custom-form" [formGroup]="form" (submit)="uploadproduct()">
+    <div class="container-form !w-full" *blockUI="'size-form'">
+        <div class="container-input">
+            <label class="label-form">Nombre del producto</label>
+            <div class="relative">
+                <div class="icon-input-form">
+                    <i class="fas fa-tag"></i>
+                </div>
+                <input class="input-form" [value]="product.ProductName" [disabled]="true" />
+            </div>
+        </div>
+
+        <!-- Contenedor Precio de venta -->
+        <div class="container-input">
+            <label class="label-form">Precio de venta</label>
+            <div class="relative">
+                <div class="icon-input-form">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+                <input [ngClass]="!form.controls['Price'].valid ? 'input-form-error' : ''" class="input-form"
+                    type="text" placeholder="Precio de venta" formControlName="Price" numeric />
+            </div>
+            <app-form-error [control]="form.controls['Price']"></app-form-error>
+        </div>
+
+        <!-- Contenedor checkbox -->
+        <div class="flex items-center gap-2">
+            <input class="checkbox-form" type="checkbox" formControlName="IsPromotional" />
+            <label class="text-gray-700">Es un producto promcional?</label>
+        </div>
+
+
+        @if(form.controls['IsPromotional'].value){
+        <!-- Contenedor Descuento adicional -->
+        <div class="container-input">
+            <label class="label-form">Descuento adicional</label>
+            <div class="relative">
+                <div class="icon-input-form">
+                    <i class="fas fa-percent"></i>
+                </div>
+                <input [ngClass]="!form.controls['Discount'].valid ? 'input-form-error' : ''" class="input-form"
+                    type="text" placeholder="Descuento adicional" formControlName="Discount"
+                    (change)="calculatePromotionalPrice()" numeric />
+            </div>
+            <app-form-error [control]="form.controls['Discount']"></app-form-error>
+        </div>
+
+        <!-- Contenedor Precio promocional -->
+        <div class="container-input">
+            <label class="label-form">Precio promocional</label>
+            <div class="relative">
+                <div class="icon-input-form">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+                <input [ngClass]="!form.controls['PromotionalPrice'].valid ? 'input-form-error' : ''" class="input-form"
+                    type="text" placeholder="Precio promocional" formControlName="PromotionalPrice" [disabled]="true"
+                    numeric />
+            </div>
+            <app-form-error [control]="form.controls['PromotionalPrice']"></app-form-error>
+        </div>
+        }
+
+        <button [ngClass]="form.valid ? 'secondary-button' : 'secondary-button-disabled'" type="submit"
+            [disabled]="form.invalid">Editar</button>
+    </div>
+</form>
+}

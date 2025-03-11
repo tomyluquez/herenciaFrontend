@@ -1,6 +1,6 @@
 @if(!loading){
-<form class="custom-form" [formGroup]="form" (submit)="uploadStock()">
-    <div class="container-form !w-full" *blockUI="'stock-form'">
+<form class="custom-form" [formGroup]="form" (submit)="uploadCategory()">
+    <div class="container-form !w-full" *blockUI="'category-form'">
         <div class="container-images-form !w-full">
             <div class="images-form flex items-center">
                 @if(category && category.Image) {

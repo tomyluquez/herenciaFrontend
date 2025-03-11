@@ -1,4 +1,4 @@
-<app-shadow-bg [isOpen]="isOpen" />
+<app-shadow-bg [isOpen]="isOpen" (click)="closeConfirm()" />
 <section class="container-modal flex-column" [ngClass]="{ 'top-[-100%]': !isOpen, 'top-[30%]': isOpen}">
     <i class="fa-solid fa-xmark icon-close" (click)="closeConfirm()"></i>
     <h3 class="title-modal text-center w-full">{{title}}</h3>

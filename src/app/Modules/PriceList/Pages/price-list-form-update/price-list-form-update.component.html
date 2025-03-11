@@ -1,0 +1,92 @@
+@if(!loading){
+<form class="custom-form !flex-col" [formGroup]="form" *blockUI="'priceList-form-update'"
+    (ngSubmit)="updatePriceList()">
+    <div class="flex flex-col">
+        <p class="title !m-0">Actualización de precios o descuentos</p>
+        <p class="subtitle">Actualice los precios o descuentos de sus productos de forma masiva o por categoría.</p>
+    </div>
+    <div class="flex flex-col gap-4 mt-4 w-full">
+        <div class="flex flex-col gap-2">
+            <h5>Acción</h5>
+            <div class="flex items-center gap-2">
+                <input type="radio" name="Action" id="priceCheckAction" [value]="ActionsUpdtePriceListEnum.ChangePrice"
+                    formControlName="Action">
+                <label for="priceCheckAction">Cambio de precios</label>
+            </div>
+            <div class="flex items-center gap-2">
+                <input type="radio" name="Action" id="discountCheckAction"
+                    [value]="ActionsUpdtePriceListEnum.ChangeDiscount" formControlName="Action">
+                <label for="discountCheckAction">Cambio de descuentos</label>
+            </div>
+        </div>
+        <div class="flex flex-col gap-2">
+            <h5>Tipo de actualización</h5>
+            <div class="flex items-center gap-2">
+                <input type="radio" name="ActionType" id="discountCheckType" [value]="ActionsUpdtePriceListEnum.General"
+                    formControlName="ActionType" numeric>
+                <label for="discountCheckType">Cambio masivo</label>
+            </div>
+            <div class="flex items-center gap-2">
+                <input type="radio" name="ActionType" id="priceCheckType" [value]="ActionsUpdtePriceListEnum.Category"
+                    formControlName="ActionType" numeric>
+                <label for="priceCheckType">Cambio por categoría</label>
+            </div>
+        </div>
+
+        <!-- Contenedor Categoria -->
+        @if(form.controls['ActionType'].value == ActionsUpdtePriceListEnum.Category){
+
+        <div class="container-input">
+            <label class="label-form">Seleccione una categoria</label>
+            <div class="relative">
+                <div class="icon-input-form">
+                    <i class="fas fa-list"></i>
+                </div>
+                <ng-select [ngClass]="!form.controls['Category'].valid ? 'input-form-error' : ''" class="select-form"
+                    [items]="categories" bindLabel="Name" bindValue="Id" placeholder="Seleccione una categoria"
+                    [required]="true" formControlName="Category" [searchable]="true">
+                </ng-select>
+            </div>
+            <app-form-error [control]="form.controls['Category']"></app-form-error>
+            <p class="subtitle">Seleccione la categoría a la cual desea aplicar el cambio</p>
+        </div>
+        }
+
+        <!-- Contenedor Porcentaje -->
+        @if(form.controls['Action'].value == ActionsUpdtePriceListEnum.ChangePrice){
+        <div class="container-input">
+            <label class="label-form">Porcentaje de actualización</label>
+            <div class="relative">
+                <div class="icon-input-form">
+                    <i class="fas fa-percent"></i>
+                </div>
+                <input [ngClass]="!form.controls['Percentage'].valid ? 'input-form-error' : ''" class="input-form"
+                    type="number" min="0" step="0" inputmode="numeric" placeholder="Descuento adicional"
+                    formControlName="Percentage" />
+            </div>
+            <app-form-error [control]="form.controls['Percentage']"></app-form-error>
+            <p class="subtitle">Ingrese el porcentaje de aumento o descuento (use números negativos para descuentos).
+            </p>
+        </div>
+        }
+
+        <!-- Contenedor Descuento -->
+        @if(form.controls['Action'].value == ActionsUpdtePriceListEnum.ChangeDiscount){
+        <div class="container-input">
+            <label class="label-form">Porcentaje de descuentos</label>
+            <div class="relative">
+                <div class="icon-input-form">
+                    <i class="fas fa-percent"></i>
+                </div>
+                <input [ngClass]="!form.controls['Discount'].valid ? 'input-form-error' : ''" class="input-form"
+                    type="number" min="0" step="0" inputmode="numeric" placeholder="Descuento adicional"
+                    formControlName="Discount" />
+            </div>
+            <app-form-error [control]="form.controls['Discount']"></app-form-error>
+            <p class="subtitle">Ingrese el porcentaje de descuento que se le aplicara a cada producto.</p>
+        </div>
+        }
+        <button class="secondary-button">Actualizar</button>
+    </div>
+</form>
+}

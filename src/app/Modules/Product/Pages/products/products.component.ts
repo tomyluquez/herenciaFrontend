@@ -8,18 +8,21 @@ import { SizesService } from '../../../Size/Services/sizes.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../Services/product.service';
 import sortingOptions from '../../../../data/sortingOptions.json';
-import { NameAndValue } from '../../../Other/Interface/NameValue.interface';
+import { NameAndId, NameAndValue } from '../../../Other/Interface/NameValue.interface';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 import { PaginationComponent } from '../../../../shared/components/pagination/pagination.component';
 import { CommonModule } from '@angular/common';
 import { CardComponent } from '../../../../shared/components/Cards/card/card.component';
 import { CategoryListVM, ICategoryVM, SearchCategoriesPagedList } from '../../../Category/Interfaces/Categories.interface';
-import { ISizeListVM, SizeLlistVM } from '../../../Size/Interface/Size.interface';
 import { IProductPagedList, ProductPagedList, SearchProductPagedList } from '../../Interface/Products.interfaces';
 import { ProductNavigationService } from '../../Services/Product-table.service';
 import { ActivationStatusEnum } from '../../../Other/Enums/activation-status-enum';
 import { PaginationEnum } from '../../../Other/Enums/pagination-enum';
+import { FilteringOptionsPagedListProductVM } from '../../Models/Filtering-options-paged-list-product.model';
+import { Variant } from '../../../Variant/Models/Variant.model';
+import { VariantsService } from '../../../Variant/Services/variants.service';
+import { FilteringOptionsProductStockVM } from '../../../Variant/Models/Filtering-options-product-stock.model';
 
 @Component({
   selector: 'app-products',
@@ -39,8 +42,8 @@ import { PaginationEnum } from '../../../Other/Enums/pagination-enum';
 export class ProductsComponent implements OnInit {
   @BlockUI() blockUI!: NgBlockUI;
 
-  categories!: ICategoryVM[];
-  sizes!: ISizeListVM[];
+  categories!: NameAndId[];
+  sizes!: NameAndId[];
   products!: IProductPagedList[];
   totalProducts!: number;
 
@@ -64,7 +67,8 @@ export class ProductsComponent implements OnInit {
     private _sizesService: SizesService,
     private _route: ActivatedRoute,
     private _router: Router,
-    private _productNavigation: ProductNavigationService
+    private _productNavigation: ProductNavigationService,
+    private _variantsService: VariantsService
   ) { }
 
   ngOnInit() {
@@ -74,42 +78,32 @@ export class ProductsComponent implements OnInit {
       Pagination: { Page: PaginationEnum.Page, Limit: 1000 },
       Status: ActivationStatusEnum.Active
     }
+    this._variantsService.getFilteringOptionsProductStock().subscribe((res: FilteringOptionsProductStockVM) => {
+      if (res.HasErrors || res.HasWarnings) {
+        this.blockUI.stop();
+        return
+      }
+      this.blockUI.stop();
 
-    this._categoryService
-      .getAllCategories(params)
-      .subscribe((res: CategoryListVM) => {
-        if (res.HasErrors || res.HasWarnings) {
-          return;
-        }
-
-        this.categories = res.Items;
-
-        this._sizesService
-          .getSizeList(ActivationStatusEnum.Active)
-          .subscribe((res: SizeLlistVM) => {
-            if (res.HasErrors || res.HasWarnings) {
-              return;
-            }
-
-            this.sizes = res.Items;
-            this._route.queryParams.subscribe((queryParams) => {
-              this.params = {
-                Name: queryParams['name'] || '',
-                Categories: queryParams['categories'] || '',
-                Sizes: queryParams['sizes'] || '',
-                Order: queryParams['order'] || '',
-                Pagination: {
-                  Page: this.page,
-                  Limit: this.limit,
-                },
-                Status: ActivationStatusEnum.Active
-              };
-              this.init();
-            });
-          });
+      this.categories = res.Categories;
+      this.sizes = res.Sizes
+      this._route.queryParams.subscribe((queryParams) => {
+        this.params = {
+          Name: queryParams['name'] || '',
+          Categories: queryParams['categories'] || '',
+          Sizes: queryParams['sizes'] || '',
+          Order: queryParams['order'] || '',
+          Pagination: {
+            Page: this.page,
+            Limit: this.limit,
+          },
+          Status: ActivationStatusEnum.Active
+        };
+        this.init();
       });
 
-    // Suscribirse a cambios de parámetros de URL
+    })
+
   }
 
   init() {

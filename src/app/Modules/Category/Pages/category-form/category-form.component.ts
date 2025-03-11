@@ -47,7 +47,7 @@ export class CategoryFormComponent implements OnInit, OnChanges {
     })
   }
 
-  uploadStock() {
+  uploadCategory() {
     if (this.form.invalid) return;
 
     this.blockUI.start('Cargando...');

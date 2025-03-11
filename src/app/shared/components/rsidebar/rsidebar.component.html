@@ -1,4 +1,4 @@
-<app-shadow-bg [isOpen]="isOpen" />
+<app-shadow-bg [isOpen]="isOpen" (click)="closeSidebar()" />
 <section class="container-sidebar-r" [ngClass]="{ 'right-[-100%]': !isOpen, 'right-0': isOpen}">
     <i class="fa-solid fa-xmark icon-close" (click)="closeSidebar()"></i>
     <ng-content></ng-content>

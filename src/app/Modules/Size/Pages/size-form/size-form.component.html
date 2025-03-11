@@ -1,0 +1,21 @@
+@if(!loading){
+<form class="custom-form" [formGroup]="form" (submit)="uploadSize()">
+    <div class="container-form !w-full" *blockUI="'size-form'">
+        <div class="container-input">
+            <label class="label-form">Nombre</label>
+            <div class="relative">
+                <div class="icon-input-form">
+                    <i class="fas fa-tag"></i>
+                </div>
+                <input class="input-form" [ngClass]="!form.controls['Name'].valid ? 'input-form-error' : ''" type="text"
+                    placeholder="Nombre" formControlName="Name" />
+            </div>
+            <app-form-error [control]="form.controls['Name']"></app-form-error>
+
+        </div>
+
+        <button [ngClass]="form.valid ? 'secondary-button' : 'secondary-button-disabled'" type="submit"
+            [disabled]="form.invalid">{{size ? 'Editar' : 'Agregar'}}</button>
+    </div>
+</form>
+}

@@ -22,13 +22,24 @@
 
 body {
   scroll-behavior: smooth;
-
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
   @apply bg-white;
 }
 
 :root {
   --header-height: 65px;
   --footer-height: 290px;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 
 /*  Estilos compartidos */
@@ -112,6 +123,10 @@ body {
 
 .title {
   @apply self-start text-3xl font-bold text-slate-800 my-4;
+}
+
+.subtitle {
+  @apply self-start text-sm text-slate-500;
 }
 
 .error-message {

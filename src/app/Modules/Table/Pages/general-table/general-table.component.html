@@ -35,6 +35,10 @@
                     <p [class]="getClass(item[header.Name])">{{getName(item[header.Name])}}</p>
 
                     }
+                    @else if(header.Type === headerTypeEnum.Discount){
+                    <p>{{item[header.Name] }} %</p>
+
+                    }
                     @else {
                     <p>{{item[header.Name]}}</p>
 

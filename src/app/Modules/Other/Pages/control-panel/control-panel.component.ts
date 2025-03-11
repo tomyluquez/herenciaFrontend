@@ -8,11 +8,21 @@ import { StockListComponent } from '../../../Variant/Pages/stock-list/stock-list
 import { ProductListComponent } from './../../../Product/Pages/product-list/product-list.component';
 import { OrderListComponent } from '../../../Order/Pages/order-list/order-list.component';
 import { CategoryListComponent } from '../../../Category/Pages/category-list/category-list.component';
+import { SizeListComponent } from '../../../Size/Pages/size-list/size-list.component';
+import { PriceListListComponent } from '../../../PriceList/Pages/price-list-list/price-list-list.component';
 
 @Component({
   selector: 'app-control-panel',
   standalone: true,
-  imports: [CommonModule, LSidebarComponent, ProductListComponent, StockListComponent, OrderListComponent, CategoryListComponent],
+  imports: [CommonModule,
+    LSidebarComponent,
+    ProductListComponent,
+    StockListComponent,
+    OrderListComponent,
+    CategoryListComponent,
+    SizeListComponent,
+    PriceListListComponent
+  ],
   templateUrl: './control-panel.component.html',
   styleUrl: './control-panel.component.css',
 })

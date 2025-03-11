@@ -43,7 +43,5 @@ export class CategoryService {
     })
     const params = new HttpParams().set('id', categoryId.toString());
     return this._http.put<ResponseMessages>(`${environment.apiUrl}/categories/changeStatus`, null, { headers, params });
-
-
   }
 }

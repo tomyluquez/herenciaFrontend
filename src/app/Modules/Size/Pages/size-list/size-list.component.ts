@@ -1,26 +1,27 @@
 import { Component } from '@angular/core';
 import { BlockUI, BlockUIModule, NgBlockUI } from 'ng-block-ui';
-import { CategoryListTable } from '../../Models/Category-list-table.model';
+import { SizeListTable } from '../../Models/Size-list-table.model';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { NgSelectModule } from '@ng-select/ng-select';
 import { PaginationEnum } from '../../../Other/Enums/pagination-enum';
 import { ActivationStatusEnum } from '../../../Other/Enums/activation-status-enum';
 import { NameAndId } from '../../../Other/Interface/NameValue.interface';
-import { CategoryService } from '../../Services/category.service';
+import { ISizeListVM, SearchSizePagedList } from '../../Interface/Size.interface';
+import { SizesService } from '../../Services/sizes.service';
 import { RSidebarService } from '../../../Other/Services/rsidebar.service';
-import { CategoryListVM, ICategoryVM, SearchCategoriesPagedList } from '../../Interfaces/Categories.interface';
-import { FilteringOptionsCategoryListVM } from '../../Models/Filtering-options-category-list';
+import { ModalService } from '../../../Other/Services/modal.service';
+import { AlertService } from '../../../Other/Services/alert.service';
+import { SizeLlistVM } from '../../Models/Size-list.model';
+import { ResponseMessages } from '../../../Other/Interface/ResponseMessages.Interface';
+import { FilteringOptionsSizeListVM } from '../../Models/Filtering-options-size.list';
+import { CommonModule } from '@angular/common';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { RSidebarComponent } from '../../../../shared/components/rsidebar/rsidebar.component';
 import { GeneralTableComponent } from '../../../Table/Pages/general-table/general-table.component';
-import { CategoryFormComponent } from '../category-form/category-form.component';
-import { ModalService } from '../../../Other/Services/modal.service';
 import { ConfirmModalComponent } from '../../../../shared/components/modal/confirm-modal/confirm-modal.component';
-import { ResponseMessages } from '../../../Other/Interface/ResponseMessages.Interface';
-import { AlertService } from '../../../Other/Services/alert.service';
+import { SizeFormComponent } from '../size-form/size-form.component';
 
 @Component({
-  selector: 'app-category-list',
+  selector: 'app-size-list',
   standalone: true,
   imports: [CommonModule,
     ReactiveFormsModule,
@@ -28,14 +29,15 @@ import { AlertService } from '../../../Other/Services/alert.service';
     BlockUIModule,
     RSidebarComponent,
     GeneralTableComponent,
-    CategoryFormComponent,
-    ConfirmModalComponent],
-  templateUrl: './category-list.component.html',
-  styleUrl: './category-list.component.css'
+    ConfirmModalComponent,
+    SizeFormComponent
+  ],
+  templateUrl: './size-list.component.html',
+  styleUrl: './size-list.component.css'
 })
-export class CategoryListComponent {
-  @BlockUI('category-list') blockUI!: NgBlockUI;
-  pagedList!: CategoryListTable
+export class SizeListComponent {
+  @BlockUI('size-list') blockUI!: NgBlockUI;
+  pagedList!: SizeListTable
 
   form!: FormGroup
 
@@ -45,13 +47,13 @@ export class CategoryListComponent {
   defaultStatus = ActivationStatusEnum.Active;
   statesOptions!: NameAndId[];
 
-  categoryIdSelected!: number;
+  sizeIdSelected!: number;
   isEdit = false;
-  categorySelected!: ICategoryVM | null
+  sizeSelected!: ISizeListVM | null
 
   titleConfirm = ""
 
-  constructor(private _categoryService: CategoryService, private _rSidebarSerive: RSidebarService, private _modalService: ModalService, private _alertService: AlertService) {
+  constructor(private _sizeService: SizesService, private _rSidebarSerive: RSidebarService, private _modalService: ModalService, private _alertService: AlertService) {
     this.form = new FormGroup({
       Name: new FormControl(''),
       Status: new FormControl(this.defaultStatus)
@@ -60,7 +62,7 @@ export class CategoryListComponent {
   }
 
   ngOnInit(): void {
-    this.pagedList = new CategoryListTable([], 0);
+    this.pagedList = new SizeListTable([], 0);
     if (this.pagedList) {
       this.pagedList.pageChange.subscribe((newPage) => {
         this.page = newPage;
@@ -70,14 +72,14 @@ export class CategoryListComponent {
       this.pagedList.statusChange.subscribe((categoryId) => {
         this.isEdit = false;
         const category = this.getCategory(categoryId)
-        this.categoryIdSelected = category.Id;
+        this.sizeIdSelected = category.Id;
         this.titleConfirm = `Desea ${category ? category.IsActive ? "Desactivar" : "Activar" : ''} la categoria${category ? " " + category.Name : ''}?`
         this._modalService.openConfirm();
       });
 
       this.pagedList.edit.subscribe((categoryId) => {
         this.isEdit = true;
-        this.categorySelected = this.pagedList.Items.find(i => i.Id === categoryId)!;
+        this.sizeSelected = this.pagedList.Items.find(i => i.Id === categoryId)!;
         this._rSidebarSerive.openSidebar();
       });
     }
@@ -87,7 +89,7 @@ export class CategoryListComponent {
 
   init() {
     this.blockUI.start('Cargando...');
-    this._categoryService.getFilteringOptionsCategoryList().subscribe((res: FilteringOptionsCategoryListVM) => {
+    this._sizeService.getFilteringOptionsSizeList().subscribe((res: FilteringOptionsSizeListVM) => {
       if (res.HasErrors || res.HasWarnings) {
         this.blockUI.stop();
         return
@@ -100,8 +102,8 @@ export class CategoryListComponent {
 
   }
 
-  parameters(): SearchCategoriesPagedList {
-    let parameters: SearchCategoriesPagedList = {
+  parameters(): SearchSizePagedList {
+    let parameters: SearchSizePagedList = {
       Name: this.form.controls['Name'].value,
       Pagination: { Page: this.page, Limit: this.limit },
       Status: this.form.controls['Status'].value,
@@ -115,11 +117,11 @@ export class CategoryListComponent {
     this.getPagedList(params)
   }
 
-  getPagedList(params: SearchCategoriesPagedList) {
+  getPagedList(params: SearchSizePagedList) {
     this.blockUI.start('Cargando...');
-    this._categoryService
-      .getAllCategories(params)
-      .subscribe((res: CategoryListVM) => {
+    this._sizeService
+      .getSizeList(params)
+      .subscribe((res: SizeLlistVM) => {
         if (res.HasErrors) {
           this.blockUI.stop();
           return;
@@ -131,14 +133,14 @@ export class CategoryListComponent {
       });
   }
 
-  updateCategories() {
+  updateSizes() {
     this.search();
     this._rSidebarSerive.closeSidebar();
   }
 
   addCategory() {
     this.isEdit = true;
-    this.categorySelected = null;
+    this.sizeSelected = null;
     this._rSidebarSerive.openSidebar();
   }
 
@@ -149,14 +151,14 @@ export class CategoryListComponent {
   changeStatus() {
     this._modalService.closeConfirm();
     this.blockUI.start('Cargando...');
-    this._categoryService.changeStatus(this.categoryIdSelected).subscribe((res: ResponseMessages) => {
+    this._sizeService.changeStatus(this.sizeIdSelected).subscribe((res: ResponseMessages) => {
       this._alertService.showAlerts(res);
       if (res.HasErrors || res.HasWarnings) {
         this.blockUI.stop();
         return
       }
       this.blockUI.stop();
-      this.updateCategories();
+      this.updateSizes();
     })
   }
 }

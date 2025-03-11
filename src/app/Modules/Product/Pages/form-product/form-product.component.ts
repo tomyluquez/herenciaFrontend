@@ -14,11 +14,12 @@ import { CustomValidators } from '../../../Form/Validators/Custom-validator';
 import { FormErrorComponent } from '../../../Form/Pages/form-error/form-error.component';
 import { ResponseMessages } from '../../../Other/Interface/ResponseMessages.Interface';
 import { IProduct, IProductVariants, Products } from '../../Interface/Products.interfaces';
-import { ISizeListVM, SizeLlistVM } from '../../../Size/Interface/Size.interface';
 import { ActivationStatusEnum } from '../../../Other/Enums/activation-status-enum';
 import { CategoryListVM, SearchCategoriesPagedList } from '../../../Category/Interfaces/Categories.interface';
 import { AlertService } from '../../../Other/Services/alert.service';
 import { PaginationEnum } from '../../../Other/Enums/pagination-enum';
+import { VariantsService } from '../../../Variant/Services/variants.service';
+import { FilteringOptionsProductStockVM } from '../../../Variant/Models/Filtering-options-product-stock.model';
 
 @Component({
   selector: 'app-form-product',
@@ -39,10 +40,17 @@ export class FormProductComponent implements OnInit {
   formModel!: Form
 
   categories!: NameAndId[]
-  sizes!: ISizeListVM[]
+  sizes!: NameAndId[]
   sizesSelected: IProductVariants[] = [];
 
-  constructor(private _route: ActivatedRoute, private _productService: ProductService, private _alertService: AlertService, private _categoryService: CategoryService, private _sizeService: SizesService, private _location: Location) {
+  constructor(private _route: ActivatedRoute,
+    private _productService: ProductService,
+    private _alertService: AlertService,
+    private _categoryService: CategoryService,
+    private _sizeService: SizesService,
+    private _location: Location,
+    private _variantsService: VariantsService
+  ) {
     const productId = this._route.snapshot.params['productId'];
     if (productId) this.productId = productId;
   }
@@ -58,49 +66,36 @@ export class FormProductComponent implements OnInit {
       Pagination: { Page: PaginationEnum.Page, Limit: 1000 },
       Status: ActivationStatusEnum.Active
     }
-    this._categoryService
-      .getAllCategories(params)
-      .subscribe((res: CategoryListVM) => {
-        if (res.HasErrors || res.HasWarnings) {
-          this.blockUI.stop();
-          return;
-        }
+    this._variantsService.getFilteringOptionsProductStock().subscribe((res: FilteringOptionsProductStockVM) => {
+      if (res.HasErrors || res.HasWarnings) {
+        this.blockUI.stop();
+        return
+      }
 
-        this.categories = res.Items.map(c => {
-          return {
-            Name: c.Name,
-            Id: c.Id
-          }
-        });
-        this._sizeService
-          .getSizeList(ActivationStatusEnum.Active)
-          .subscribe((res: SizeLlistVM) => {
-            if (res.HasErrors || res.HasWarnings) {
-              return;
-            }
-
-            this.sizes = res.Items;
-          })
-        if (this.productId) {
-          this._productService.getProductById(this.productId).subscribe((res: Products) => {
-            console.log(res);
-            if (res.HasErrors) {
-              this._alertService.showAlerts(res);
-              this.blockUI.stop();
-              return;
-            }
-
-            this.product = res.Items[0];
-            this.createForm(); // Ahora se ejecuta después de asignar this.product
+      this.categories = res.Categories;
+      this.sizes = res.Sizes
+      this.blockUI.stop();
+      if (this.productId) {
+        this._productService.getProductById(this.productId).subscribe((res: Products) => {
+          console.log(res);
+          if (res.HasErrors) {
+            this._alertService.showAlerts(res);
             this.blockUI.stop();
-            this.loading = false;
-          });
-        } else {
-          this.createForm(); // Se ejecuta aquí si no hay productId
+            return;
+          }
+
+          this.product = res.Items[0];
+          this.createForm(); // Ahora se ejecuta después de asignar this.product
           this.blockUI.stop();
           this.loading = false;
-        }
-      });
+        });
+      } else {
+        this.createForm(); // Se ejecuta aquí si no hay productId
+        this.blockUI.stop();
+        this.loading = false;
+      }
+    })
+
   }
 
 

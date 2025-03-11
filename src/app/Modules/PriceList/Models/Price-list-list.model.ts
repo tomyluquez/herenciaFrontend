@@ -1,8 +1,8 @@
 import { ResponseMessages } from "../../Other/Interface/ResponseMessages.Interface";
-import { ICategoryVM } from "../Interfaces/Categories.interface";
+import { IPriceListProducts } from "../Interface/Price-list.interface";
 
-export class CategoryListVM extends ResponseMessages {
-    Items: ICategoryVM[];
+export class PriceListProductsVM extends ResponseMessages {
+    Items: IPriceListProducts[];
     TotalItems: number;
 
     constructor() {
