@@ -5,14 +5,15 @@ import { environment } from '../../../../environment/environment';
 import {
   SearchProductPagedList,
   ProductPagedList,
-  Products,
   PromotionalProducts,
   IProduct,
+  Products,
 } from '../Interface/Products.interfaces';
 import { PaginationEnum } from '../../Other/Enums/pagination-enum';
 import { ResponseMessages } from '../../Other/Interface/ResponseMessages.Interface';
 import { ChangeStatus } from '../../Other/Interface/Others.interface';
 import { FilteringOptionsPagedListProductVM } from '../Models/Filtering-options-paged-list-product.model';
+import { ProductToSale } from '../Models/Products.model';
 
 @Injectable({
   providedIn: 'root',
@@ -30,6 +31,11 @@ export class ProductService {
   getPagedListProducts(
     queryParams: SearchProductPagedList
   ): Observable<ProductPagedList> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
     const params = new HttpParams()
       .set('name', queryParams.Name)
       .set('categories', queryParams.Categories)
@@ -40,9 +46,27 @@ export class ProductService {
       .set('status', queryParams.Status);
     return this._http.get<ProductPagedList>(
       `${environment.apiUrl}/products/pagedList`,
+      { headers, params }
+    );
+  }
+
+  getProductsToSale(
+    queryParams: SearchProductPagedList
+  ): Observable<ProductToSale> {
+    const params = new HttpParams()
+      .set('name', queryParams.Name)
+      .set('categories', queryParams.Categories)
+      .set('sizes', queryParams.Sizes)
+      .set('page', queryParams.Pagination.Page)
+      .set('limit', queryParams.Pagination.Limit)
+      .set('order', queryParams.Order)
+      .set('status', queryParams.Status);
+    return this._http.get<ProductToSale>(
+      `${environment.apiUrl}/products/getProductsToSale`,
       { params }
     );
   }
+
 
   getProductById(productId: number): Observable<Products> {
     const params = new HttpParams().set('id', productId.toString());

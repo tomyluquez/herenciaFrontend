@@ -7,6 +7,8 @@ import { SearchOrderPagedList } from '../Interface/order-list.interface';
 import { OrderVM } from '../Models/Order.model';
 import { ResponseMessages } from '../../Other/Interface/ResponseMessages.Interface';
 import { OrderDetail } from '../Models/Order-detail.model';
+import { IOrderDetail } from '../Interface/order-detail.interface';
+import { SaveOrderResponse } from '../Models/SaveOrderResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -69,5 +71,13 @@ export class OrderService {
     const options = { headers, params }
     return this._http.get<OrderDetail>(
       `${environment.apiUrl}/orders/getOrderDetailById`, options)
+  }
+
+  saveOrder(order: IOrderDetail): Observable<SaveOrderResponse> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this._http.post<SaveOrderResponse>(`${environment.apiUrl}/orders/saveOrder`, order, { headers });
   }
 }

@@ -1,24 +1,82 @@
-<app-discount-coupon class="w-full" (discountEmit)="applyDiscount($event)" />
-<div class="w-full flex items-center justify-between">
-    <p>Subtotal:</p>
-    <p>{{subtotal | currency: "$"}}</p>
-</div>
-<div class="w-full flex items-center justify-between">
-    <p>Costo de envio:</p>
-    <p>{{shippingCost ? (shippingCost | currency: "$") : "A confirmar"}}</p>
-</div>
-<div class="w-full flex items-center justify-between">
-    <p>Descuento:</p>
-    <div class="flex gap-2 items-center justify-center">
-        <p>{{discount | currency: "$"}} ({{discountPercentage}}%)</p>
-        @if(discount){
-        <i class="fa-solid fa-square-minus cursor-pointer" (click)="removeDiscount()"></i>
+@if(!isLoading){
+<form [formGroup]="form" (ngSubmit)="proceedToPayment()">
+    <app-discount-coupon class="w-full" (discountEmit)="applyDiscuntCoupon($event)" [hasAddedCoupon]="hasAddedCoupon" />
+
+    <!-- Shipping Method Selector -->
+    <div class="w-full mb-4">
+        <label class="block font-semibold mb-1">Método de envío:</label>
+        <ng-select class="w-full" [items]="checkOutInfo!.ShippingMethods" bindLabel="Name" bindValue="Id"
+            placeholder="Selecciona un metodo de envio" formControlName="shippingMethodId"
+            (change)="applyChargeToShipping($event)">
+        </ng-select>
+        <span *ngIf="form.get('shippingMethodId')?.invalid && isSubmitted" class="text-red-500 text-sm">
+            Por favor seleccione un método de envío
+        </span>
+    </div>
+
+    <!-- Payment Method Selector -->
+    <div class="w-full mb-4">
+        <label class="block font-semibold mb-1">Método de pago:</label>
+        <ng-select class="w-full" [items]="checkOutInfo!.PaymentsMethods" bindLabel="Name" bindValue="Id"
+            placeholder="Selecciona un metodo de pago" formControlName="paymentMethodId"
+            (change)="applyExtraPaymentDiscount($event)">
+        </ng-select>
+        <span *ngIf="form.get('paymentMethodId')?.invalid && isSubmitted" class="text-red-500 text-sm">
+            Por favor seleccione un método de pago
+        </span>
+    </div>
+
+    <!-- Resumen de costos -->
+    <div class="w-full flex items-center justify-between">
+        <p>Subtotal:</p>
+        <p>{{ form.get('subtotal')?.value | currency: "$" }}</p>
+    </div>
+
+    <div class="w-full flex items-center justify-between">
+        <p>Costo de envío:</p>
+        @if (form.get('shippingCost')?.value) {
+
+        <p>
+
+            {{
+            (form.get('shippingCost')?.value | currency: "$" )
+            }}
+        </p>
+        }@else {
+        <p class="text-green-500">Envio Gratis!</p>
         }
     </div>
-</div>
-<app-divider />
-<div class="w-full flex items-center justify-between">
-    <strong>Total:</strong>
-    <strong>{{total | currency: "$"}}</strong>
-</div>
-<button class="black-button w-full" (click)="proceedToPayment()">Proceder al pago</button>
+
+    <div class="w-full flex items-center justify-between">
+        <p>Descuento del cupon:</p>
+        <div class="flex gap-2 items-center justify-center">
+            <p>
+                {{ form.get('discountCoupon')?.value | currency: "$" }}
+                ({{ form.get('discountCouponPercentage')?.value }}%)
+            </p>
+            @if (form.get('discountCoupon')?.value) {
+            <i class="fa-solid fa-square-minus cursor-pointer" (click)="removeDiscount()"></i>
+            }
+        </div>
+    </div>
+
+    <div class="w-full flex items-center justify-between">
+        <p>Descuento pago en efectivo:</p>
+        <div class="flex gap-2 items-center justify-center">
+            <p>
+                {{ form.get('discountPayment')?.value | currency: "$" }}
+                ({{ form.get('discountPaymentPercentage')?.value }}%)
+            </p>
+        </div>
+    </div>
+
+    <app-divider />
+
+    <div class="w-full flex items-center justify-between">
+        <strong>Total:</strong>
+        <strong>{{ form.get('total')?.value | currency: "$" }}</strong>
+    </div>
+
+    <button class="black-button w-full" type="submit">Proceder al pago</button>
+</form>
+}

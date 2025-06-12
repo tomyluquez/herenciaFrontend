@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DividerComponent } from '../../divider/divider.component';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../../Modules/Auth/Services/auth.service';
@@ -18,6 +18,7 @@ import { AlertService } from '../../../../Modules/Other/Services/alert.service';
 export class CartDropdownComponent implements OnInit {
   @Input({ required: true }) isOpen = false;
   @Input({ required: true }) isLoggin = false;
+  @Output() quantityItems = new EventEmitter<number>();
 
   loadItems = true;
 
@@ -35,6 +36,8 @@ export class CartDropdownComponent implements OnInit {
     this.cartSubscription = this._cartService.cartItems$.subscribe((items) => {
       this.cartItems = items;
       this.loadItems = false;
+
+      this.quantityItems.emit(items.reduce((acc, i) => acc + (i.Quantity || 0), 0));
     });
     this.getCartItems();
   }

@@ -1,9 +1,9 @@
-import { Component, EventEmitter, input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DiscountCouponService } from '../../../Other/Services/discount-coupon.service';
 import { AlertService } from '../../../Other/Services/alert.service';
-import { DiscountCoupon } from '../../../Other/models/Discount-coupon-model';
+import { DiscountCoupon } from '../../../Other/Models/Discount-coupon-model';
 
 @Component({
   selector: 'app-discount-coupon',
@@ -15,9 +15,10 @@ import { DiscountCoupon } from '../../../Other/models/Discount-coupon-model';
 export class DiscountCouponComponent {
   couponName!: string;
   loading = false;
+  @Input() hasAddedCoupon = false;
 
   @Output() couponEmit = new EventEmitter<string>();
-  @Output() discountEmit = new EventEmitter<number>();
+  @Output() discountEmit = new EventEmitter<DiscountCoupon>();
 
   constructor(private _discountCouponService: DiscountCouponService, private _alertService: AlertService) { }
 
@@ -28,7 +29,7 @@ export class DiscountCouponComponent {
       this._alertService.showAlerts(res);
 
       if (res.Discount && !res.HasErrors || !res.HasWarnings) {
-        this.discountEmit.emit(res.Discount)
+        this.discountEmit.emit(res)
       }
       this.couponName = "";
       this.loading = false;

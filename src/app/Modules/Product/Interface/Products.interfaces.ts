@@ -26,6 +26,18 @@ export interface IProductPagedList {
   Image?: string;
   HasStock: boolean;
   IsActive: boolean;
+  Rentability: number;
+}
+
+export interface ProductPagedList {
+  Id: number;
+  Name: string;
+  CategoryName: string;
+  Price: number;
+  PromotionalPrice: number;
+  Image?: string;
+  HasStock: boolean;
+  IsActive: boolean;
 }
 
 export interface IPromotionalProduct {
@@ -59,6 +71,7 @@ export interface IProduct {
   IsActive?: boolean;
   IsPromotional?: boolean;
   PromotionalPrice: number;
+  Rentability: number;
 }
 
 export interface IProductVariants {

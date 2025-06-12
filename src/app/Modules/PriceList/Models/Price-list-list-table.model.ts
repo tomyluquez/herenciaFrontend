@@ -18,7 +18,7 @@ export class PriceListListTable extends Table<IPriceListProducts> {
             {
                 Name: "Discount",
                 Value: "Descuento",
-                Type: HeaderTypeEnum.Discount
+                Type: HeaderTypeEnum.Percentage
             },
             {
                 Name: "PromotionalPrice",

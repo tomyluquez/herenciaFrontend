@@ -6,5 +6,5 @@ export enum HeaderTypeEnum {
     Status = 5,
     Date = 6,
     OrderStatus = 7,
-    Discount = 8
+    Percentage = 8
 }

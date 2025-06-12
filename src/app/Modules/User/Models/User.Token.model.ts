@@ -3,10 +3,12 @@ import { ResponseMessages } from "../../Other/Interface/ResponseMessages.Interfa
 export class UserTokenVM extends ResponseMessages {
   Token: string;
   Role: number;
+  CustomerName: string;
 
   constructor() {
     super();
     this.Token = '';
     this.Role = 0;
+    this.CustomerName = '';
   }
 }

@@ -4,11 +4,13 @@ import { ResponseMessages } from "../../Other/Interface/ResponseMessages.Interfa
 export class UserCartItemsVM extends ResponseMessages {
   Items: ICartItemsVM[];
   TotalItems: number;
+  CartId: number;
 
   constructor() {
     super();
     this.Items = [];
     this.TotalItems = 0;
+    this.CartId = 0;
   }
 
   addItems(items: ICartItemsVM[]) {

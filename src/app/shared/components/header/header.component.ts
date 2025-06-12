@@ -43,6 +43,8 @@ export class HeaderComponent {
   isLoggin = false;
   role!: number;
 
+  quantityItems = 0;
+
   constructor(
     private _menuService: MenuService,
     private _sidebarService: LSidebarService,
@@ -89,5 +91,9 @@ export class HeaderComponent {
   toggleDropdownCart() {
     this.isOpenDropdownUser = false;
     this.isOpenDropdownCart = !this.isOpenDropdownCart;
+  }
+
+  setQuantityItems(quantity: number) {
+    this.quantityItems = quantity;
   }
 }

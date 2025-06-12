@@ -3,14 +3,22 @@ export interface IOrderDetail {
     OrderNumber: number;
     Total: number;
     Subtotal: number;
-    Discount: number;
-    DiscountCoupon?: string,
+    DiscountCouponPercentage: number;
+    DiscountCoupon?: number,
+    DiscountCouponId?: number,
+    DiscountPaymentPercentage: number;
+    DiscountPayment?: number,
     DateCreated: Date;
-    OrderStatus: string;
+    OrderStatus?: string;
+    OrderStatusId?: number;
     PaymentMethod?: string;
+    PaymentMethodId?: number;
     ShippingMethod?: string;
+    ShippingMethodId?: number;
+    ShippingCost?: number;
     CustomerName: string;
     Details?: OrderItem[];
+    CartId: number;
 }
 
 interface OrderItem {

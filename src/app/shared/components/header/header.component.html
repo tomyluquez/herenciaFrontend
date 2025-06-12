@@ -38,7 +38,15 @@
         <div class="flex-between gap-8">
             <div class="relative">
                 <i class="fa-solid fa-cart-shopping icon" (click)="toggleDropdownCart()"></i>
-                <app-cart-dropdown [isOpen]="isOpenDropdownCart" [isLoggin]="isLoggin" />
+
+                <!-- Badge con cantidad -->
+                <div *ngIf="quantityItems > 0"
+                    class="absolute -top-[0.75rem] -right-[0.75rem] min-w-[20px] h-[20px] text-xs rounded-full flex items-center justify-center border border-primary text-primary bg-white shadow-sm">
+                    {{ quantityItems }}
+                </div>
+
+                <app-cart-dropdown [isOpen]="isOpenDropdownCart" [isLoggin]="isLoggin"
+                    (quantityItems)="setQuantityItems($event)" />
             </div>
             <div class="relative">
                 <i class="fa-regular fa-user icon" (click)="toggleDropdownUser()"></i>

@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environment/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { map, Observable, of } from 'rxjs';
 import { CompanyInfoVM, ICompanyInfoVM } from '../Interfaces/Config.interface';
+import { SearchConfigList } from '../Interfaces/Config-list.interface';
+import { ConfigVM } from '../Models/Config-list.model';
 
 @Injectable({
   providedIn: 'root',
@@ -33,5 +35,15 @@ export class ConfigService {
           return this.companyInfo;
         })
       );
+  }
+
+  getConfig(search: SearchConfigList): Observable<ConfigVM> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+    const params = new HttpParams()
+      .set('page', search.Pagination.Page)
+      .set('limit', search.Pagination.Limit)
+
+    return this._http.get<ConfigVM>(`${environment.apiUrl}/config/getConfig`, { headers, params });
   }
 }

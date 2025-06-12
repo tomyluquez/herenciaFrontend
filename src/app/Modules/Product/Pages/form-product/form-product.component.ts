@@ -46,8 +46,6 @@ export class FormProductComponent implements OnInit {
   constructor(private _route: ActivatedRoute,
     private _productService: ProductService,
     private _alertService: AlertService,
-    private _categoryService: CategoryService,
-    private _sizeService: SizesService,
     private _location: Location,
     private _variantsService: VariantsService
   ) {
@@ -77,7 +75,6 @@ export class FormProductComponent implements OnInit {
       this.blockUI.stop();
       if (this.productId) {
         this._productService.getProductById(this.productId).subscribe((res: Products) => {
-          console.log(res);
           if (res.HasErrors) {
             this._alertService.showAlerts(res);
             this.blockUI.stop();
@@ -103,14 +100,15 @@ export class FormProductComponent implements OnInit {
 
     this.form = new FormGroup({
       Name: new FormControl(this.product ? this.product.Name : '', [Validators.required, Validators.maxLength(100)]),
-      Price: new FormControl(this.product ? this.product.Price : 0, [Validators.required, Validators.min(0), CustomValidators.onlyNumbers()]),
+      Price: new FormControl(this.product ? this.product.Price : 0, [Validators.required, Validators.min(0),]),
       Description: new FormControl(this.product ? this.product.Description : ''),
       Images: new FormControl(this.product ? this.product.Images : ''),
-      Category: new FormControl(this.product ? this.product.CategoryId : '', Validators.required),
-      Discount: new FormControl(this.product ? this.product.Discount : 0, [CustomValidators.onlyNumbers()]),
-      Cost: new FormControl(this.product ? this.product.Cost : 0, [Validators.required, Validators.min(0), CustomValidators.onlyNumbers()]),
+      Category: new FormControl(this.product ? this.product.CategoryId : null, Validators.required),
+      Discount: new FormControl(this.product ? this.product.Discount : 0, []),
+      Cost: new FormControl(this.product ? this.product.Cost : 0, [Validators.required, Validators.min(0),]),
       IsPromotional: new FormControl(this.product ? this.product.IsPromotional : false),
-      PromotionalPrice: new FormControl(this.product ? this.product.PromotionalPrice : '', [CustomValidators.onlyNumbers()]),
+      PromotionalPrice: new FormControl(this.product ? this.product.PromotionalPrice : 0, []),
+      Rentability: new FormControl(this.product ? this.product.Rentability : 0, []),
     });
 
     this.sizeForm = new FormGroup({
@@ -146,7 +144,8 @@ export class FormProductComponent implements OnInit {
       IsActive: this.product ? this.product.IsActive : true,
       IsPromotional: this.form.controls['IsPromotional'].value,
       PromotionalPrice: this.form.controls['IsPromotional'].value ? Number(this.form.controls['PromotionalPrice'].value) : 0,
-      Variants: this.sizesSelected && this.sizesSelected.length > 0 ? this.sizesSelected : []
+      Variants: this.sizesSelected && this.sizesSelected.length > 0 ? this.sizesSelected : [],
+      Rentability: Number(this.form.controls['Rentability'].value)
     }
 
     this._productService.saveProduct(newProduct).subscribe((res: ResponseMessages) => {
@@ -191,9 +190,71 @@ export class FormProductComponent implements OnInit {
     this.sizesSelected = this.sizesSelected.filter(s => s.Id !== sizeId)
   }
 
+  calculateRentability() {
+    const isPromotional = this.form.controls['IsPromotional'].value;
+    const cost = Number(this.form.controls['Cost'].value);
+    let price = Number(this.form.controls['Price'].value);
+    let promotionalPrice = Number(this.form.controls['PromotionalPrice'].value);
+
+    if (cost > 0) {
+      // Si el producto es promocional, calcular rentabilidad con el precio promocional
+      const effectivePrice = isPromotional ? promotionalPrice : price;
+      const rentability = ((effectivePrice - cost) / cost) * 100;
+      this.form.controls['Rentability'].setValue(rentability);
+    }
+  }
+
+  calculatePrice() {
+    this.calculateRentability();
+  }
+
   calculatePromotionalPrice() {
     if (this.form.controls['IsPromotional'].value) {
-      this.form.controls['PromotionalPrice'].setValue(this.form.controls['Price'].value * (1 - this.form.controls['Discount'].value / 100));
+      const price = Number(this.form.controls['Price'].value);
+      const discount = Number(this.form.controls['Discount'].value);
+
+      // Calcular precio promocional si hay descuento
+      if (discount > 0) {
+        const promotionalPrice = price * (1 - discount / 100);
+        this.form.controls['PromotionalPrice'].setValue(promotionalPrice);
+      }
+
+      // Recalcular rentabilidad
+      this.calculateRentability();
+    }
+  }
+
+  calculateDiscountFromPromotionalPrice() {
+    if (this.form.controls['IsPromotional'].value) {
+      const price = Number(this.form.controls['Price'].value);
+      const promotionalPrice = Number(this.form.controls['PromotionalPrice'].value);
+
+      // Evitar divisiones por cero y asegurar valores válidos
+      if (price > 0 && promotionalPrice > 0) {
+        const discount = ((price - promotionalPrice) / price) * 100;
+        this.form.controls['Discount'].setValue(discount.toFixed(2));
+      }
+
+      // Recalcular rentabilidad
+      this.calculateRentability();
+    }
+  }
+
+  onRentabilityChange(): void {
+    const rentability = this.form.controls['Rentability'].value;
+    const cost = this.form.controls['Cost'].value;
+
+    if (!cost || !rentability) return;
+
+    if (this.form.controls['IsPromotional'].value) {
+      // Si es promocional, calcular el precio promocional
+      const discount = this.form.controls['Discount'].value || 0;
+      const promotionalPrice = cost * (1 + rentability / 100) * (1 - discount / 100);
+      this.form.controls['PromotionalPrice'].setValue(promotionalPrice.toFixed(2));
+    } else {
+      // Si no es promocional, calcular el precio de venta normal
+      const price = cost * (1 + rentability / 100);
+      this.form.controls['Price'].setValue(price.toFixed(2));
     }
   }
 

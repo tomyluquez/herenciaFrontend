@@ -22,9 +22,24 @@ export class ProductListTable extends Table<IProductPagedList> {
                 Type: HeaderTypeEnum.Text
             },
             {
+                Name: "Cost",
+                Value: "Costo",
+                Type: HeaderTypeEnum.Price
+            },
+            {
                 Name: "Price",
                 Value: "Precio",
                 Type: HeaderTypeEnum.Price
+            },
+            {
+                Name: "PromotionalPrice",
+                Value: "Precio promocional",
+                Type: HeaderTypeEnum.Price
+            },
+            {
+                Name: "Rentability",
+                Value: "Rentabilidad",
+                Type: HeaderTypeEnum.Percentage
             },
             {
                 Name: "CategoryName",

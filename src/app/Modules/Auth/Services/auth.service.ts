@@ -29,6 +29,10 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
+  getCustomerName(): string | null {
+    return localStorage.getItem('customerName');
+  }
+
   getRole(): number {
     return Number(localStorage.getItem('role')) || UserRoleEnum.Customer;
   }
@@ -51,6 +55,7 @@ export class AuthService {
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
+    localStorage.removeItem('customerName');
     this.setLoggedIn(false);
     this._router.navigate(['/Login']);
   }
@@ -68,6 +73,10 @@ export class AuthService {
 
   setRole(role: string) {
     localStorage.setItem('role', role);
+  }
+
+  setCustomerName(customerName: string) {
+    localStorage.setItem('customerName', customerName);
   }
 
   getUserIdByToken(token: string | null): number {

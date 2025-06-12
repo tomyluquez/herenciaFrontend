@@ -6,7 +6,12 @@
 
     <div class="grid grid-cols-2 w-full items-center px-2">
         <p class="text-sm">Cliente: {{orderDetail.CustomerName}}</p>
-        <p class="text-sm text-end">Total: {{orderDetail.Discount | currency : "$"}}</p>
+    </div>
+    <div class="grid grid-cols-2 w-full items-center px-2">
+        <p class="text-sm">Descuento por cupon: {{orderDetail.DiscountCoupon | currency : "$"}}
+            ({{orderDetail.DiscountCouponPercentage}}%)</p>
+        <p class="text-sm">Descuento por forma de pago: {{orderDetail.DiscountPayment | currency : "$"}}
+            ({{orderDetail.DiscountPaymentPercentage}}%)</p>
     </div>
     <div class="grid grid-cols-2 w-full items-center px-2">
         <p class="text-sm">Fecha: {{orderDetail.DateCreated | date: "dd/MM/yyyy"}}</p>

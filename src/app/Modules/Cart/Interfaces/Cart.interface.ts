@@ -4,7 +4,9 @@ export interface ICartItemsVM {
   Quantity: number;
   Price: number;
   SizeName: string;
+  SizeId: number;
   UrlImage: string;
+  VariantId: number;
 }
 
 export interface UpdateQuantityCartItem {

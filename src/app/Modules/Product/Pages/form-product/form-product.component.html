@@ -39,7 +39,6 @@
                 </div>
                 <app-form-error [control]="form.controls['Name']"></app-form-error>
             </div>
-
             <!-- Contenedor Costo de compra -->
             <div class="container-input">
                 <label class="label-form">Costo de compra</label>
@@ -48,7 +47,8 @@
                         <i class="fas fa-dollar-sign"></i>
                     </div>
                     <input [ngClass]="!form.controls['Cost'].valid ? 'input-form-error' : ''" class="input-form"
-                        type="text" placeholder="Costo de compra" formControlName="Cost" />
+                        type="text" placeholder="Costo de compra" formControlName="Cost"
+                        (change)="calculateRentability()" inputmode="numeric" />
                 </div>
                 <app-form-error [control]="form.controls['Cost']"></app-form-error>
             </div>
@@ -61,30 +61,46 @@
                         <i class="fas fa-dollar-sign"></i>
                     </div>
                     <input [ngClass]="!form.controls['Price'].valid ? 'input-form-error' : ''" class="input-form"
-                        type="text" placeholder="Precio de venta" formControlName="Price" />
+                        type="text" placeholder="Precio de venta" formControlName="Price" (change)="calculatePrice()"
+                        inputmode="numeric" />
                 </div>
                 <app-form-error [control]="form.controls['Price']"></app-form-error>
             </div>
 
-            <!-- Contenedor Descripcion -->
+            <!-- Contenedor Rentabilidad -->
+            <div class="container-input">
+                <label class="label-form">Rentabilidad</label>
+                <div class="relative">
+                    <div class="icon-input-form">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <input [ngClass]="!form.controls['Rentability'].valid ? 'input-form-error' : ''" class="input-form"
+                        type="text" placeholder="Rentabilidad" formControlName="Rentability" inputmode="numeric"
+                        (change)="onRentabilityChange()" />
+                </div>
+                <app-form-error [control]="form.controls['Rentability']"></app-form-error>
+            </div>
+
+            <!-- Contenedor Descripción -->
             <div class="container-input">
                 <label class="label-form">Descripción</label>
                 <div class="relative">
                     <div class="icon-input-form">
-                        <i class="fas fa-align-left"></i>
+                        <i class="fas fa-percent"></i>
                     </div>
                     <textarea class="input-form" placeholder="Descripción" formControlName="Description"></textarea>
                 </div>
             </div>
 
-            <!-- Contenedor checkbox -->
+            <!-- Checkbox Es Promocional -->
             <div class="flex items-center gap-2">
-                <input class="checkbox-form" type="checkbox" formControlName="IsPromotional" />
-                <label class="text-gray-700">Es un producto promcional?</label>
+                <input class="checkbox-form" type="checkbox" formControlName="IsPromotional"
+                    (change)="calculateRentability()" />
+                <label class="text-gray-700">Es un producto promocional?</label>
             </div>
 
-
-            @if(form.controls['IsPromotional'].value){
+            <!-- Sección Promocional (Visible solo si es promocional) -->
+            @if(form.controls['IsPromotional'].value) {
             <!-- Contenedor Descuento adicional -->
             <div class="container-input">
                 <label class="label-form">Descuento adicional</label>
@@ -94,7 +110,7 @@
                     </div>
                     <input [ngClass]="!form.controls['Discount'].valid ? 'input-form-error' : ''" class="input-form"
                         type="text" placeholder="Descuento adicional" formControlName="Discount"
-                        (change)="calculatePromotionalPrice()" />
+                        (change)="calculatePromotionalPrice()" inputmode="numeric" />
                 </div>
                 <app-form-error [control]="form.controls['Discount']"></app-form-error>
             </div>
@@ -108,7 +124,8 @@
                     </div>
                     <input [ngClass]="!form.controls['PromotionalPrice'].valid ? 'input-form-error' : ''"
                         class="input-form" type="text" placeholder="Precio promocional"
-                        formControlName="PromotionalPrice" [disabled]="true" />
+                        formControlName="PromotionalPrice" (change)="calculateDiscountFromPromotionalPrice()"
+                        inputmode="numeric" />
                 </div>
                 <app-form-error [control]="form.controls['PromotionalPrice']"></app-form-error>
             </div>

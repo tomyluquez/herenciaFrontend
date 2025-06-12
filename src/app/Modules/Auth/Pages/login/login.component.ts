@@ -72,6 +72,7 @@ export class LoginComponent implements OnInit {
 
           this._authService.setToken(res.Token);
           this._authService.setRole(String(res.Role));
+          this._authService.setCustomerName(String(res.CustomerName));
           this._authService.setLoggedIn();
           this._cartService.updateCartItems();
           this._router.navigate(['/Home']);

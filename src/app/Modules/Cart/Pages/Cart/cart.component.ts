@@ -8,11 +8,12 @@ import { DividerComponent } from '../../../../shared/components/divider/divider.
 import { TableItemsCartComponent } from '../table-items-cart/table-items-cart.component';
 import { CartSummaryComponent } from '../cart-summary/cart-summary.component';
 import { CartService } from '../../Services/cart.service';
+import { UserCartItemsVM } from '../../../User/Models/User.Cart.model';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CommonModule, DiscountCouponComponent, BlockUIModule, DividerComponent, TableItemsCartComponent, CartSummaryComponent],
+  imports: [CommonModule, BlockUIModule, TableItemsCartComponent, CartSummaryComponent],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css',
 })
@@ -20,6 +21,7 @@ export class CartComponent implements OnInit {
   @BlockUI('main') mainBlockUI!: NgBlockUI
   @BlockUI('items-cart') itemsCartBlockUI!: NgBlockUI
   loadItems = true;
+  cartId = 0
 
   private cartSubscription!: Subscription;
   cartItems: ICartItemsVM[] = [];
@@ -38,11 +40,12 @@ export class CartComponent implements OnInit {
 
   getCartItems() {
     this.itemsCartBlockUI.start('Cargando...');
-    this._cartService.getCartItemsByUserId().subscribe((res) => {
+    this._cartService.getCartItemsByUserId().subscribe((res: UserCartItemsVM) => {
       if (!res.HasErrors || !res.HasWarnings) {
         this._cartService.updateCartItems();
       }
       this.loadItems = false;
+      this.cartId = res.CartId;
       this.itemsCartBlockUI.stop();
     });
   }

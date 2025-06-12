@@ -15,7 +15,7 @@ import { PaginationComponent } from '../../../../shared/components/pagination/pa
 import { CommonModule } from '@angular/common';
 import { CardComponent } from '../../../../shared/components/Cards/card/card.component';
 import { CategoryListVM, ICategoryVM, SearchCategoriesPagedList } from '../../../Category/Interfaces/Categories.interface';
-import { IProductPagedList, ProductPagedList, SearchProductPagedList } from '../../Interface/Products.interfaces';
+import { ProductPagedList, SearchProductPagedList } from '../../Interface/Products.interfaces';
 import { ProductNavigationService } from '../../Services/Product-table.service';
 import { ActivationStatusEnum } from '../../../Other/Enums/activation-status-enum';
 import { PaginationEnum } from '../../../Other/Enums/pagination-enum';
@@ -23,6 +23,9 @@ import { FilteringOptionsPagedListProductVM } from '../../Models/Filtering-optio
 import { Variant } from '../../../Variant/Models/Variant.model';
 import { VariantsService } from '../../../Variant/Services/variants.service';
 import { FilteringOptionsProductStockVM } from '../../../Variant/Models/Filtering-options-product-stock.model';
+import { ProductToSale } from '../../Models/Products.model';
+import { IProductToSale } from '../../Interface/Product.interface';
+import { AlertService } from '../../../Other/Services/alert.service';
 
 @Component({
   selector: 'app-products',
@@ -44,7 +47,7 @@ export class ProductsComponent implements OnInit {
 
   categories!: NameAndId[];
   sizes!: NameAndId[];
-  products!: IProductPagedList[];
+  products!: IProductToSale[];
   totalProducts!: number;
 
   categoriesSeleted: string[] = [];
@@ -62,9 +65,8 @@ export class ProductsComponent implements OnInit {
 
   constructor(
     private _sidebarService: RSidebarService,
-    private _categoryService: CategoryService,
     private _productsService: ProductService,
-    private _sizesService: SizesService,
+    private _alertService: AlertService,
     private _route: ActivatedRoute,
     private _router: Router,
     private _productNavigation: ProductNavigationService,
@@ -117,10 +119,13 @@ export class ProductsComponent implements OnInit {
 
     // Realizar la búsqueda usando los parámetros de la URL
     this._productsService
-      .getPagedListProducts(this.params)
-      .subscribe((res: ProductPagedList) => {
-        if (res.HasErrors || res.HasWarnings) {
-          // agregar una notificación
+      .getProductsToSale(this.params)
+      .subscribe((res: ProductToSale) => {
+        this._alertService.showAlerts(res);
+        if (res.HasErrors) {
+          this.blockUI.stop();
+          return;
+
         }
         this.products = res.Items;
         this.totalProducts = res.TotalItems;

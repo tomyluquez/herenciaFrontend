@@ -2,7 +2,6 @@
     <thead>
         <tr>
             <th>Imagen</th>
-            <th>Cantidad</th>
             <th>Producto</th>
             <th>Precio</th>
             <th>Acciones</th>
@@ -12,11 +11,9 @@
         @for (cartItem of cartItems; track $index) {
         <tr>
             <td class="text-center">
-                <img *ngIf="cartItem.UrlImage" class="pre-image" src="{{cartItem.UrlImage}}" alt="Imagen del producto">
-                <div *ngIf="!cartItem.UrlImage" class="pre-image border-2 border-white bg-gray-200"></div>
-            </td>
-            <td class="text-center">
-                <p>{{cartItem.Quantity}} x </p>
+                <img *ngIf="cartItem.UrlImage" class="pre-image m-auto" src="{{cartItem.UrlImage}}"
+                    alt="Imagen del producto">
+                <div *ngIf="!cartItem.UrlImage" class="pre-image m-auto border-2 border-white bg-gray-200"></div>
             </td>
             <td class="text-center">
                 <p>{{cartItem.ProductName}}</p>
@@ -26,11 +23,14 @@
             </td>
             <td class="text-center">
                 <div class="flex-center gap-4">
-                    <button class="flex-center"
-                        [ngClass]="cartItem.Quantity === 1 ? 'pagination-button-disabled' : 'pagination-button'"
-                        (click)="decrement(cartItem.Id)" [disabled]="cartItem.Quantity === 1">
+                    @if(cartItem.Quantity > 1){
+
+                    <button class="flex-center pagination-button" (click)="decrement(cartItem.Id)"
+                        [disabled]="cartItem.Quantity === 1">
                         <i class="fa-solid fa-minus"></i>
                     </button>
+                    }
+                    <p>{{cartItem.Quantity}}</p>
                     <button class="flex-center ml-2 pagination-button" (click)="increment(cartItem.Id)">
                         <i class="fa-solid fa-plus"></i>
                     </button>

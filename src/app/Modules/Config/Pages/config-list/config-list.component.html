@@ -1,0 +1,18 @@
+@if(isEdit){
+<app-rsidebar>
+    <app-config-form />
+</app-rsidebar>
+}
+
+<section *blockUI="'stock-list'">
+
+    <div class="flex items-center justify-between">
+        <h3 class="title w-[70%]">Configuracion de la tienda</h3>
+        <button class="primary-button !w-[30%]" (click)="addConfig()">+ Agregar configuración</button>
+    </div>
+
+    <div class="flex flex-col">
+        <app-general-table [data]="pagedList" />
+    </div>
+
+</section>

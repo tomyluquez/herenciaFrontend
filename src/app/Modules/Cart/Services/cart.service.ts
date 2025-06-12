@@ -15,6 +15,7 @@ import { VariantSelected } from '../../Variant/Interface/Variant.interface';
 import { ResponseMessages } from '../../Other/Interface/ResponseMessages.Interface';
 import { environment } from '../../../../environment/environment';
 import { UserCartItemsVM } from '../../User/Models/User.Cart.model';
+import { CheckoutInfoVM } from '../Models/checkoutInfoVM';
 
 @Injectable({
   providedIn: 'root',
@@ -154,6 +155,10 @@ export class CartService {
           return of(response); // Devuelve un observable con el ResponseMessages
         })
       );
+  }
+
+  getCheckoutInfo(): Observable<CheckoutInfoVM> {
+    return this._http.get<CheckoutInfoVM>(`${environment.apiUrl}/checkout`);
   }
 
 }

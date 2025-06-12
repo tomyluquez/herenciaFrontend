@@ -2,8 +2,11 @@
     <p class="text-center w-full">¿Tienes un cupón de descuento?</p>
     <div class="flex-center-col gap-2 w-full">
         <input class="input-text" type="text" placeholder="Ingresa tu cupón" [(ngModel)]="couponName" />
+        @if(!hasAddedCoupon){
+
         <button [ngClass]="!couponName || loading ? 'black-button-disabled' : 'black-button'"
             [disabled]="couponName === '' || loading" (click)="addCoupon()">{{loading ? 'Agregando cupon...' : "Agregar
             cupón"}}</button>
+        }
     </div>
 </div>
