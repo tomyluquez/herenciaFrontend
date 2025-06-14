@@ -14,6 +14,7 @@ export interface IOrderDetail {
     OrderStatusId?: number;
     PaymentMethod?: string;
     PaymentMethodId?: number;
+    PromotionId?: number | null;
     ShippingMethod?: string;
     ShippingMethodId?: number;
     ShippingCost?: number;

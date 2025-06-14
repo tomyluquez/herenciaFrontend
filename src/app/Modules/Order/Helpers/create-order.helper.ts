@@ -15,6 +15,7 @@ export const createOrderHelper = (orderForm: any, cartId: number): IOrderDetail 
         DiscountPaymentPercentage: Number(orderForm.discountPaymentPercentage) || 0,
         DateCreated: new Date(),
         OrderStatusId: 1,
+        PromotionId: null,
         PaymentMethodId: Number(orderForm.paymentMethodId),
         ShippingMethodId: Number(orderForm.paymentMethodId),
         CustomerName: orderForm.customerName,
