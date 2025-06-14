@@ -14,12 +14,15 @@ import { DataContainerCards } from '../../../../Modules/Order/Models/Order.model
 export class ContainerCardsHomeComponent {
   @Input({ required: true }) data!: DataContainerCards
   @Input({ required: true }) isLoading!: boolean
+  @Input() isProduct: boolean = true
   @Output() clickCard = new EventEmitter<number>
   @Output() changeLimit = new EventEmitter<number>
 
   currentPage = PaginationEnum.Page;
 
-  constructor() { }
+  constructor() {
+  }
+
 
   search(id: number) {
     this.clickCard.emit(id)

@@ -1,3 +1,4 @@
+@if(totalPages > 1){
 <div class="flex-center gap-4">
     <span>Página {{page}} de {{totalPages}}</span>
     <button class="flex-center pagination-button" *ngIf="page > 1" (click)="prevPage()">
@@ -8,3 +9,4 @@
         <i class="fa-solid fa-chevron-right"></i>
     </button>
 </div>
+}

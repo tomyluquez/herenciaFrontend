@@ -20,7 +20,10 @@ export const routes: Routes = [
     path: routesModel.Stock,
     loadChildren: () => import('./Modules/Variant/Routes/stock.routes')
   },
-
+  {
+    path: routesModel.Order,
+    loadChildren: () => import('../app/Modules/Order/Routes/Order.Routes')
+  },
   {
     path: routesModel.Contact,
     loadComponent: () =>
@@ -50,6 +53,13 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./Modules/Other/Pages/control-panel/control-panel.component').then(
         (m) => m.ControlPanelComponent
+      ),
+  },
+  {
+    path: routesModel.CustomerProfile,
+    loadComponent: () =>
+      import('./Modules/Other/Pages/customer-profile/customer-profile.component').then(
+        (m) => m.CustomerProfileComponent
       ),
   },
 ];

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, TitleStrategy } from '@angular/router';
 import { ProductService } from '../../Services/product.service';
 import { Product } from '../../Models/Product.model';
-import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { BlockUI, BlockUIModule, NgBlockUI } from 'ng-block-ui';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule, Location } from '@angular/common';
 import { CategoryService } from '../../../Category/Services/category.service';
@@ -20,16 +20,18 @@ import { AlertService } from '../../../Other/Services/alert.service';
 import { PaginationEnum } from '../../../Other/Enums/pagination-enum';
 import { VariantsService } from '../../../Variant/Services/variants.service';
 import { FilteringOptionsProductStockVM } from '../../../Variant/Models/Filtering-options-product-stock.model';
+import { UploadImageService } from '../../../Other/Services/upload-image.service';
 
 @Component({
   selector: 'app-form-product',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NgSelectModule, FormsModule, FormErrorComponent],
+  imports: [CommonModule, ReactiveFormsModule, NgSelectModule, FormsModule, FormErrorComponent, BlockUIModule],
   templateUrl: './form-product.component.html',
   styleUrl: './form-product.component.css'
 })
 export class FormProductComponent implements OnInit {
   @BlockUI() blockUI!: NgBlockUI;
+  @BlockUI('image-block') imageBlockUI!: NgBlockUI;
   loading = true;
 
   productId?: number;
@@ -47,7 +49,8 @@ export class FormProductComponent implements OnInit {
     private _productService: ProductService,
     private _alertService: AlertService,
     private _location: Location,
-    private _variantsService: VariantsService
+    private _variantsService: VariantsService,
+    private _uploadImageService: UploadImageService
   ) {
     const productId = this._route.snapshot.params['productId'];
     if (productId) this.productId = productId;
@@ -102,7 +105,7 @@ export class FormProductComponent implements OnInit {
       Name: new FormControl(this.product ? this.product.Name : '', [Validators.required, Validators.maxLength(100)]),
       Price: new FormControl(this.product ? this.product.Price : 0, [Validators.required, Validators.min(0),]),
       Description: new FormControl(this.product ? this.product.Description : ''),
-      Images: new FormControl(this.product ? this.product.Images : ''),
+      Images: new FormControl(this.product ? this.product.Images : []),
       Category: new FormControl(this.product ? this.product.CategoryId : null, Validators.required),
       Discount: new FormControl(this.product ? this.product.Discount : 0, []),
       Cost: new FormControl(this.product ? this.product.Cost : 0, [Validators.required, Validators.min(0),]),
@@ -160,8 +163,28 @@ export class FormProductComponent implements OnInit {
 
   }
 
-  removeImage(index: number) { }
-  onImageSelected(e: Event) { }
+  get images(): string[] {
+    return this.form.controls['Images'].value || [];
+  }
+
+  removeImage(index: number) {
+    const currentImages = this.form.controls['Images'].value || [];
+    const updatedImages = currentImages.filter((_: string, i: number) => i !== index);
+    this.form.controls['Images'].setValue(updatedImages);
+  }
+  onImageSelected(e: any) {
+    this.imageBlockUI.start();
+    const file = e.target.files[0];
+
+    if (file) {
+      this._uploadImageService.uploadImage(file).subscribe((res: any) => {
+        this.imageBlockUI.stop();
+        const imageUrl = res.secure_url;
+        const currentImages = this.form.controls['Images'].value || [];
+        this.form.controls['Images'].setValue([...currentImages, imageUrl]);
+      });
+    }
+  }
 
 
   addSize() {

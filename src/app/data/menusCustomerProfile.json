@@ -1,0 +1,14 @@
+{
+  "Items": [
+    {
+      "Name": "Información personal",
+      "Href": "#Profile",
+      "Icon": "fa-regular fa-circle-user"
+    },
+    {
+      "Name": "Historial de compras",
+      "Href": "#Purchases",
+      "Icon": "fa-solid fa-clipboard"
+    }
+  ]
+}

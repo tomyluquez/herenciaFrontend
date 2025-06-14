@@ -71,7 +71,7 @@ export class HomeComponent implements OnInit {
   }
 
   seeProduct(productId: number) {
-    this._router.navigateByUrl(`Product/${productId}`);
+    this._router.navigateByUrl(`Products/product/${productId}`);
   }
 
   changeLimitCategories(newLimit: number) {
@@ -110,7 +110,6 @@ export class HomeComponent implements OnInit {
     this.categories.Title = 'Nuestras categorias';
     this.categories.Items = items;
     this.categories.QuantityPages = quantityPages;
-
     this.loadingCategories = false;
   }
 

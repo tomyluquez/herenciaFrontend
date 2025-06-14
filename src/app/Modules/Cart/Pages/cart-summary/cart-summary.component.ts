@@ -198,7 +198,7 @@ export class CartSummaryComponent implements OnInit, OnChanges {
           this.alertService.showAlerts(res);
           return;
         }
-        this.router.navigate(['order-detail'], { queryParams: { orderNumber: res.OrderNumber } });
+        this.router.navigate(['Order/order-status'], { queryParams: { orderNumber: res.OrderNumber } });
       })
     }
   }

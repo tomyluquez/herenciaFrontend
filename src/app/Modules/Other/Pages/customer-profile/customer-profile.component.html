@@ -1,3 +1,4 @@
+@if(customer){
 <app-lsidebar>
     <nav class="nav-mobile flex-column">
         <ul class="ul-nav-mobile w-full">
@@ -12,7 +13,7 @@
 
 <div class="container-gral">
     <i class='fa-solid fa-bars text-primary-400 md:hidden' (click)="openMobileMenu()"></i>
-    <h3 class="title">Panel de control</h3>
+    <h3 class="title">Mi perfil</h3>
     <div class="container-control-panel relative">
         <div class="options-panel border-full">
             <ul class="flex flex-col gap-4">
@@ -25,30 +26,18 @@
             </ul>
         </div>
         <div class="info-panel border-full">
-            <div class="panel" *ngIf="panelSelected === '#Products'">
-                <app-product-list />
+            <div class="panel" *ngIf="panelSelected === '#Profile'">
+                <app-customer-info [customerName]="customer.Name" [customerEmail]="customer.Mail"
+                    [customerPhone]="customer.Phone" [customerAddres]="customer.Addres" />
             </div>
-            <div class="panel" *ngIf="panelSelected === '#Stock'">
-                <app-stock-list />
-            </div>
-            <div class="panel" *ngIf="panelSelected === '#Sales'">
-                <app-order-list />
-            </div>
-            <div class="panel" *ngIf="panelSelected === '#Categories'">
-                <app-category-list />
-            </div>
-            <div class="panel" *ngIf="panelSelected === '#Sizes'">
-                <app-size-list />
-            </div>
-            <div class="panel" *ngIf="panelSelected === '#PriceList'">
-                <app-price-list-list />
-            </div>
-            <div class="panel" *ngIf="panelSelected === '#Config'">
-                <app-config-list />
-            </div>
-            <div class="panel" *ngIf="panelSelected === '#Dash'">
-                Aca van los Dash
+            <div class="panel" *ngIf="panelSelected === '#Purchases'">
+                <app-history-orders [customerName]="customer.Name" />
             </div>
         </div>
     </div>
 </div>
+}@else {
+<div class="container-gral">
+    <p>No se encontraron detalles del cliente</p>
+</div>
+}

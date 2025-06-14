@@ -1,5 +1,42 @@
-<div class="w-full flex flex-col gap-2">
-    <input class="input-text" type="text" placeholder="Buscá por nombre o categoria" [(ngModel)]="search">
-    <button [ngClass]="!search ? 'disabled-primary-button' :'primary-button'" [disabled]="!search"
-        (click)="searchProducts()">Buscar</button>
+<div class="w-full relative group">
+    <!-- Input de búsqueda con icono integrado -->
+    <div class="relative">
+        <input
+            class="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 transition-all duration-200"
+            type="text" placeholder="Buscar productos, categorías..." [(ngModel)]="search"
+            (keyup.enter)="searchProducts()" aria-label="Campo de búsqueda">
+
+        <!-- Icono de búsqueda -->
+        <div
+            class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 group-focus-within:text-primary-500">
+            <i class="fas fa-search"></i>
+        </div>
+
+        <!-- Botón para limpiar búsqueda -->
+        <button *ngIf="search"
+            class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-primary-500 transition-colors"
+            (click)="clearSearch()">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <!-- Botón de búsqueda con feedback visual -->
+    <button
+        class="mt-3 w-full py-3 px-4 rounded-lg font-medium transition-all duration-200 flex items-center justify-center gap-2
+                {{!search ? 'bg-gray-200 text-gray-500 cursor-not-allowed' : 'bg-primary-600 hover:bg-primary-700 text-white shadow-md hover:shadow-lg'}}"
+        [disabled]="!search" (click)="searchProducts()">
+        <i class="fas fa-search"></i>
+        Buscar
+    </button>
+
+    <!-- Sugerencias de búsqueda (opcional) -->
+    <div *ngIf="showSuggestions && search"
+        class="mt-2 bg-white border border-gray-200 rounded-lg shadow-lg py-2 max-h-60 overflow-y-auto">
+        <div *ngFor="let suggestion of getSuggestions()"
+            class="px-4 py-2 hover:bg-primary-50 cursor-pointer flex items-center gap-2"
+            (click)="selectSuggestion(suggestion)">
+            <i class="fas fa-search text-gray-400 text-sm"></i>
+            <span class="text-gray-700">{{suggestion}}</span>
+        </div>
+    </div>
 </div>

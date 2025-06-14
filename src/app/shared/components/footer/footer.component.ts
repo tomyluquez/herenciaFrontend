@@ -17,6 +17,7 @@ import { MenuService } from '../../../Modules/Menu/Services/menu-service.service
 export class FooterComponent {
   companyInfo!: ICompanyInfoVM[];
   menues!: IMenuVM[];
+  currentYear = new Date().getFullYear();
 
   constructor(
     private _configService: ConfigService,

@@ -13,6 +13,8 @@ import { Router } from '@angular/router';
 })
 export class SearchModalComponent {
   search!: string;
+  showSuggestions: boolean = false;
+  popularSearches = ['Camisetas', 'Pantalones', 'Zapatos', 'Accesorios'];
 
   constructor(private _modalService: ModalService, private _router: Router) { }
 
@@ -22,5 +24,31 @@ export class SearchModalComponent {
       queryParams: { name: this.search },
     });
     this._modalService.closeModal();
+  }
+  getSuggestions() {
+    return this.popularSearches.filter(item =>
+      item.toLowerCase().includes(this.search.toLowerCase())
+    );
+  }
+
+  // Seleccionar sugerencia
+  selectSuggestion(suggestion: string) {
+    this.search = suggestion;
+    this.searchProducts();
+    this.showSuggestions = false;
+  }
+
+  // Limpiar búsqueda
+  clearSearch() {
+    this.search = '';
+    this.showSuggestions = false;
+    // Opcional: resetear resultados si es necesario
+  }
+
+  // Alternativamente, para mostrar sugerencias al focus
+  onInputFocus() {
+    if (this.search) {
+      this.showSuggestions = true;
+    }
   }
 }

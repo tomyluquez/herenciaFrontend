@@ -2,7 +2,8 @@
     <ul class="container-dropdown">
         @if(isLoggin){
         <li class="dropdown-row">
-            <a *ngIf="!isAdmin()" class="dropdown-row-value"><i class="fa-regular fa-circle-user mr-2"></i> Mi
+            <a (click)="goTo(routesModels.CustomerProfile)" *ngIf="!isAdmin()" class="dropdown-row-value"><i
+                    class="fa-regular fa-circle-user mr-2"></i> Mi
                 Perfil</a>
             <a (click)="goTo(routesModels.ControlPanel)" *ngIf="isAdmin()" class="dropdown-row-value"><i
                     class="fa-regular fa-circle-user mr-2"></i> Panel de control</a>

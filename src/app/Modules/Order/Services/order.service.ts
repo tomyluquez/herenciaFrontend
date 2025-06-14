@@ -34,8 +34,8 @@ export class OrderService {
       .set('limit', search.Pagination.Limit)
       .set('orderStatus', search.OrderStatus)
       .set('orderNumber', search.OrderNumber)
-      .set('startDate', search.StartDate.toString())
-      .set('endDate', search.EndDate.toString())
+      .set('startDate', search.StartDate?.toString() || "")
+      .set('endDate', search.EndDate?.toString() || "")
 
     const options = { headers, params }
 
@@ -71,6 +71,20 @@ export class OrderService {
     const options = { headers, params }
     return this._http.get<OrderDetail>(
       `${environment.apiUrl}/orders/getOrderDetailById`, options)
+  }
+
+  getOrderDetailByOrderNumber(orderNumber: number): Observable<OrderDetail> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`, // Incluye el token en el encabezado
+    });
+
+    const params = new HttpParams()
+      .set('orderNumber', orderNumber)
+
+    const options = { headers, params }
+    return this._http.get<OrderDetail>(
+      `${environment.apiUrl}/orders/getOrderDetailByOrderNumber`, options)
   }
 
   saveOrder(order: IOrderDetail): Observable<SaveOrderResponse> {

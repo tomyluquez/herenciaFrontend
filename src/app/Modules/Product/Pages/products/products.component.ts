@@ -220,6 +220,12 @@ export class ProductsComponent implements OnInit {
     this.sizeSelected = [];
     this.updateUrlParams();
   }
+
+  resetAllFilters() {
+    this.categoriesSeleted = [];
+    this.sizeSelected = [];
+    this.updateUrlParams();
+  }
   removeCategory(category: string, event: Event) {
     event.stopPropagation();
     this.categoriesSeleted = this.categoriesSeleted.filter(

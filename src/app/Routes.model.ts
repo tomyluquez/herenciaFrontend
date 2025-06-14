@@ -7,6 +7,8 @@ export const routesModel = {
   Register: 'Register',
   Contact: 'Contact',
   ControlPanel: 'ControlPanel',
+  Order: 'Order',
+  CustomerProfile: 'CustomerProfile'
 };
 
 export const productsRoutesModel = {
@@ -16,4 +18,8 @@ export const productsRoutesModel = {
 
 export const stockRoutesModel = {
   FormStock: ':variantId'
+}
+
+export const orderRoutesModel = {
+  OrderStatus: 'order-status/:orderNumber'
 }

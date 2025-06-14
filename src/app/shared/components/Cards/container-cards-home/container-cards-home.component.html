@@ -11,7 +11,9 @@
         <app-card-skeleton />
         }@else {
         @for (item of data.Items; track $index) {
-        <div><app-card [title]="item.Name" [loading]="isLoading" (click)="search(item.Id)" /></div>
+        <div><app-card [isProduct]="isProduct" [image]="item.Image" [title]="item.Name" [loading]="isLoading"
+                (click)="search(item.Id)" />
+        </div>
         }
         }
     </div>

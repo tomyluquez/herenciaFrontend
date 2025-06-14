@@ -4,10 +4,11 @@ export interface IOrderDetail {
     Total: number;
     Subtotal: number;
     DiscountCouponPercentage: number;
-    DiscountCoupon?: number,
+    DiscountCouponTotal?: number,
     DiscountCouponId?: number,
+    DiscountCoupon?: string,
     DiscountPaymentPercentage: number;
-    DiscountPayment?: number,
+    DiscountPaymentTotal?: number,
     DateCreated: Date;
     OrderStatus?: string;
     OrderStatusId?: number;
@@ -25,6 +26,7 @@ interface OrderItem {
     Id: number;
     Name: string;
     Size: string;
+    SizeName: string;
     UnitPrice: number;
     TotalPrice: number;
     Quantity: number;

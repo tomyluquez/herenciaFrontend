@@ -1,0 +1,30 @@
+/* Personalización del scroll para sugerencias */
+.suggestions-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.suggestions-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.suggestions-container::-webkit-scrollbar-thumb {
+  background: #a68468;
+  border-radius: 10px;
+}
+
+/* Animación para las sugerencias */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.suggestions-container {
+  animation: fadeIn 0.2s ease-out;
+}

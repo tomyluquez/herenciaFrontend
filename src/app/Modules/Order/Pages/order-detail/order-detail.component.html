@@ -1,35 +1,149 @@
-@if(orderDetail){
-<section *blockUI="'order-detail'" class="w-full flex flex-col gap-2">
-    <div class="flex items-center">
-        <h3 class="title w-[70%]">Detalle de la orden N° {{orderDetail.OrderNumber}}</h3>
-    </div>
-
-    <div class="grid grid-cols-2 w-full items-center px-2">
-        <p class="text-sm">Cliente: {{orderDetail.CustomerName}}</p>
-    </div>
-    <div class="grid grid-cols-2 w-full items-center px-2">
-        <p class="text-sm">Descuento por cupon: {{orderDetail.DiscountCoupon | currency : "$"}}
-            ({{orderDetail.DiscountCouponPercentage}}%)</p>
-        <p class="text-sm">Descuento por forma de pago: {{orderDetail.DiscountPayment | currency : "$"}}
-            ({{orderDetail.DiscountPaymentPercentage}}%)</p>
-    </div>
-    <div class="grid grid-cols-2 w-full items-center px-2">
-        <p class="text-sm">Fecha: {{orderDetail.DateCreated | date: "dd/MM/yyyy"}}</p>
-        <p class="text-sm text-end">Total: {{orderDetail.Subtotal | currency : "$"}}</p>
-    </div>
-    <div class="grid grid-cols-2 w-full items-center px-2">
-        <p class="text-sm">Estado: {{orderDetail.OrderStatus}}</p>
-        <p class="text-sm text-end">Total: {{orderDetail.Total | currency : "$"}}</p>
-    </div>
-
-    @for (item of orderDetail.Details; track $index) {
-    <div class="grid grid-cols-2 w-full items-center px-2">
-        <div class="flex flex-col">
-            <p class="text-sm font-bold">{{item.Name}} - {{item.Size}}</p>
-            <p class="text-sm text-gray-500">x {{item.Quantity}}</p>
+@if(orderDetail) {
+<div *blockUI="'order-detail'" class="w-full max-w-6xl mx-auto p-6 bg-white rounded-lg shadow-md">
+    <!-- Header section -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 border-b pb-4">
+        <div>
+            <h2 class="text-2xl font-bold text-gray-800">Orden #{{orderDetail.OrderNumber}}</h2>
+            <div class="flex items-center gap-2 mt-2">
+                <span class="px-3 py-1 rounded-full text-sm font-medium">
+                    {{orderDetail.OrderStatus}}
+                </span>
+                <span class="text-sm text-gray-500">{{orderDetail.DateCreated | date:'medium'}}</span>
+            </div>
         </div>
-        <p class="text-sm text-end">Total: {{item.TotalPrice| currency : "$"}}</p>
+        <!-- <div class="mt-4 md:mt-0">
+      <button (click)="printOrder()" class="bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-md mr-2">
+        <i class="fas fa-print mr-2"></i>Imprimir
+      </button>
+      <button *ngIf="orderDetail.OrderStatusId === 1" (click)="updateOrderStatus(2)" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md">
+        <i class="fas fa-cog mr-2"></i>Procesar
+      </button>
+      <button *ngIf="orderDetail.OrderStatusId === 2" (click)="updateOrderStatus(3)" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md">
+        <i class="fas fa-truck mr-2"></i>Marcar como enviado
+      </button>
+    </div> -->
     </div>
-    }
-</section>
+
+    <!-- Customer and order info -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <!-- Customer info -->
+        <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-lg text-gray-700 mb-3 flex items-center">
+                <i class="fas fa-user mr-2 text-primary-500"></i> Información del cliente
+            </h3>
+            <p class="text-gray-800">{{orderDetail.CustomerName}}</p>
+        </div>
+
+        <!-- Payment info -->
+        <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-lg text-gray-700 mb-3 flex items-center">
+                <i class="fas fa-credit-card mr-2 text-primary-500"></i> Pago
+            </h3>
+            <p class="text-gray-800">{{orderDetail.PaymentMethod}}</p>
+            <p *ngIf="orderDetail.DiscountPaymentPercentage" class="text-green-600 text-sm mt-1">
+                Descuento: {{orderDetail.DiscountPaymentPercentage}}% (-{{orderDetail.DiscountPaymentTotal | currency}})
+            </p>
+        </div>
+
+        <!-- Shipping info -->
+        <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-lg text-gray-700 mb-3 flex items-center">
+                <i class="fas fa-truck mr-2 text-primary-500"></i> Envío
+            </h3>
+            <p class="text-gray-800">{{orderDetail.ShippingMethod || 'No especificado'}}</p>
+            <p *ngIf="orderDetail.ShippingCost" class="text-gray-800 text-sm mt-1">
+                Costo: {{orderDetail.ShippingCost | currency}}
+            </p>
+        </div>
+    </div>
+
+    <!-- Order items -->
+    <div class="mb-8">
+        <h3 class="font-semibold text-lg text-gray-700 mb-4 flex items-center">
+            <i class="fas fa-boxes mr-2 text-primary-500"></i> Productos ({{orderDetail.Details?.length || 0}})
+        </h3>
+
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Producto</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Precio unitario</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Tamaño</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Cantidad</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    @for (item of orderDetail.Details; track $index) {
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex items-center">
+                                <div
+                                    class="flex-shrink-0 h-10 w-10 bg-gray-200 rounded-md flex items-center justify-center">
+                                    <i class="fas fa-box text-gray-400"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <div class="text-sm font-medium text-gray-900">{{item.Name}}</div>
+                                    <div class="text-sm text-gray-500">SKU: {{item.Id || 'N/A'}}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{item.UnitPrice | currency}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{item.SizeName}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{item.Quantity}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{item.TotalPrice |
+                            currency}}</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Order summary -->
+    <div class="bg-gray-50 p-6 rounded-lg">
+        <h3 class="font-semibold text-lg text-gray-700 mb-4 flex items-center">
+            <i class="fas fa-receipt mr-2 text-primary-500"></i> Resumen de la orden
+        </h3>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <div class="flex justify-between py-2 border-b border-gray-200">
+                    <span class="text-gray-600">Subtotal:</span>
+                    <span class="font-medium">{{orderDetail.Subtotal | currency}}</span>
+                </div>
+
+                <div *ngIf="orderDetail.DiscountCouponTotal"
+                    class="flex justify-between py-2 border-b border-gray-200 text-green-600">
+                    <span>Descuento por cupón ({{orderDetail.DiscountCoupon}}%):</span>
+                    <span class="font-medium">-{{orderDetail.DiscountCouponTotal | currency}}</span>
+                </div>
+
+                <div *ngIf="orderDetail.DiscountPaymentTotal"
+                    class="flex justify-between py-2 border-b border-gray-200 text-green-600">
+                    <span>Descuento por pago:</span>
+                    <span class="font-medium">-{{orderDetail.DiscountPaymentTotal | currency}}</span>
+                </div>
+
+                <div *ngIf="orderDetail.ShippingCost" class="flex justify-between py-2 border-b border-gray-200">
+                    <span>Costo de envío:</span>
+                    <span class="font-medium">{{orderDetail.ShippingCost | currency}}</span>
+                </div>
+
+                <div class="flex justify-between py-2 border-b border-gray-200">
+                    <span class="text-gray-600">Total:</span>
+                    <span class="font-medium">{{orderDetail.Total | currency}}</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
 }

@@ -12,18 +12,28 @@ export class CarouselComponent implements OnChanges {
   @Input() images!: string[];
 
   imageSelected!: string;
-
-  constructor() {}
+  isChangingImage: boolean = false;
+  currentImageIndex = 0;
+  showLightbox: boolean = false;
+  constructor() { }
 
   ngOnChanges() {
     this.imageSelected = this.images[0];
   }
 
-  selectImage(index: number): void {
-    this.imageSelected = this.images[index];
+  selectImage(index: number, event?: Event): void {
+    if (event) event.stopPropagation();
+
+    this.isChangingImage = true;
+    setTimeout(() => {
+      this.currentImageIndex = index;
+      this.imageSelected = this.images[index];
+    }, 150);
   }
 
-  nextImage(): void {
+  nextImage(event?: Event): void {
+    if (event) event.stopPropagation();
+
     const currentIndexImage = this.images.findIndex(
       (i) => i === this.imageSelected
     );
@@ -36,7 +46,9 @@ export class CarouselComponent implements OnChanges {
     this.selectImage(currentIndexImage + 1);
   }
 
-  prevImage(): void {
+  prevImage(event?: Event): void {
+    if (event) event.stopPropagation();
+
     const currentIndexImage = this.images.findIndex(
       (i) => i == this.imageSelected
     );
@@ -48,4 +60,18 @@ export class CarouselComponent implements OnChanges {
 
     this.selectImage(currentIndexImage - 1);
   }
+
+  // Métodos para controlar el lightbox
+  openLightbox() {
+    this.showLightbox = true;
+    document.body.style.overflow = 'hidden'; // Bloquear scroll
+  }
+
+  closeLightbox() {
+    this.showLightbox = false;
+    document.body.style.overflow = '';
+  }
+
+
+
 }

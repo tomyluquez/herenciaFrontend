@@ -51,7 +51,7 @@
     </div>
     <app-divider />
     <div class="flex-between-wrap">
-        <p>© 2023 HERENCIA.Todos los derechos reservados</p>
+        <p>© {{currentYear}} HERENCIA.Todos los derechos reservados</p>
         <div class="flex-center gap-4">
             @if (companyInfo && companyInfo.length > 0) {
             @for (info of companyInfo; track $index) {

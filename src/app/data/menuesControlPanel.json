@@ -2,35 +2,43 @@
   "Items": [
     {
       "Name": "Productos",
-      "Href": "#Products"
+      "Href": "#Products",
+      "Icon": "fa-solid fa-cart-shopping"
     },
     {
       "Name": "Stock",
-      "Href": "#Stock"
+      "Href": "#Stock",
+      "Icon": "fa-solid fa-dolly"
     },
     {
       "Name": "Pedidos",
-      "Href": "#Sales"
+      "Href": "#Sales",
+      "Icon": "fa-solid fa-clipboard"
     },
     {
       "Name": "Categorias",
-      "Href": "#Categories"
+      "Href": "#Categories",
+      "Icon": "fa-solid fa-list"
     },
     {
       "Name": "Talles",
-      "Href": "#Sizes"
+      "Href": "#Sizes",
+      "Icon": "fa-solid fa-expand"
     },
     {
       "Name": "Lista de precios",
-      "Href": "#PriceList"
+      "Href": "#PriceList",
+      "Icon": "fa-solid fa-list-ol"
     },
     {
       "Name": "Configuración",
-      "Href": "#Config"
+      "Href": "#Config",
+      "Icon": "fa-solid fa-gear"
     },
     {
       "Name": "Dashboard",
-      "Href": "#Dash"
+      "Href": "#Dash",
+      "Icon": "fa-solid fa-chart-line"
     }
   ]
 }

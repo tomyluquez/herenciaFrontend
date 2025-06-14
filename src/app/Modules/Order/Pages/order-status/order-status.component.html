@@ -1,0 +1,130 @@
+<div class="container-gral">
+    @if(loading){
+    <p>Cargando...</p>
+    }
+    @else if(order && !loading){
+    <div class="max-w-4xl mx-auto p-6 bg-primary-50 rounded-lg shadow-md">
+        <!-- Header -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+            <div>
+                <h1 class="text-2xl font-bold text-primary-900">Orden #{{order.OrderNumber}}</h1>
+                <p class="text-primary-700">Realizada el {{formatDate(order.DateCreated)}}</p>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <span class="text-lg">{{getStatusIcon(order.OrderStatusId)}}</span>
+                <span class="px-3 py-1 rounded-full text-sm font-medium {{getStatusColor(order.OrderStatusId)}}">
+                    {{order.OrderStatus || 'Estado desconocido'}}
+                </span>
+            </div>
+        </div>
+
+        <!-- Progress bar -->
+        <div class="mb-8">
+            <div class="flex justify-between text-sm text-primary-700 mb-1">
+                <span>Pendiente</span>
+                <span>Procesando</span>
+                <span>Enviado</span>
+                <span>Entregado</span>
+            </div>
+            <div class="w-full bg-primary-100 rounded-full h-2.5">
+                <div class="bg-primary-500 h-2.5 rounded-full"
+                    [ngStyle]="{'width': getProgressValue(order.OrderStatusId) + '%'}"></div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Order details -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Products -->
+                <div class="bg-primary-whitefull rounded-lg shadow-sm p-4">
+                    <h2 class="text-lg font-semibold text-primary-900 mb-4">Productos</h2>
+
+                    <div class="divide-y divide-primary-100">
+                        <div *ngFor="let item of order.Details" class="py-4 flex gap-4">
+                            <div class="w-20 h-20 bg-primary-100 rounded-md flex items-center justify-center">
+                                <span class="text-primary-400">🛍️</span>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="font-medium text-primary-900">{{item.Name}}</h3>
+                                <p class="text-sm text-primary-500">{{item.SizeName}} • {{item.Quantity}}
+                                    unidad{{item.Quantity
+                                    > 1 ? 'es' : ''}}</p>
+                                <p class="text-primary-700 font-medium mt-1">${{item.TotalPrice | number:'1.2-2'}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Summary -->
+                <div class="bg-primary-whitefull rounded-lg shadow-sm p-4">
+                    <h2 class="text-lg font-semibold text-primary-900 mb-4">Resumen de compra</h2>
+
+                    <div class="space-y-2">
+                        <div class="flex justify-between">
+                            <span class="text-primary-700">Subtotal</span>
+                            <span class="font-medium">${{order.Subtotal | number:'1.2-2'}}</span>
+                        </div>
+
+                        <div *ngIf="order.DiscountCouponTotal" class="flex justify-between text-success-message">
+                            <span>Cupon: ({{order.DiscountCoupon}})</span>
+                            <span class="font-medium">-${{order.DiscountCouponTotal | number:'1.2-2'}}</span>
+                        </div>
+
+                        <div *ngIf="order.DiscountPaymentTotal" class="flex justify-between text-success-message">
+                            <span>Descuento por método de pago</span>
+                            <span class="font-medium">-${{order.DiscountPaymentTotal | number:'1.2-2'}}</span>
+                        </div>
+
+                        <div *ngIf="order.ShippingCost" class="flex justify-between">
+                            <span class="text-primary-700">Envío</span>
+                            <span class="font-medium">${{order.ShippingCost | number:'1.2-2'}}</span>
+                        </div>
+
+                        <div
+                            class="border-t border-primary-200 pt-2 mt-2 flex justify-between text-lg font-bold text-primary-900">
+                            <span>Total</span>
+                            <span>${{order.Total | number:'1.2-2'}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Shipping and payment -->
+            <div class="space-y-6">
+
+                <!-- Shipping -->
+                <div class="bg-primary-whitefull rounded-lg shadow-sm p-4">
+                    <h2 class="text-lg font-semibold text-primary-900 mb-4">Método de envío</h2>
+                    <div class="space-y-2">
+                        <p class="text-primary-900">{{order.ShippingMethod || 'No especificado'}}</p>
+                        <p *ngIf="order.ShippingCost" class="text-primary-700">Costo: ${{order.ShippingCost |
+                            number:'1.2-2'}}</p>
+                    </div>
+                </div>
+
+                <!-- Payment -->
+                <div class="bg-primary-whitefull rounded-lg shadow-sm p-4">
+                    <h2 class="text-lg font-semibold text-primary-900 mb-4">Método de pago</h2>
+                    <div class="space-y-2">
+                        <p class="text-primary-900">{{order.PaymentMethod || 'No especificado'}}</p>
+                    </div>
+                </div>
+
+                <!-- Help section -->
+                <div class="bg-primary-100 rounded-lg p-4 events-none">
+                    <h3 class="font-medium text-primary-900 mb-2">¿Necesitas ayuda?</h3>
+                    <p class="text-sm text-primary-700 mb-3">Si tienes alguna pregunta sobre tu pedido, no dudes en
+                        contactarnos.</p>
+                    <a routerLink="https://wa.me/543512118497" target="_blank"
+                        class="cursor-pointer inline-block bg-primary-500 hover:bg-primary-600 text-primary-whitefull px-4 py-2 rounded-md text-sm font-medium transition-colors">
+                        Contactanos
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    }@else {
+    <p>No se encontraron detalles de la orden</p>
+    }
+</div>

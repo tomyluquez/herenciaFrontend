@@ -25,7 +25,7 @@
 </main>
 <app-divider />
 <app-container-cards-home [data]="categories" [isLoading]="loadingCategories" (clickCard)="searchByCategory($event)"
-    (changeLimit)="changeLimitCategories($event)" />
+    (changeLimit)="changeLimitCategories($event)" [isProduct]="false" />
 <app-divider />
 <app-container-cards-home [data]="promotionalProducts" [isLoading]="loadingProducts" (clickCard)="seeProduct($event)"
     (changeLimit)="changeLimitProducts($event)" />

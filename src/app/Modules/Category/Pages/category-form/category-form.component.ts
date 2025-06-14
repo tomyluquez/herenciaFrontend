@@ -7,6 +7,7 @@ import { AlertService } from '../../../Other/Services/alert.service';
 import { ResponseMessages } from '../../../Other/Interface/ResponseMessages.Interface';
 import { CommonModule } from '@angular/common';
 import { FormErrorComponent } from '../../../Form/Pages/form-error/form-error.component';
+import { UploadImageService } from '../../../Other/Services/upload-image.service';
 
 @Component({
   selector: 'app-category-form',
@@ -17,13 +18,14 @@ import { FormErrorComponent } from '../../../Form/Pages/form-error/form-error.co
 })
 export class CategoryFormComponent implements OnInit, OnChanges {
   @BlockUI('category-form') blockUI!: NgBlockUI
+  @BlockUI('image-block') imageBlockUI!: NgBlockUI;
   @Input() category!: ICategoryVM | null;
   @Output() newCategory = new EventEmitter<ICategoryVM>();
 
   form!: FormGroup
   loading = true;
 
-  constructor(private _categoryService: CategoryService, private _alertService: AlertService) {
+  constructor(private _categoryService: CategoryService, private _alertService: AlertService, private _uploadImageService: UploadImageService) {
   }
 
   ngOnInit() {
@@ -71,6 +73,23 @@ export class CategoryFormComponent implements OnInit, OnChanges {
     return newCategory;
   }
 
-  onImageSelected(e: any) { }
-  removeImage(categoryId: number) { }
+  get image(): string {
+    return this.form.controls['Image'].value || "";
+  }
+
+  removeImage() {
+    this.form.controls['Image'].setValue("");
+  }
+  onImageSelected(e: any) {
+    this.imageBlockUI.start();
+    const file = e.target.files[0];
+
+    if (file) {
+      this._uploadImageService.uploadImage(file).subscribe((res: any) => {
+        this.imageBlockUI.stop();
+        const imageUrl = res.secure_url;
+        this.form.controls['Image'].setValue(imageUrl);
+      });
+    }
+  }
 }

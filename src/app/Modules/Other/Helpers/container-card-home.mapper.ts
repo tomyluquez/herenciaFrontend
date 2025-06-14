@@ -5,7 +5,7 @@ export const containerCardHomeMapper = (item: any[]): IItemDataContainerCards[] 
         return {
             Id: i.Id,
             Name: i.Name,
-            Image: i.Image ? i.Iamge : i.Images ? i.Images[0] : ""
+            Image: i.Image ? i.Image : i.Images ? i.Images[0] : ""
         }
     })
 

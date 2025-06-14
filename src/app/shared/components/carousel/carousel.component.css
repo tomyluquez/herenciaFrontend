@@ -5,3 +5,30 @@
 .selected {
   @apply border-2 border-primary-400 opacity-100;
 }
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #a68468;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #805e4e;
+}
+
+.pagination-button {
+  transition: all 0.3s ease;
+  transform: translateY(-50%);
+}
+
+.pagination-button:hover {
+  transform: translateY(-50%) scale(1.1);
+}

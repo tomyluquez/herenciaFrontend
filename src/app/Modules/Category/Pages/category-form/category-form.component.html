@@ -3,12 +3,12 @@
     <div class="container-form !w-full" *blockUI="'category-form'">
         <div class="container-images-form !w-full">
             <div class="images-form flex items-center">
-                @if(category && category.Image) {
+                @if(image) {
                 <div class="grid grid-cols-2 gap-2">
                     <div class="relative">
-                        <img class="image !w-32 !h-32" [src]="category.Image" alt="imagen de producto">
-                        <button class="remove-button !absolute top-0 right-0"
-                            (click)="removeImage(category.Id)">×</button>
+                        <img class="image !w-32 !h-32" [src]="image" alt="imagen de producto">
+                        <button type="button" class="remove-button !absolute top-0 right-0"
+                            (click)="removeImage()">×</button>
                     </div>
                 </div>
                 } @else {

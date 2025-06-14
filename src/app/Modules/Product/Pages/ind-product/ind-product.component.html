@@ -1,35 +1,98 @@
 @if(!loadingProduct){
-<section class="container-gral mx-auto px-4 py-8">
-    <app-breadcrum [items]="breadcrumItems" />
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<section class="container-gral mx-auto px-4 py-8 max-w-7xl">
+    <!-- Breadcrumb -->
+    <app-breadcrum [items]="breadcrumItems" class="mb-6" />
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+        <!-- Carousel de Imágenes -->
         <app-carousel [images]="product.Images" />
-        <div>
-            <h1 class="text-xl md:text-3xl font-bold mb-2">{{product.Name}}</h1>
-            <p class="text-2xl font-semibold mb-4" [ngClass]="{'crossed-out mb-0 text-sm': product.IsPromotional}">
-                {{product.Price |
-                currency: '$'}}</p>
-            <p *ngIf="product.IsPromotional" class="text-2xl font-semibold mb-4">
-                {{product.PromotionalPrice |
-                currency: '$'}}</p>
-            <p class="text-gray-600 mb-6">
-                {{product.Description}}
-            </p>
 
-            @if(product.Variants && product.Variants.length > 0){
-            <app-size-selector [sizes]="product.Variants || []" (variantEmit)="setVariant($event)" />
-            }
+        <!-- Información del Producto -->
+        <div class="flex flex-col">
+            <!-- Encabezado -->
+            <div class="mb-4">
+                <h1 class="text-2xl md:text-4xl font-bold text-gray-900 mb-2">{{product.Name}}</h1>
 
-            <div class="w-full md:w-1/2">
-                <button [disabled]="!selectedVariant"
-                    [ngClass]="!selectedVariant ? 'primary-button-disabled' : 'primary-button'"
-                    class="sticky bottom-0 left-0 md:static" (click)="addToCart()">
-                    {{product.Variants && product.Variants.length > 0 ? 'Añadir al carrito' : 'Sin stock'}}
-                </button>
+
+                <!-- Precios -->
+                <div class="mb-6">
+                    <div *ngIf="product.IsPromotional" class="flex items-baseline gap-3">
+                        <span class="text-3xl font-bold text-primary-700">{{product.PromotionalPrice | currency:
+                            '$'}}</span>
+                        <span class="text-lg text-gray-400 line-through">{{product.Price | currency: '$'}}</span>
+                    </div>
+                    <div *ngIf="!product.IsPromotional" class="text-3xl font-bold text-primary-700">
+                        {{product.Price | currency: '$'}}
+                    </div>
+                </div>
+
+                <!-- Descripción -->
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Descripción</h3>
+                    <p class="text-gray-600 leading-relaxed">{{product.Description}}</p>
+                </div>
+
+                <!-- Variantes/Talles -->
+                @if(product.Variants && product.Variants.length > 0) {
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-3">Seleccionar talle</h3>
+                    <app-size-selector [sizes]="product.Variants" (variantEmit)="setVariant($event)" />
+                </div>
+                }
+
+                <!-- Botón de Acción -->
+                <div class="mt-auto sticky bottom-0 bg-white py-4 lg:py-0 lg:bg-transparent">
+                    <button [disabled]="!selectedVariant && product.Variants && product.Variants.length > 0" class="w-full py-3 px-6 rounded-lg font-bold text-lg transition-all
+                           {{!selectedVariant && product.Variants && product.Variants.length > 0 ? 
+                             'bg-gray-300 text-gray-500 cursor-not-allowed' : 
+                             'bg-primary-600 hover:bg-primary-700 text-white shadow-md hover:shadow-lg'}}"
+                        (click)="addToCart()">
+                        <i class="fas fa-shopping-cart mr-2"></i>
+                        {{product.Variants && product.Variants.length > 0 ?
+                        (selectedVariant ? 'Añadir al carrito' : 'Selecciona un talle') :
+                        'Sin stock'}}
+                    </button>
+
+                    <!-- Botón secundario -->
+                    <button
+                        class="w-full mt-3 py-3 px-6 border border-primary-600 text-primary-600 rounded-lg font-medium hover:bg-primary-50 transition-colors">
+                        <i class="far fa-heart mr-2"></i> Añadir a favoritos
+                    </button>
+                </div>
+
+                <!-- Detalles adicionales (opcional) -->
+                <div class="mt-8 border-t border-gray-200 pt-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-3">Detalles del producto</h3>
+                    <ul class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-gray-600">
+                        <li class="flex items-center">
+                            <i class="fas fa-tag mr-2 text-primary-500"></i>
+                            Categoría: <span class="ml-1 font-medium">{{product.CategoryName}}</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-box mr-2 text-primary-500"></i>
+                            Material: <span class="ml-1 font-medium">Algodón 100%</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-ruler mr-2 text-primary-500"></i>
+                            Guía de talles
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-truck mr-2 text-primary-500"></i>
+                            Envíos a todo el país
+                        </li>
+                    </ul>
+                </div>
             </div>
+        </div>
 
+        <!-- Sección de productos relacionados (opcional) -->
+        <div class="mt-16 border-t border-gray-200 pt-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">Productos relacionados</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <!-- Aquí irían las tarjetas de productos relacionados -->
+            </div>
         </div>
     </div>
-
 </section>
 }
 

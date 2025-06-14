@@ -45,13 +45,14 @@ export class OrderListComponent {
   constructor(private _orderService: OrderService, private _rSidebarService: RSidebarService) {
     const today = new Date();
     const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1); // Primer día del mes
+    const tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1); // Primer día del mes
 
     this.form = new FormGroup({
       CustomerName: new FormControl(''),
       OrderNumber: new FormControl(null),
       OrderStatus: new FormControl(this.defaultStatus),
       StartDate: new FormControl(formatDate(firstDayOfMonth)), // ✅ Formato correcto
-      EndDate: new FormControl(formatDate(today)), // ✅ Formato correcto
+      EndDate: new FormControl(formatDate(tomorrow)), // ✅ Formato correcto
     });
   }
 

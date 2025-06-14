@@ -10,11 +10,13 @@ import { Component, Input } from '@angular/core';
 })
 export class CardComponent {
   @Input() loading = true;
+  @Input() isProduct = true;
   @Input() title!: string;
   @Input() image?: string;
   @Input() subtitle?: string;
   @Input() price?: number;
   @Input() promotionalPrice?: number;
 
-  constructor() { }
+  constructor() {
+  }
 }
