@@ -10,7 +10,7 @@ export const createOrderHelper = (orderForm: any, cartId: number): IOrderDetail 
         Subtotal: orderForm.subtotal,
         DiscountCouponTotal: orderForm.discountCoupon || 0,
         DiscountCouponPercentage: orderForm.discountCouponPercentage || 0,
-        DiscountCouponId: orderForm.discountCouponId,
+        DiscountCouponId: orderForm.discountCouponId || null,
         DiscountPaymentTotal: orderForm.discountPayment || 0,
         DiscountPaymentPercentage: Number(orderForm.discountPaymentPercentage) || 0,
         DateCreated: new Date(),
