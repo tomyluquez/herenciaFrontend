@@ -45,7 +45,7 @@ export class CartSummaryComponent implements OnInit, OnChanges {
     private cartService: CartService,
     private orderService: OrderService,
     private alertService: AlertService,
-    private router: Router
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -198,7 +198,8 @@ export class CartSummaryComponent implements OnInit, OnChanges {
           this.alertService.showAlerts(res);
           return;
         }
-        this.router.navigate(['Order/order-status'], { queryParams: { orderNumber: res.OrderNumber } });
+        this.cartService.updateCartItems();
+        this.router.navigate([`Order/order-status/${res.OrderNumber}`]);
       })
     }
   }
