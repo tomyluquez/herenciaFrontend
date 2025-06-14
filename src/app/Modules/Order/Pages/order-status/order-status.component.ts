@@ -6,6 +6,7 @@ import { IOrderDetail } from '../../Interface/order-detail.interface';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { OrderStatusEnum } from '../../Enums/order-status-enum';
+import { getOrderStatusClassById } from '../../Helpers/order-status.helper';
 
 @Component({
   selector: 'app-order-status',
@@ -54,21 +55,8 @@ export class OrderStatusComponent implements OnInit {
     });
   }
 
-  getStatusColor(statusId?: number): string {
-    switch (statusId) {
-      case OrderStatusEnum.Pending: // Pendiente
-        return 'bg-warning text-warning-message';
-      case OrderStatusEnum.Preparation: // Procesando
-        return 'bg-primary-200 text-primary-800';
-      case OrderStatusEnum.Prepared: // Enviado
-        return 'bg-primary-300 text-primary-900';
-      case OrderStatusEnum.Delivered: // Entregado
-        return 'bg-success text-success-message';
-      case OrderStatusEnum.Canceled: // Cancelado
-        return 'bg-error text-error-message';
-      default:
-        return 'bg-primary-100 text-primary-800';
-    }
+  getStatusColor(statusId: number): string {
+    return getOrderStatusClassById(statusId);
   }
 
   getStatusIcon(statusId?: number): string {
