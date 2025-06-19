@@ -11,7 +11,7 @@ import { ShadowBgComponent } from '../shadow-bg/shadow-bg.component';
   styleUrl: './modal.component.css',
 })
 export class ModalComponent {
-  @Input({ required: true }) title!: string;
+  @Input() title!: string;
   isOpen = true;
 
   constructor(private _modalService: ModalService) {
@@ -24,3 +24,5 @@ export class ModalComponent {
     this._modalService.closeModal();
   }
 }
+
+

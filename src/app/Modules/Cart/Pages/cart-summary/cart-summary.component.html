@@ -1,3 +1,7 @@
+<app-modal>
+    <app-processed-order [orderNumber]="orderNumber" />
+</app-modal>
+
 @if(!isLoading){
 <form [formGroup]="form" (ngSubmit)="proceedToPayment()">
     <app-discount-coupon class="w-full" (discountEmit)="applyDiscuntCoupon($event)" [hasAddedCoupon]="hasAddedCoupon" />
@@ -77,6 +81,6 @@
         <strong>{{ form.get('total')?.value | currency: "$" }}</strong>
     </div>
 
-    <button class="black-button w-full" type="submit">Proceder al pago</button>
+    <button class="black-button w-full" type="submit">Finalizar compra</button>
 </form>
 }
