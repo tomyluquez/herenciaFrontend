@@ -17,11 +17,14 @@ import { SaveOrderResponse } from '../../../Order/Models/SaveOrderResponse';
 import { AlertService } from '../../../Other/Services/alert.service';
 import { Router } from '@angular/router';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { ModalComponent } from '../../../../shared/components/modal/modal.component';
+import { ModalService } from '../../../Other/Services/modal.service';
+import { ProcessedOrderComponent } from '../../../Order/Pages/processed-order/processed-order.component';
 
 @Component({
   selector: 'app-cart-summary',
   standalone: true,
-  imports: [DiscountCouponComponent, CommonModule, DividerComponent, ReactiveFormsModule, NgSelectModule],
+  imports: [DiscountCouponComponent, CommonModule, DividerComponent, ReactiveFormsModule, NgSelectModule, ModalComponent, ProcessedOrderComponent],
   templateUrl: './cart-summary.component.html',
   styleUrl: './cart-summary.component.css'
 })
@@ -38,6 +41,8 @@ export class CartSummaryComponent implements OnInit, OnChanges {
   couponDiscountPercentage = 0
   paymentDiscountPercentage = 0
 
+  orderNumber = 0
+
   form!: FormGroup;
 
   constructor(private fb: FormBuilder,
@@ -45,7 +50,7 @@ export class CartSummaryComponent implements OnInit, OnChanges {
     private cartService: CartService,
     private orderService: OrderService,
     private alertService: AlertService,
-    private router: Router,
+    private _modalService: ModalService
   ) { }
 
   ngOnInit() {
@@ -199,8 +204,13 @@ export class CartSummaryComponent implements OnInit, OnChanges {
           return;
         }
         this.cartService.updateCartItems();
-        this.router.navigate([`Order/order-status/${res.OrderNumber}`]);
+        this.orderNumber = res.OrderNumber
+        this.openModal()
       })
     }
+  }
+
+  openModal() {
+    this._modalService.toggleModal();
   }
 }
