@@ -1,4 +1,5 @@
 export enum PaginationEnum {
-    Limit = 10,
-    Page = 1
+    Limit = 20,
+    Page = 1,
+    HomeCardsLimit = 5,
 }

@@ -1,21 +1,22 @@
-@if(data){
+@if(isLoading){
+<app-card-skeleton />
+<app-card-skeleton />
+<app-card-skeleton />
+<app-card-skeleton />
+<app-card-skeleton />
+}
+@else if(data && !isLoading){
 <main class="container-gral">
     <h3 class="title">{{data.Title}}</h3>
 
     <div class="container-grid-fill gap-4">
-        @if(isLoading){
-        <app-card-skeleton />
-        <app-card-skeleton />
-        <app-card-skeleton />
-        <app-card-skeleton />
-        <app-card-skeleton />
-        }@else {
+
         @for (item of data.Items; track $index) {
         <div><app-card [isProduct]="isProduct" [image]="item.Image" [title]="item.Name" [loading]="isLoading"
                 (click)="search(item.Id)" />
         </div>
         }
-        }
+
     </div>
 
     @if(data.QuantityPages > 1 && data.QuantityPages > currentPage){

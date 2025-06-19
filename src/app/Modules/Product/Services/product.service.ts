@@ -23,8 +23,8 @@ import { HomeInfoResponse } from '../../Other/Models/Home-info.model';
 export class ProductService {
   constructor(private _http: HttpClient) { }
 
-  getPromotionalProducts(page = PaginationEnum.Page): Observable<PromotionalProducts> {
-    let params = new HttpParams().set('limit', page * PaginationEnum.Limit);
+  getPromotionalProducts(limit: number): Observable<PromotionalProducts> {
+    let params = new HttpParams().set('limit', limit);
     return this._http.get<PromotionalProducts>(
       `${environment.apiUrl}/products/promotional`, { params }
     );
