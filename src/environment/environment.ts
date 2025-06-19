@@ -1,3 +1,3 @@
 export const environment = {
-  apiUrl: 'http://localhost:3002/api/v1',
+  apiUrl: 'https://backendherencia.onrender.com/api/v1',
 };
