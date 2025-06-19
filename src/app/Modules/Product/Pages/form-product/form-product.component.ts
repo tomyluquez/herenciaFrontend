@@ -61,7 +61,7 @@ export class FormProductComponent implements OnInit {
   }
 
   init() {
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
     const params: SearchCategoriesPagedList = {
       Name: "",
       Pagination: { Page: PaginationEnum.Page, Limit: 1000 },
@@ -133,7 +133,7 @@ export class FormProductComponent implements OnInit {
   onSubmit() {
     if (this.form.invalid) return;
 
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
     const newProduct: IProduct = {
       Id: this.product ? this.product.Id : 0,
       Name: this.form.controls['Name'].value,

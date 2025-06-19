@@ -72,7 +72,7 @@ export class ProductListComponent implements OnInit {
   }
 
   init() {
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
     this._productsService.getFilteringOptionsPagedListProduct().subscribe((res: FilteringOptionsPagedListProductVM) => {
       if (res.HasErrors || res.HasWarnings) {
         this.blockUI.stop();
@@ -106,7 +106,7 @@ export class ProductListComponent implements OnInit {
   }
 
   getPagedList(params: SearchProductPagedList) {
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
     this._productsService
       .getPagedListProducts(params)
       .subscribe((res: ProductPagedList) => {
@@ -126,7 +126,7 @@ export class ProductListComponent implements OnInit {
   }
 
   changeStatus() {
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
     const product = this.getProductInfo(this.productId);
     const status: ChangeStatus = {
       Id: product ? product.Id : 0,

@@ -69,7 +69,7 @@ export class StockListComponent implements OnInit {
   }
 
   init() {
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
     this._variantsService.getFilteringOptionsProductStock().subscribe((res: FilteringOptionsProductStockVM) => {
       if (res.HasErrors || res.HasWarnings) {
         this.blockUI.stop();
@@ -103,7 +103,7 @@ export class StockListComponent implements OnInit {
   }
 
   getPagedList(params: SearchProductsStockPagedList) {
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
     this._variantsService
       .getProductsStock(params)
       .subscribe((res: ProductStockVM) => {

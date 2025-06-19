@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
     this.isSubmitted = true;
     if (this.formLogin.valid) {
       this.isLoading = true;
-      this.blockUI.start('Cargando...');
+      this.blockUI.start();
       const email = this.formLogin.get('email')?.value;
       const password = this.formLogin.get('password')?.value;
 

@@ -82,7 +82,7 @@ export class OrderListComponent {
   }
 
   init() {
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
     this._orderService.getFilteringOptionsOrderList(false).subscribe((res: FilteringOptionsOrderListVM) => {
       if (res.HasErrors || res.HasWarnings) {
         this.blockUI.stop();
@@ -115,7 +115,7 @@ export class OrderListComponent {
   }
 
   getPagedList(params: SearchOrderPagedList) {
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
     this._orderService
       .getOrders(params)
       .subscribe((res: OrderVM) => {

@@ -34,7 +34,7 @@ export class PriceListFormUpdateComponent implements OnInit {
   constructor(private _categoriesService: CategoryService, private _priceListService: PriceListService, private _alertService: AlertService) { }
 
   ngOnInit() {
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
     const params = {
       Name: "",
       Pagination: { Page: 1, Limit: 10000 },
@@ -64,7 +64,7 @@ export class PriceListFormUpdateComponent implements OnInit {
   }
 
   updatePriceList() {
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
     if (!this.form.controls['Percentage'].value && !this.form.controls['Discount'].value) return;
 
     const params = this.parametrs();

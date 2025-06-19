@@ -27,7 +27,7 @@ export class ConfigFormComponent {
   }
 
   ngOnInit() {
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
     this.createForm();
     this.blockUI.stop();
     this.loading = false;
@@ -50,7 +50,7 @@ export class ConfigFormComponent {
   uploadCategory() {
     if (this.form.invalid) return;
 
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
     const newCategory = this.getCategory();
     this._categoryService.saveCategory(newCategory).subscribe((res: ResponseMessages) => {
       this._alertService.showAlerts(res);

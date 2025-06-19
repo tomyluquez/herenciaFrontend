@@ -78,7 +78,7 @@ export class PriceListListComponent {
   }
 
   init() {
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
     this._priceListService.getFilteringOptionsPriceList().subscribe((res: FilteringOptionsPriceListVM) => {
       if (res.HasErrors || res.HasWarnings) {
         this.blockUI.stop();
@@ -109,7 +109,7 @@ export class PriceListListComponent {
   }
 
   getPagedList(params: PriceListProductsSearch) {
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
     this._priceListService
       .getPriceListProducts(params)
       .subscribe((res: PriceListProductsVM) => {

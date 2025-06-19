@@ -39,7 +39,7 @@ export class CartComponent implements OnInit {
   }
 
   getCartItems() {
-    this.itemsCartBlockUI.start('Cargando...');
+    this.itemsCartBlockUI.start();
     this._cartService.getCartItemsByUserId().subscribe((res: UserCartItemsVM) => {
       if (!res.HasErrors || !res.HasWarnings) {
         this._cartService.updateCartItems();
