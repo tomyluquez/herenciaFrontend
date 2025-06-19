@@ -45,7 +45,7 @@ export class IndProductComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
     const productId = this._route.snapshot.params['productId'];
     this._productsService
       .getProductById(productId)

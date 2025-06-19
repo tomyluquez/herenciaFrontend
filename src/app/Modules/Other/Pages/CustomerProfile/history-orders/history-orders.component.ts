@@ -63,7 +63,7 @@ export class HistoryOrdersComponent implements OnInit {
   }
 
   init() {
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
     this.orderService.getFilteringOptionsOrderList(false).subscribe((res: FilteringOptionsOrderListVM) => {
       if (res.HasErrors || res.HasWarnings) {
         this.blockUI.stop();
@@ -96,7 +96,7 @@ export class HistoryOrdersComponent implements OnInit {
   }
 
   getPagedList(params: SearchOrderPagedList) {
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
     this.orderService
       .getOrders(params)
       .subscribe((res: OrderVM) => {

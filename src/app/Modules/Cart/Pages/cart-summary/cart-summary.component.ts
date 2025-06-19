@@ -49,7 +49,7 @@ export class CartSummaryComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit() {
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
     this.cartService.getCheckoutInfo().subscribe((res: CheckoutInfoVM) => {
       this.blockUI.stop();
       if (res.HasErrors) return;
@@ -188,7 +188,7 @@ export class CartSummaryComponent implements OnInit, OnChanges {
   proceedToPayment() {
     this.isSubmitted = true;
     if (this.form.valid) {
-      this.blockUI.start('Cargando...');
+      this.blockUI.start();
       const orderSummary = this.form.value;
       const newOrder = createOrderHelper(orderSummary, this.cartId);
       this.orderService.saveOrder(newOrder).subscribe((res: SaveOrderResponse) => {

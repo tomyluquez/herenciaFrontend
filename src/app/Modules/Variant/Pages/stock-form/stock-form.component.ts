@@ -27,7 +27,7 @@ export class StockFormComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
     this.createForm();
     this.blockUI.stop();
     this.loading = false;
@@ -50,7 +50,7 @@ export class StockFormComponent implements OnInit, OnChanges {
   uploadStock() {
     if (this.form.invalid) return;
 
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
     const newQuantity = this.form.controls['Quantity'].value
     this._variantService.updateStock(this.variant.Id, newQuantity).subscribe((res: ResponseMessages) => {
       this._alertService.showAlerts(res);

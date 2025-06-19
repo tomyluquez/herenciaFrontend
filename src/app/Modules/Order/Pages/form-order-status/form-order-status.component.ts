@@ -30,7 +30,7 @@ export class FormOrderStatusComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
     this._orderService.getFilteringOptionsOrderList(true).subscribe((res: FilteringOptionsOrderListVM) => {
       if (res.HasErrors || res.HasWarnings) {
         this.blockUI.stop();
@@ -60,7 +60,7 @@ export class FormOrderStatusComponent implements OnInit, OnChanges {
   updateStatus() {
     if (this.form.invalid) return;
 
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
     const newStatus = this.form.controls['StatusId'].value
     this._orderService.changeStatusOrder(this.order.Id, newStatus).subscribe((res: ResponseMessages) => {
       this._alertService.showAlerts(res);

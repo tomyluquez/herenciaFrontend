@@ -86,7 +86,7 @@ export class CategoryListComponent {
   }
 
   init() {
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
     this._categoryService.getFilteringOptionsCategoryList().subscribe((res: FilteringOptionsCategoryListVM) => {
       if (res.HasErrors || res.HasWarnings) {
         this.blockUI.stop();
@@ -116,7 +116,7 @@ export class CategoryListComponent {
   }
 
   getPagedList(params: SearchCategoriesPagedList) {
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
     this._categoryService
       .getAllCategories(params)
       .subscribe((res: CategoryListVM) => {
@@ -148,7 +148,7 @@ export class CategoryListComponent {
 
   changeStatus() {
     this._modalService.closeConfirm();
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
     this._categoryService.changeStatus(this.categoryIdSelected).subscribe((res: ResponseMessages) => {
       this._alertService.showAlerts(res);
       if (res.HasErrors || res.HasWarnings) {

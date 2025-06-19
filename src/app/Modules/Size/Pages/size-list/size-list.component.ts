@@ -88,7 +88,7 @@ export class SizeListComponent {
   }
 
   init() {
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
     this._sizeService.getFilteringOptionsSizeList().subscribe((res: FilteringOptionsSizeListVM) => {
       if (res.HasErrors || res.HasWarnings) {
         this.blockUI.stop();
@@ -118,7 +118,7 @@ export class SizeListComponent {
   }
 
   getPagedList(params: SearchSizePagedList) {
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
     this._sizeService
       .getSizeList(params)
       .subscribe((res: SizeLlistVM) => {
@@ -150,7 +150,7 @@ export class SizeListComponent {
 
   changeStatus() {
     this._modalService.closeConfirm();
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
     this._sizeService.changeStatus(this.sizeIdSelected).subscribe((res: ResponseMessages) => {
       this._alertService.showAlerts(res);
       if (res.HasErrors || res.HasWarnings) {

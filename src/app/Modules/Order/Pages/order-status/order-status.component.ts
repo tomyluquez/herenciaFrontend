@@ -23,7 +23,7 @@ export class OrderStatusComponent implements OnInit {
   constructor(private orderService: OrderService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
 
     // Obtener orderId de la URL
     this.route.params.subscribe(params => {
