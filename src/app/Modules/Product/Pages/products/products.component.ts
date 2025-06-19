@@ -74,7 +74,7 @@ export class ProductsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
     const params: SearchCategoriesPagedList = {
       Name: "",
       Pagination: { Page: PaginationEnum.Page, Limit: 1000 },

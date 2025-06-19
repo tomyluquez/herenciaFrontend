@@ -27,7 +27,7 @@ export class SizeFormComponent {
   }
 
   ngOnInit() {
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
     this.createForm();
     this.blockUI.stop();
     this.loading = false;
@@ -49,7 +49,7 @@ export class SizeFormComponent {
   uploadSize() {
     if (this.form.invalid) return;
 
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
     const newSize = this.getSize();
     this._sizeSerivice.saveSize(newSize).subscribe((res: ResponseMessages) => {
       this._alertService.showAlerts(res);

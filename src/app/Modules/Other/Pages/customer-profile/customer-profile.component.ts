@@ -32,7 +32,7 @@ export class CustomerProfileComponent {
   }
 
   ngOnInit(): void {
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
     if (this.customerName) {
 
       this.userService.getUserProfileByUserName(this.customerName).subscribe((res: UserProfile) => {

@@ -45,7 +45,7 @@ export class IndProductComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
     const productId = this._route.snapshot.params['productId'];
     this._productsService
       .getProductById(productId)
@@ -84,6 +84,7 @@ export class IndProductComponent implements OnInit {
   }
 
   async addToCart() {
+    this.blockUI.start();
     if (!this.selectedVariant) return;
     const token = this._authService.getToken();
     const userId = this._authService.getUserIdByToken(token);
@@ -97,6 +98,7 @@ export class IndProductComponent implements OnInit {
     this._cartService
       .addItemToCart(this.selectedVariant)
       .subscribe((res: ResponseMessages) => {
+        this.blockUI.stop();
         this._alertService.showAlerts(res);
       });
   }

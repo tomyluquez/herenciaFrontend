@@ -46,14 +46,12 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.loadingCategories = true;
     this.loadingProducts = true;
-    this.blockUI.start();
     const params: SearchCategoriesPagedList = {
       Name: "",
-      Pagination: { Page: PaginationEnum.Page, Limit: 5 },
+      Pagination: { Page: PaginationEnum.Page, Limit: PaginationEnum.HomeCardsLimit },
       Status: ActivationStatusEnum.Active
     }
     this._productService.getHomeInfo(params).subscribe((res: HomeInfoResponse) => {
-      this.blockUI.stop();
       this.loadingCategories = false;
       this.loadingProducts = false;
       if (res.HasErrors || res.HasWarnings) {
@@ -77,7 +75,7 @@ export class HomeComponent implements OnInit {
     this.loadingCategories = true;
     const params: SearchCategoriesPagedList = {
       Name: "",
-      Pagination: { Page: PaginationEnum.Page, Limit: newLimit },
+      Pagination: { Page: PaginationEnum.Page, Limit: PaginationEnum.HomeCardsLimit * newLimit },
       Status: ActivationStatusEnum.Active
     }
     this._categoryService
@@ -91,7 +89,7 @@ export class HomeComponent implements OnInit {
   changeLimitProducts(newLimit: number) {
     this.loadingProducts = true;
     this._productService
-      .getPromotionalProducts(newLimit)
+      .getPromotionalProducts((PaginationEnum.HomeCardsLimit * newLimit))
       .subscribe((res: PromotionalProducts) => {
         this.setPromotionalProducts(res);
         this.loadingProducts = false;
@@ -103,7 +101,7 @@ export class HomeComponent implements OnInit {
       return;
     }
 
-    const quantityPages = GetQuantityPages(res.TotalItems, PaginationEnum.Limit)
+    const quantityPages = GetQuantityPages(res.TotalItems, PaginationEnum.HomeCardsLimit)
     const items = containerCardHomeMapper(res.Items);
     this.categories = new DataContainerCards();
     this.categories.Title = 'Nuestras categorias';

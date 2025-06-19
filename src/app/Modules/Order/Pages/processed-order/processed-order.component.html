@@ -1,0 +1,56 @@
+<div class="max-w-2xl mx-auto p-6 bg-primary-50 rounded-xl shadow-md">
+    <!-- Icono de confirmación -->
+    <div class="flex justify-center mb-6">
+        <div class="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center">
+            <i class="fas fa-check-circle text-green-600 text-4xl"></i>
+        </div>
+    </div>
+
+    <!-- Título principal -->
+    <h1 class="text-2xl md:text-3xl font-bold text-center text-primary-900 mb-4">
+        ¡Gracias por tu compra!
+    </h1>
+
+    <!-- Subtítulo -->
+    <p class="text-lg text-center text-primary-700 mb-8">
+        Tu orden #{{orderNumber}} ha sido confirmada
+    </p>
+
+    <!-- Tarjeta de resumen -->
+    <div class="bg-white rounded-lg p-6 mb-8 border border-primary-200">
+        <div class="flex items-start mb-4">
+            <i class="fas fa-envelope text-primary-500 mt-1 mr-3"></i>
+            <div>
+                <h3 class="font-semibold text-primary-900">Correo de confirmación enviado</h3>
+                <p class="text-primary-600 text-sm">Hemos enviado los detalles de tu compra por correo</p>
+            </div>
+        </div>
+
+        <div class="flex items-start mb-4">
+            <i class="fas fa-clock text-primary-500 mt-1 mr-3"></i>
+            <div>
+                <h3 class="font-semibold text-primary-900">Procesando tu pedido</h3>
+                <p class="text-primary-600 text-sm">Nuestro equipo está preparando tu pedido</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botones de acción -->
+    <div class="flex flex-col sm:flex-row gap-4">
+        <button (click)="goToOrderStatus()"
+            class="flex-1 py-3 px-6 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2">
+            <i class="fas fa-truck"></i>
+            Ver estado del pedido
+        </button>
+        <button (click)="goToProducts()"
+            class="flex-1 py-3 px-6 border border-primary-600 text-primary-600 hover:bg-primary-50 rounded-lg font-medium transition-colors flex items-center justify-center gap-2">
+            <i class="fas fa-shopping-bag"></i>
+            Seguir comprando
+        </button>
+    </div>
+
+    <!-- Nota adicional -->
+    <p class="text-sm text-primary-500 mt-8 text-center">
+        ¿Necesitas ayuda? <a href="https://wa.me/543512118497" class="text-primary-600 hover:underline">Contáctanos</a>
+    </p>
+</div>

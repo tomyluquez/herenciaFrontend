@@ -59,7 +59,7 @@ export class ConfigListComponent {
   }
 
   init() {
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
     this.search();
 
   }
@@ -78,7 +78,7 @@ export class ConfigListComponent {
   }
 
   getPagedList(params: SearchConfigList) {
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
     this._configService
       .getConfig(params)
       .subscribe((res: ConfigVM) => {

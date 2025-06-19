@@ -27,7 +27,7 @@ export class PriceListFormComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
     this.createForm();
     this.blockUI.stop();
     this.loading = false;
@@ -53,7 +53,7 @@ export class PriceListFormComponent implements OnInit, OnChanges {
   uploadproduct() {
     if (this.form.invalid) return;
 
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
     const newproduct = this.getproduct();
     this._priceListService.updatePriceProduct(newproduct).subscribe((res: ResponseMessages) => {
       this._alertService.showAlerts(res);
