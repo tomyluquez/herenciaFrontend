@@ -10,8 +10,8 @@ import { UserDropdownComponent } from '../Dropdowns/user-dropdown/user-dropdown.
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../../Modules/Auth/Services/auth.service';
 import { SearchModalComponent } from '../modal/search-modal/search-modal.component';
-import { IMenuVM, MenuVM } from '../../../Modules/Menu/Interface/Menu.Interfaces';
-import { MenuService } from '../../../Modules/Menu/Services/menu-service.service';
+import { IMenuVM } from '../../../Modules/Menu/Interface/Menu.Interfaces';
+import menues from '../../../data/menues.json';
 
 @Component({
   selector: 'app-header',
@@ -46,7 +46,6 @@ export class HeaderComponent {
   quantityItems = 0;
 
   constructor(
-    private _menuService: MenuService,
     private _sidebarService: LSidebarService,
     private _modalService: ModalService,
     private _authService: AuthService
@@ -60,14 +59,10 @@ export class HeaderComponent {
 
   }
 
+
   ngOnInit(): void {
     this._modalService.closeModal();
-    this.blockUI.start('Cargando...');
-    this.isMobile = window.innerWidth < 992;
-    this._menuService.getMenuHeaderDB().subscribe((res: MenuVM) => {
-      this.menues = res.Items;
-      this.blockUI.stop();
-    });
+    this.menues = menues.Items;
   }
 
   @HostListener('window:resize', ['$event'])

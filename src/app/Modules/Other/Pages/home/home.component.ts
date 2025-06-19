@@ -15,6 +15,7 @@ import { DataContainerCards } from '../../../Order/Models/Order.model';
 import { ActivationStatusEnum } from '../../Enums/activation-status-enum';
 import { CategoryListVM, SearchCategoriesPagedList } from '../../../Category/Interfaces/Categories.interface';
 import { PromotionalProducts } from '../../../Product/Interface/Products.interfaces';
+import { HomeInfoResponse } from '../../Models/Home-info.model';
 
 @Component({
   selector: 'app-home',
@@ -45,24 +46,22 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.loadingCategories = true;
     this.loadingProducts = true;
-    this.blockUI.start('Cargando...');
+    this.blockUI.start();
     const params: SearchCategoriesPagedList = {
       Name: "",
       Pagination: { Page: PaginationEnum.Page, Limit: 5 },
       Status: ActivationStatusEnum.Active
     }
-    this._categoryService
-      .getAllCategories(params)
-      .subscribe((res: CategoryListVM) => {
-        this.setCategories(res);
-      });
-
-    this._productService
-      .getPromotionalProducts(PaginationEnum.Page)
-      .subscribe((res: PromotionalProducts) => {
-        this.setPromotionalProducts(res);
-      });
-    this.blockUI.stop();
+    this._productService.getHomeInfo(params).subscribe((res: HomeInfoResponse) => {
+      this.blockUI.stop();
+      this.loadingCategories = false;
+      this.loadingProducts = false;
+      if (res.HasErrors || res.HasWarnings) {
+        return;
+      }
+      this.setCategories(res.Categories);
+      this.setPromotionalProducts(res.PromotionalProducts);
+    })
   }
 
   searchByCategory(categoryId: number) {

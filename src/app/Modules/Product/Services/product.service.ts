@@ -14,6 +14,8 @@ import { ResponseMessages } from '../../Other/Interface/ResponseMessages.Interfa
 import { ChangeStatus } from '../../Other/Interface/Others.interface';
 import { FilteringOptionsPagedListProductVM } from '../Models/Filtering-options-paged-list-product.model';
 import { ProductToSale } from '../Models/Products.model';
+import { SearchCategoriesPagedList } from '../../Category/Interfaces/Categories.interface';
+import { HomeInfoResponse } from '../../Other/Models/Home-info.model';
 
 @Injectable({
   providedIn: 'root',
@@ -110,4 +112,14 @@ export class ProductService {
     return this._http.get<FilteringOptionsPagedListProductVM>(`${environment.apiUrl}/products/getFilteringOptionsPagedListProduct`);
   }
 
+  getHomeInfo(search: SearchCategoriesPagedList): Observable<HomeInfoResponse> {
+    let params = new HttpParams().set('limit', search.Pagination.Limit)
+      .set('page', search.Pagination.Page)
+      .set('status', search.Status)
+      .set('name', search.Name)
+
+    return this._http.get<HomeInfoResponse>(`${environment.apiUrl}/products/getHomeInfo`, {
+      params,
+    });
+  }
 }

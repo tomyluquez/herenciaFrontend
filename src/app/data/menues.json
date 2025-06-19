@@ -2,15 +2,18 @@
   "Items": [
     {
       "Name": "Home",
-      "Href": "/Home"
+      "Href": "/Home",
+      "Icon": "fa-solid fa-house"
     },
     {
       "Name": "Productos",
-      "Href": "/Products"
+      "Href": "/Products",
+      "Icon": "fa-solid fa-shirt"
     },
     {
       "Name": "Contacto",
-      "Href": "/Contact"
+      "Href": "/Contact",
+      "Icon": "fa-solid fa-phone"
     }
   ]
 }
