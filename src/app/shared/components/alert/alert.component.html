@@ -1,13 +1,40 @@
 <section
-    class="flex flex-col fixed bottom-[20px] left-[50%] translate-x-[-50%] text-center z-10 w-[70%] md:w-[30%] rounded-lg duration-300"
-    [ngClass]="{ 'bottom-[20px] border-2': isVisible, 'bottom-[-100%]': !isVisible, 'text-green-800 border-green-800' : type === 'success', 'text-yellow-800 border-yellow-800' : type === 'warning', 'text-red-800 border-red-800' : type === 'error'}">
-    <div class="w-full p-[10px] text-[30px] rounded-lg flex items-center justify-around"
-        [ngClass]="{'bg-green-200' : type === 'success', 'bg-yellow-200' : type === 'warning', 'bg-red-200' : type === 'error'}">
-        <i
-            [ngClass]="{'fa-regular fa-circle-check text-3xl' : type === 'success', 'fa-solid fa-triangle-exclamation' : type === 'warning', 'fa-solid fa-xmark' : type === 'error'}"></i>
-        <div class="flex flex-col items-center justify-center">
-            <span class="text-2xl">{{primaryText}}</span>
-            <span class="text-[12px]">{{secondaryText}}</span>
+    class="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 w-[90%] md:w-[400px] transition-all duration-500 ease-[cubic-bezier(0.68,-0.6,0.32,1.6)]"
+    [ngClass]="{ 
+           'translate-y-0 opacity-100 scale-100': isVisible, 
+           'translate-y-20 opacity-0 scale-90': !isVisible 
+         }">
+
+    <div class="relative bg-white p-4 rounded-xl shadow-md border-t-4 flex gap-3" [ngClass]="{
+         'border-t-primary-500': type === 'success',
+         'border-t-warning-message': type === 'warning',
+         'border-t-error-message': type === 'error'
+       }">
+
+        <!-- Punto de color -->
+        <div class="flex-shrink-0 w-3 h-3 rounded-full mt-1.5" [ngClass]="{
+           'bg-primary-500': type === 'success',
+           'bg-warning-message': type === 'warning',
+           'bg-error-message': type === 'error'
+         }"></div>
+
+        <!-- Contenido -->
+        <div class="flex-1">
+            <h3 class="font-semibold text-primary-900 mb-1">{{primaryText}}</h3>
+            <p class="text-sm text-primary-600">{{secondaryText}}</p>
+        </div>
+
+        <!-- Acciones -->
+        <div class="flex flex-col items-center justify-between">
+            <button class="text-primary-400 hover:text-primary-600 transition-colors" (click)="dismissAlert()">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="text-xs mt-2" [ngClass]="{
+             'text-primary-500': type === 'success',
+             'text-warning-message': type === 'warning',
+             'text-error-message': type === 'error'
+           }">
+            </div>
         </div>
     </div>
 </section>
