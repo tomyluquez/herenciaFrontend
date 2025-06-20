@@ -20,6 +20,7 @@ import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { ModalComponent } from '../../../../shared/components/modal/modal.component';
 import { ModalService } from '../../../Other/Services/modal.service';
 import { ProcessedOrderComponent } from '../../../Order/Pages/processed-order/processed-order.component';
+import { EmailJSService } from '../../../Other/Services/emailJS.service';
 
 @Component({
   selector: 'app-cart-summary',
@@ -50,7 +51,8 @@ export class CartSummaryComponent implements OnInit, OnChanges {
     private cartService: CartService,
     private orderService: OrderService,
     private alertService: AlertService,
-    private _modalService: ModalService
+    private _modalService: ModalService,
+    private _emailJSService: EmailJSService
   ) { }
 
   ngOnInit() {
@@ -196,15 +198,23 @@ export class CartSummaryComponent implements OnInit, OnChanges {
       this.blockUI.start();
       const orderSummary = this.form.value;
       const newOrder = createOrderHelper(orderSummary, this.cartId);
-      this.orderService.saveOrder(newOrder).subscribe((res: SaveOrderResponse) => {
-        this.blockUI.stop();
+      this.orderService.saveOrder(newOrder).subscribe(async (res: SaveOrderResponse) => {
         this.isSubmitted = false;
+        this.alertService.showAlerts(res);
         if (res.HasErrors || res.HasWarnings) {
-          this.alertService.showAlerts(res);
           return;
         }
         this.cartService.updateCartItems();
         this.orderNumber = res.OrderNumber
+        const email = await this._emailJSService.sendEmailNewOrder(res.CustomerName, res.CustomerEmail, res.OrderNumber);
+        if (!email) {
+          this.alertService.openAlert({
+            primaryText: 'Error al enviar el correo',
+            secondaryText: 'El correo no pudo ser enviado, por favor contactanos a nuestro whatsapp',
+            type: 'error'
+          })
+        }
+        this.blockUI.stop();
         this.openModal()
       })
     }

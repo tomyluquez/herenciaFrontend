@@ -10,6 +10,8 @@ import { CommonModule } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormErrorComponent } from '../../../Form/Pages/form-error/form-error.component';
 import { ResponseMessages } from '../../../Other/Interface/ResponseMessages.Interface';
+import { OrderStatusEnum } from '../../Enums/order-status-enum';
+import { EmailJSService } from '../../../Other/Services/emailJS.service';
 
 @Component({
   selector: 'app-form-order-status',
@@ -26,7 +28,7 @@ export class FormOrderStatusComponent implements OnInit, OnChanges {
 
   form!: FormGroup
   statesOptions!: NameAndId[]
-  constructor(private _orderService: OrderService, private _alertService: AlertService) {
+  constructor(private _orderService: OrderService, private _alertService: AlertService, private _emailJSService: EmailJSService) {
   }
 
   ngOnInit() {
@@ -62,11 +64,21 @@ export class FormOrderStatusComponent implements OnInit, OnChanges {
 
     this.blockUI.start();
     const newStatus = this.form.controls['StatusId'].value
-    this._orderService.changeStatusOrder(this.order.Id, newStatus).subscribe((res: ResponseMessages) => {
+    this._orderService.changeStatusOrder(this.order.Id, newStatus).subscribe(async (res: ResponseMessages) => {
       this._alertService.showAlerts(res);
       if (res.HasSuccess) {
         this.order.OrderStatusId = newStatus;
         this.newStatus.emit(this.order);
+        if (newStatus === OrderStatusEnum.Prepared) {
+          const email = await this._emailJSService.sendEmailDeliveryOrder(this.order.customerName, this.order.CustomerEmail!, this.order.OrderNumber);
+          if (!email) {
+            this._alertService.openAlert({
+              primaryText: 'Error al enviar el correo',
+              secondaryText: 'El correo no pudo ser enviado, por favor contactanos a nuestro whatsapp',
+              type: 'error'
+            })
+          }
+        }
       }
       this.blockUI.stop();
     })
