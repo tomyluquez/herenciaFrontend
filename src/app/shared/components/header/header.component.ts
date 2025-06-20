@@ -42,6 +42,7 @@ export class HeaderComponent {
   // tiene que estar escuchando el servicio de auth para actualizar si esta logueado o no
   isLoggin = false;
   role!: number;
+  userName?: string | null;
 
   quantityItems = 0;
 
@@ -54,6 +55,7 @@ export class HeaderComponent {
       this.isLoggin = this._authService.getLoggedIn();
       if (this.isLoggin) {
         this.role = this._authService.getRole();
+        this.userName = this._authService.getCustomerName();
       }
     })
 

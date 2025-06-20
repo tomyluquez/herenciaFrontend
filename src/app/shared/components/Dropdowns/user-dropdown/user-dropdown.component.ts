@@ -16,6 +16,7 @@ export class UserDropdownComponent {
   @Input({ required: true }) isOpen = false;
   @Input({ required: true }) isLoggin = false;
   @Input() role?: number;
+  @Input() userName?: string | null;
 
   routesModels = routesModel;
 

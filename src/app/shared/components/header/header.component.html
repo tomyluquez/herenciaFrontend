@@ -50,7 +50,8 @@
             </div>
             <div class="relative">
                 <i class="fa-regular fa-user icon" (click)="toggleDropdownUser()"></i>
-                <app-user-dropdown [isOpen]="isOpenDropdownUser" [isLoggin]="isLoggin" [role]="role" />
+                <app-user-dropdown [isOpen]="isOpenDropdownUser" [isLoggin]="isLoggin" [role]="role"
+                    [userName]="userName" />
 
             </div>
             <i class="fa-solid fa-magnifying-glass icon" (click)="openModal()"></i>
