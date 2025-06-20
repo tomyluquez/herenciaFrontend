@@ -1,19 +1,60 @@
-<div [ngClass]="isOpen ? 'openDropdown' : 'hidden'" class="z-10">
-    <ul class="container-dropdown">
-        @if(isLoggin){
-        <li class="dropdown-row">
-            <a (click)="goTo(routesModels.CustomerProfile)" *ngIf="!isAdmin()" class="dropdown-row-value"><i
-                    class="fa-regular fa-circle-user mr-2"></i> Mi
-                Perfil</a>
-            <a (click)="goTo(routesModels.ControlPanel)" *ngIf="isAdmin()" class="dropdown-row-value"><i
-                    class="fa-regular fa-circle-user mr-2"></i> Panel de control</a>
-        </li>
+<div [ngClass]="isOpen ? 'block' : 'hidden'"
+    class="fixed md:absolute right-0 mt-2 w-56 z-30 transition-all duration-200 ease-out origin-top-right">
+    <div class="bg-white rounded-lg shadow-xl border border-gray-100 overflow-hidden">
+        <!-- Header del usuario -->
+        @if(isLoggin && userName) {
+        <div class="px-4 py-3 border-b border-gray-100">
+            <p class="text-sm text-primary-600">Hola,</p>
+            <p class="font-medium text-primary-900 truncate">{{userName}}</p>
+        </div>
         }
-        <li class="dropdown-row">
-            <a *ngIf="!isLoggin" class="dropdown-row-value" (click)="goTo(routesModels.Login)"><i
-                    class="fa-solid fa-arrow-right-to-bracket mr-2"></i> Iniciar sesión</a>
-            <a (click)="logOut()" *ngIf="isLoggin" class="dropdown-row-value"><i
-                    class="fa-solid fa-arrow-right-from-bracket mr-2"></i> Cerrar sesión</a>
-        </li>
-    </ul>
+
+        <!-- Opciones del menú -->
+        <ul class="py-1">
+            @if(isLoggin) {
+            <!-- Opción para perfil o panel admin -->
+            <li>
+                <a (click)="isAdmin() ? goTo(routesModels.ControlPanel) : goTo(routesModels.CustomerProfile)"
+                    class="flex items-center px-4 py-2.5 text-primary-700 hover:bg-primary-50 transition-colors cursor-pointer">
+                    <i [ngClass]="isAdmin() ? 'fas fa-sliders-h' : 'fas fa-user-circle'"
+                        class="mr-3 text-primary-500 w-5 text-center"></i>
+                    {{isAdmin() ? 'Panel de Control' : 'Mi Perfil'}}
+                </a>
+            </li>
+
+            <!-- Separador -->
+            <li class="border-t border-gray-100 my-1"></li>
+            }
+
+            <!-- Opción de login/logout -->
+            <li>
+                @if(!isLoggin) {
+                <a (click)="goTo(routesModels.Login)"
+                    class="flex items-center px-4 py-2.5 text-primary-700 hover:bg-primary-50 transition-colors cursor-pointer">
+                    <i class="fas fa-sign-in-alt mr-3 text-primary-500 w-5 text-center"></i>
+                    Iniciar Sesión
+                </a>
+                } @else {
+                <a (click)="logOut()"
+                    class="flex items-center px-4 py-2.5 text-red-600 hover:bg-red-50 transition-colors cursor-pointer">
+                    <i class="fas fa-sign-out-alt mr-3 text-red-500 w-5 text-center"></i>
+                    Cerrar Sesión
+                </a>
+                }
+            </li>
+
+            <!-- Opción de registro para no logueados -->
+            @if(!isLoggin) {
+            <li class="border-t border-gray-100"></li>
+            <li>
+                <a (click)="goTo(routesModels.Register)"
+                    class="flex items-center px-4 py-2.5 text-primary-700 hover:bg-primary-50 transition-colors cursor-pointer">
+                    <i class="fas fa-user-plus mr-3 text-primary-500 w-5 text-center"></i>
+                    Crear Cuenta
+                </a>
+            </li>
+            }
+        </ul>
+
+    </div>
 </div>

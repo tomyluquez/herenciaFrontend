@@ -1,30 +1,102 @@
-<div [ngClass]="isOpen ? 'openDropdown' : 'hidden'" class="z-10">
-    <ul class="container-dropdown">
-        @if(isLoggin){
-        @if(loadItems){
-        <p>Cargando...</p>
-        }@else {
-        @if(cartItems && cartItems.length > 0){
-        @for (cartItem of cartItems; track $index) {
-        <li class="dropdown-row justify-between">
-            <span>{{ cartItem.Quantity }}x </span>
-            <span>{{cartItem.ProductName}}</span>
-            <i (click)="removeCartItem(cartItem.Id)" class="fa-solid fa-trash text-primary-400 cursor-pointer"></i>
-        </li>
-        <app-divider />
-        }
-        } @else {
-        <p class="text-center p-4">Tu carrito se encuentra vacío</p>
-        }
-        }
-        <button class="primary-button" (click)="seeCart()">Ver mi Carrito</button>
-        } @else {
-        <div class="text-center">
-            <p class="mb-2">¡Hola! Para poder ver o agregar productos a tu carrito, inicia sesión.</p>
-            <button class="primary-button" (click)="redirectLogin()">Iniciar sesión</button>
-            <p class="mt-2 text-gray-500">¿No tienes cuenta? <a href="/Register" class="text-blue-500">Regístrate
-                    aquí</a></p>
+<div [ngClass]="isOpen ? 'block' : 'hidden'"
+    class="fixed md:absolute right-0 mt-2 w-full md:w-96 z-30 transition-all duration-200 ease-out transform origin-top-right">
+    <div class="bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden">
+        <!-- Header del dropdown -->
+        <div class="bg-primary-600 text-white px-4 py-3 flex justify-between items-center">
+            <h3 class="font-semibold text-lg">
+                <i class="fas fa-shopping-cart mr-2"></i>
+                Mi Carrito
+            </h3>
+            <span *ngIf="isLoggin && cartItems && cartItems.length > 0"
+                class="bg-primary-400 text-xs px-2 py-1 rounded-full">
+                {{cartItems.length}} {{cartItems.length === 1 ? 'ítem' : 'ítems'}}
+            </span>
         </div>
-        }
-    </ul>
+
+        <!-- Contenido del dropdown -->
+        <div class="max-h-96 overflow-y-auto custom-scrollbar">
+            @if(isLoggin) {
+            @if(loadItems) {
+            <!-- Estado de carga -->
+            <div class="p-6 flex flex-col items-center justify-center">
+                <i class="fas fa-spinner fa-spin text-primary-500 text-2xl mb-3"></i>
+                <p class="text-primary-700">Cargando tu carrito...</p>
+            </div>
+            } @else {
+            @if(cartItems && cartItems.length > 0) {
+            <!-- Lista de productos -->
+            <ul class="divide-y divide-gray-100">
+                @for (cartItem of cartItems; track $index) {
+                <li class="px-4 py-3 hover:bg-primary-50 transition-colors duration-150">
+                    <div class="flex items-start gap-3">
+                        <!-- Imagen del producto -->
+                        <div class="flex-shrink-0 w-16 h-16 bg-gray-100 rounded-lg overflow-hidden">
+                            <img [src]="cartItem.UrlImage" alt="{{cartItem.ProductName}}"
+                                class="w-full h-full object-cover">
+                        </div>
+
+                        <!-- Detalles del producto -->
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-medium text-primary-900 truncate">{{cartItem.ProductName}}</h4>
+                            <p class="text-sm text-primary-600">{{cartItem.Quantity}} × {{cartItem.Price| currency}}</p>
+                            <p class="font-semibold text-primary-800">{{cartItem.Quantity * cartItem.Price| currency}}
+                            </p>
+                        </div>
+
+                        <!-- Botón eliminar -->
+                        <button (click)="removeCartItem(cartItem.Id); $event.stopPropagation()"
+                            class="text-gray-400 hover:text-red-500 transition-colors p-1">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </li>
+                }
+            </ul>
+
+            <!-- Resumen -->
+            <div class="border-t border-gray-200 px-4 py-3 bg-primary-50">
+                <div class="flex justify-between font-semibold text-primary-900 mb-3">
+                    <span>Total:</span>
+                    <span>{{calculateTotal() | currency}}</span>
+                </div>
+                <button (click)="seeCart()"
+                    class="w-full py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2">
+                    <i class="fas fa-shopping-bag"></i>
+                    Ver mi carrito
+                </button>
+            </div>
+            } @else {
+            <!-- Carrito vacío -->
+            <div class="p-6 flex flex-col items-center justify-center text-center">
+                <i class="fas fa-shopping-basket text-primary-300 text-4xl mb-3"></i>
+                <h4 class="font-medium text-primary-800 mb-1">Tu carrito está vacío</h4>
+                <p class="text-primary-600 text-sm mb-4">Agrega productos para comenzar</p>
+                <button (click)="goToProducts()"
+                    class="px-4 py-2 border border-primary-600 text-primary-600 rounded-lg hover:bg-primary-50 transition-colors">
+                    Explorar productos
+                </button>
+            </div>
+            }
+            }
+            } @else {
+            <!-- Usuario no logueado -->
+            <div class="p-6 text-center">
+                <i class="fas fa-user-lock text-primary-400 text-3xl mb-3"></i>
+                <h4 class="font-medium text-primary-800 mb-2">Inicia sesión para ver tu carrito</h4>
+                <p class="text-primary-600 text-sm mb-4">Guarda tus productos favoritos y accede a ofertas exclusivas
+                </p>
+
+                <button (click)="goToLogin()"
+                    class="w-full py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-medium mb-2 transition-colors">
+                    Iniciar sesión
+                </button>
+
+                <p class="text-sm text-primary-500">
+                    ¿No tienes cuenta?
+                    <a (click)="goToLogin()" class="text-primary-600 hover:underline font-medium">Regístrate aquí</a>
+                </p>
+            </div>
+            }
+        </div>
+    </div>
 </div>

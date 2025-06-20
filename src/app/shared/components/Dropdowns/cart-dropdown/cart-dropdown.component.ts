@@ -11,7 +11,7 @@ import { AlertService } from '../../../../Modules/Other/Services/alert.service';
 @Component({
   selector: 'app-cart-dropdown',
   standalone: true,
-  imports: [CommonModule, DividerComponent, RouterModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './cart-dropdown.component.html',
   styleUrl: '../dropdown.css',
 })
@@ -42,10 +42,21 @@ export class CartDropdownComponent implements OnInit {
     this.getCartItems();
   }
 
-  redirectLogin() {
+  goToLogin() {
     this.isOpen = false;
     this._router.navigate(['/Login']);
   }
+
+  goToRegister() {
+    this.isOpen = false;
+    this._router.navigate(['/Regsiter']);
+  }
+
+  goToProducts() {
+    this.isOpen = false;
+    this._router.navigate(['/Products']);
+  }
+
 
   getCartItems() {
     this._cartService.getCartItemsByUserId().subscribe((res) => {
@@ -68,5 +79,8 @@ export class CartDropdownComponent implements OnInit {
   seeCart() {
     this.isOpen = false;
     this._router.navigate(['/Cart']);
+  }
+  calculateTotal() {
+    return this.cartItems?.reduce((acc, i) => acc + (i.Price || 0), 0);
   }
 }

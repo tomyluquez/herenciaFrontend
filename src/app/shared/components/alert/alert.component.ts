@@ -23,4 +23,30 @@ export class AlertComponent {
       this.type = this._alertServices.type();
     });
   }
+
+  progressWidth = 100;
+  private timer: any;
+
+  showAlert() {
+    this.isVisible = true;
+    this.startProgressBar();
+  }
+
+  private startProgressBar() {
+    this.progressWidth = 100;
+    clearInterval(this.timer);
+
+    this.timer = setInterval(() => {
+      this.progressWidth -= 1;
+      if (this.progressWidth <= 0) {
+        clearInterval(this.timer);
+        this.isVisible = false;
+      }
+    }, 50); // Ajusta este valor para cambiar la velocidad
+  }
+
+  dismissAlert() {
+    clearInterval(this.timer);
+    this.isVisible = false;
+  }
 }
