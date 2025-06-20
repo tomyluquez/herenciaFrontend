@@ -13,6 +13,7 @@ import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { AlertService } from '../../../Other/Services/alert.service';
 import { CartService } from '../../../Cart/Services/cart.service';
 import { UserTokenVM } from '../../../User/Models/User.Token.model';
+import { UserRoleEnum } from '../../../User/Enums/user-role-enum';
 
 @Component({
   selector: 'app-login',
@@ -75,7 +76,11 @@ export class LoginComponent implements OnInit {
           this._authService.setCustomerName(String(res.CustomerName));
           this._authService.setLoggedIn();
           this._cartService.updateCartItems();
-          this._router.navigate(['/Home']);
+          if (res.Role === UserRoleEnum.Admin) {
+            this._router.navigate(['/ControlPanel']);
+          } else {
+            this._router.navigate(['/Home']);
+          }
           this.blockUI.stop();
         });
     }
