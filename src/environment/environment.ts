@@ -1,3 +1,3 @@
 export const environment = {
-  apiUrl: 'https://backendherencia.onrender.com/api/v1',
+  apiUrl: 'https://herencia-api.vercel.app/api/v1',
 };
