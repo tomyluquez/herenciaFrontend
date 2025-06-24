@@ -220,6 +220,12 @@ export class CartSummaryComponent implements OnInit, OnChanges {
     }
   }
 
+  getShippingCostText(): string {
+    const shippingMethod = this.form.get('shippingMethodId')?.value
+    const shippingMethodValue = shippingMethod ? this.checkOutInfo.ShippingMethods.find(s => s.Id == shippingMethod)?.Value || '' : '';
+    return shippingMethodValue === 'countryDelivery' ? 'A convenir' : 'Envio Gratis!'
+  }
+
   openModal() {
     this._modalService.toggleModal();
   }

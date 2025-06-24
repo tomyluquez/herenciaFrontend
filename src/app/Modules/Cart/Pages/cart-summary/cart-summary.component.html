@@ -39,7 +39,6 @@
     <div class="w-full flex items-center justify-between">
         <p>Costo de envío:</p>
         @if (form.get('shippingCost')?.value) {
-
         <p>
 
             {{
@@ -47,7 +46,7 @@
             }}
         </p>
         }@else {
-        <p class="text-green-500">Envio Gratis!</p>
+        <p class="text-green-500">{{getShippingCostText()}}</p>
         }
     </div>
 
