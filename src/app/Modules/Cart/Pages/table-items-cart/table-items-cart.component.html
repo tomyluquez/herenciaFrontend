@@ -1,44 +1,76 @@
-<table class="w-full" *blockUI="'table-items-cart'">
-    <thead>
-        <tr>
-            <th>Imagen</th>
-            <th>Producto</th>
-            <th>Precio</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        @for (cartItem of cartItems; track $index) {
-        <tr>
-            <td class="text-center">
-                <img *ngIf="cartItem.UrlImage" class="pre-image m-auto" src="{{cartItem.UrlImage}}"
-                    alt="Imagen del producto">
-                <div *ngIf="!cartItem.UrlImage" class="pre-image m-auto border-2 border-white bg-gray-200"></div>
-            </td>
-            <td class="text-center">
-                <p>{{cartItem.ProductName}}</p>
-            </td>
-            <td class="text-center">
-                <p>{{cartItem.Price | currency: "$"}}</p>
-            </td>
-            <td class="text-center">
-                <div class="flex-center gap-4">
-                    @if(cartItem.Quantity > 1){
-
-                    <button class="flex-center pagination-button" (click)="decrement(cartItem.Id)"
-                        [disabled]="cartItem.Quantity === 1">
-                        <i class="fa-solid fa-minus"></i>
+<div class="w-full overflow-x-auto rounded-lg border border-gray-200 shadow-sm" *blockUI="'table-items-cart'">
+    <table class="min-w-[700px] w-full divide-y divide-gray-200">
+        <thead class="bg-primary-600">
+            <tr>
+                <th scope="col"
+                    class="px-4 py-3 text-left text-xs font-medium text-white uppercase tracking-wider whitespace-nowrap">
+                    Producto</th>
+                <th scope="col"
+                    class="px-4 py-3 text-left text-xs font-medium text-white uppercase tracking-wider whitespace-nowrap">
+                    Precio Unitario</th>
+                <th scope="col"
+                    class="px-4 py-3 text-left text-xs font-medium text-white uppercase tracking-wider whitespace-nowrap">
+                    Cantidad</th>
+                <th scope="col"
+                    class="px-4 py-3 text-left text-xs font-medium text-white uppercase tracking-wider whitespace-nowrap">
+                    Subtotal</th>
+                <th scope="col"
+                    class="px-4 py-3 text-right text-xs font-medium text-white uppercase tracking-wider whitespace-nowrap">
+                    Acciones</th>
+            </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+            @for (cartItem of cartItems; track $index) {
+            <tr class="hover:bg-primary-50 transition-colors duration-150">
+                <td class="px-4 py-4 whitespace-nowrap min-w-[200px]">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0 h-16 w-16 rounded-md overflow-hidden bg-gray-100">
+                            @if (cartItem.UrlImage) {
+                            <img class="h-full w-full object-cover" src="{{cartItem.UrlImage}}"
+                                alt="{{cartItem.ProductName}}">
+                            } @else {
+                            <div class="h-full w-full flex items-center justify-center text-gray-400">
+                                <i class="fas fa-image text-xl"></i>
+                            </div>
+                            }
+                        </div>
+                        <div class="ml-4">
+                            <div class="text-sm font-medium text-primary-900">{{cartItem.ProductName}}</div>
+                            @if(cartItem.SizeName) {
+                            <div class="text-sm text-primary-500">{{cartItem.SizeName}}</div>
+                            }
+                        </div>
+                    </div>
+                </td>
+                <td class="px-4 py-4 whitespace-nowrap text-sm text-primary-900">
+                    {{cartItem.Price | currency}}
+                </td>
+                <td class="px-4 py-4 whitespace-nowrap min-w-[140px]">
+                    <div class="flex items-center space-x-2">
+                        <button (click)="decrement(cartItem.Id)" [disabled]="cartItem.Quantity <= 1"
+                            class="h-8 w-8 rounded-full border border-gray-300 flex items-center justify-center text-primary-600 hover:bg-primary-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                            <i class="fas fa-minus text-xs"></i>
+                        </button>
+                        <span class="text-sm font-medium w-6 text-center">
+                            {{cartItem.Quantity}}
+                        </span>
+                        <button (click)="increment(cartItem.Id)"
+                            class="h-8 w-8 rounded-full border border-gray-300 flex items-center justify-center text-primary-600 hover:bg-primary-100 transition-colors">
+                            <i class="fas fa-plus text-xs"></i>
+                        </button>
+                    </div>
+                </td>
+                <td class="px-4 py-4 whitespace-nowrap text-sm font-semibold text-primary-900">
+                    {{(cartItem.Price * cartItem.Quantity) | currency}}
+                </td>
+                <td class="px-4 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <button (click)="removeCartItem(cartItem.Id)"
+                        class="text-red-600 hover:text-red-900 transition-colors">
+                        <i class="fas fa-trash-alt"></i>
                     </button>
-                    }
-                    <p>{{cartItem.Quantity}}</p>
-                    <button class="flex-center ml-2 pagination-button" (click)="increment(cartItem.Id)">
-                        <i class="fa-solid fa-plus"></i>
-                    </button>
-                    <i (click)="removeCartItem(cartItem.Id)"
-                        class="fa-solid fa-trash text-primary-400 cursor-pointer"></i>
-                </div>
-            </td>
-        </tr>
-        }
-    </tbody>
-</table>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

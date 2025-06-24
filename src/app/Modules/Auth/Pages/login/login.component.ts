@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DividerComponent } from '../../../../shared/components/divider/divider.component';
 import { AuthService } from '../../Services/auth.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { CommonModule, Location } from '@angular/common';
 import {
   FormControl,
   FormGroup,
@@ -19,7 +19,8 @@ import { UserRoleEnum } from '../../../User/Enums/user-role-enum';
   selector: 'app-login',
   standalone: true,
   imports: [
-    DividerComponent,
+    RouterLink,
+    CommonModule,
     ReactiveFormsModule,
   ],
   templateUrl: './login.component.html',
@@ -30,6 +31,7 @@ export class LoginComponent implements OnInit {
 
   isLoading = false;
   isSubmitted = false;
+  showPassword = false;
 
   formLogin!: FormGroup;
 
@@ -84,5 +86,9 @@ export class LoginComponent implements OnInit {
           this.blockUI.stop();
         });
     }
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 }

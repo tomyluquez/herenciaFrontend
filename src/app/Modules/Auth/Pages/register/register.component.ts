@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { AuthService } from '../../Services/auth.service';
 import { CommonModule, Location } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ResponseMessages } from '../../../Other/Interface/ResponseMessages.Interface';
 import { AlertService } from '../../../Other/Services/alert.service';
 
@@ -16,7 +16,7 @@ import { AlertService } from '../../../Other/Services/alert.service';
   selector: 'app-register',
   standalone: true,
   imports: [
-    DividerComponent,
+    RouterLink,
     ReactiveFormsModule,
     CommonModule,
   ],
@@ -26,6 +26,7 @@ import { AlertService } from '../../../Other/Services/alert.service';
 export class RegisterComponent {
   isLoading = false;
   isSubmitted = false;
+  seePasswords = false;
 
   formRegister!: FormGroup;
 
@@ -41,6 +42,7 @@ export class RegisterComponent {
       password: new FormControl(null, Validators.required),
       confirmPassword: new FormControl(null, Validators.required),
       userName: new FormControl(null, Validators.required),
+      phone: new FormControl(null, Validators.required),
     });
   }
 
@@ -50,6 +52,7 @@ export class RegisterComponent {
     const password = this.formRegister.get('password')?.value;
     const confirmPassword = this.formRegister.get('confirmPassword')?.value;
     const userName = this.formRegister.get('userName')?.value;
+    const phone = this.formRegister.get('phone')?.value;
 
     if (password !== confirmPassword) {
       this.formRegister.controls['confirmPassword'].setErrors({
@@ -65,6 +68,7 @@ export class RegisterComponent {
           email,
           password,
           userName,
+          phone
         })
         .subscribe((res: ResponseMessages) => {
           this._alertService.showAlerts(res);
@@ -81,4 +85,10 @@ export class RegisterComponent {
         });
     }
   }
+
+  // Alternar visibilidad de contraseñas
+  togglePasswordVisibility() {
+    this.seePasswords = !this.seePasswords;
+  }
+
 }
