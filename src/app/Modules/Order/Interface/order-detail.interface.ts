@@ -19,6 +19,8 @@ export interface IOrderDetail {
     ShippingMethodId?: number;
     ShippingCost?: number;
     CustomerName: string;
+    CustomerPhone?: number;
+    CustomerEmail?: string;
     Details?: OrderItem[];
     CartId: number;
 }
