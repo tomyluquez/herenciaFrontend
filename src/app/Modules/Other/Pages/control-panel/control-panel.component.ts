@@ -11,6 +11,7 @@ import { CategoryListComponent } from '../../../Category/Pages/category-list/cat
 import { SizeListComponent } from '../../../Size/Pages/size-list/size-list.component';
 import { PriceListListComponent } from '../../../PriceList/Pages/price-list-list/price-list-list.component';
 import { ConfigListComponent } from '../../../Config/Pages/config-list/config-list.component';
+import { CouponDiscountListComponent } from "../coupon-discount-list/coupon-discount-list.component";
 
 @Component({
   selector: 'app-control-panel',
@@ -23,8 +24,7 @@ import { ConfigListComponent } from '../../../Config/Pages/config-list/config-li
     CategoryListComponent,
     SizeListComponent,
     PriceListListComponent,
-    ConfigListComponent
-  ],
+    ConfigListComponent, CouponDiscountListComponent],
   templateUrl: './control-panel.component.html',
   styleUrl: './control-panel.component.css',
 })
