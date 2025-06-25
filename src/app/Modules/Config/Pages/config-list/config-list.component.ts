@@ -94,7 +94,7 @@ export class ConfigListComponent {
       });
   }
 
-  updateStock() {
+  updateConfig() {
     this.search();
     this.isEdit = false;
     this._rSidebarSerive.closeSidebar();

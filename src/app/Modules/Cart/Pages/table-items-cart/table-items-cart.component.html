@@ -1,5 +1,5 @@
 <div class="w-full overflow-x-auto rounded-lg border border-gray-200 shadow-sm" *blockUI="'table-items-cart'">
-    <table class="min-w-[700px] w-full divide-y divide-gray-200">
+    <table class="hidden sm:table min-w-full min-w-[700px] w-full divide-y divide-gray-200">
         <thead class="bg-primary-600">
             <tr>
                 <th scope="col"
@@ -73,4 +73,44 @@
             }
         </tbody>
     </table>
+    <div class="sm:hidden divide-y divide-gray-200">
+        @for (cartItem of cartItems; track $index) {
+        <div class="py-4 px-2">
+            <div class="flex items-center gap-4">
+                <!-- Imagen -->
+                <div class="h-16 w-16 flex-shrink-0 bg-gray-100 rounded-md overflow-hidden">
+                    @if (cartItem.UrlImage) {
+                    <img src="{{cartItem.UrlImage}}" class="w-full h-full object-cover" />
+                    } @else {
+                    <div class="h-full w-full flex items-center justify-center text-gray-400">
+                        <i class="fas fa-image text-xl"></i>
+                    </div>
+                    }
+                </div>
+                <!-- Info -->
+                <div class="flex-1">
+                    <div class="text-sm font-medium text-primary-900">{{cartItem.ProductName}}</div>
+                    <div class="text-xs text-primary-500" *ngIf="cartItem.SizeName">{{cartItem.SizeName}}</div>
+                    <div class="text-xs mt-1">Precio: {{cartItem.Price | currency}}</div>
+                    <div class="text-xs mt-1">Subtotal: {{(cartItem.Price * cartItem.Quantity) | currency}}</div>
+                    <div class="flex items-center gap-2 mt-2">
+                        <button (click)="decrement(cartItem.Id)" [disabled]="cartItem.Quantity <= 1"
+                            class="h-7 w-7 text-xs border rounded-full flex items-center justify-center">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <span class="text-sm">{{cartItem.Quantity}}</span>
+                        <button (click)="increment(cartItem.Id)"
+                            class="h-7 w-7 text-xs border rounded-full flex items-center justify-center">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <button (click)="removeCartItem(cartItem.Id)"
+                            class="ml-auto text-red-600 hover:text-red-900 text-xs">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
 </div>

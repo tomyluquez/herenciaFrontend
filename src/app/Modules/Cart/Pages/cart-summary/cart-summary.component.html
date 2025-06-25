@@ -3,23 +3,23 @@
 </app-modal>
 
 @if(!isLoading) {
-<div class="bg-white rounded-lg md:rounded-xl shadow-lg overflow-hidden max-w-4xl mx-4 md:mx-auto my-6">
+<div class="bg-white rounded-lg md:rounded-xl shadow-lg overflow-hidden max-w-4xl mx-auto my-6">
     <!-- Encabezado -->
     <div class="bg-primary-600 text-white px-4 py-3 md:px-6 md:py-4">
         <h2 class="text-lg md:text-xl font-bold">Finalizar Compra</h2>
         <p class="text-xs md:text-sm text-primary-100">Revisa y confirma tu pedido</p>
     </div>
 
-    <div class="p-4 md:p-6">
-        <form [formGroup]="form" (ngSubmit)="proceedToPayment()" class="space-y-4 md:space-y-6">
+    <div class="p-4 md:p-6 overflow-x-auto">
+        <form [formGroup]="form" (ngSubmit)="proceedToPayment()" class="w-full max-w-full space-y-4 md:space-y-6">
             <!-- Cupón de descuento -->
             <app-discount-coupon class="w-full" (discountEmit)="applyDiscuntCoupon($event)"
                 [hasAddedCoupon]="hasAddedCoupon" />
 
             <!-- Método de envío -->
-            <div class="space-y-1 md:space-y-2">
+            <div class="space-y-1 md:space-y-2 w-full">
                 <label class="block text-xs md:text-sm font-medium text-primary-700">Método de envío</label>
-                <ng-select class="custom-ng-select w-full" [items]="checkOutInfo!.ShippingMethods" bindLabel="Name"
+                <ng-select class="custom-ng-select" [items]="checkOutInfo!.ShippingMethods" bindLabel="Name"
                     bindValue="Id" placeholder="Selecciona método de envío" formControlName="shippingMethodId"
                     (change)="applyChargeToShipping($event)">
                     <ng-template ng-option-tmp let-item="item">
@@ -40,17 +40,17 @@
             </div>
 
             <!-- Método de pago -->
-            <div class="space-y-1 md:space-y-2">
+            <div class="space-y-1 md:space-y-2 w-full">
                 <label class="block text-xs md:text-sm font-medium text-primary-700">Método de pago</label>
-                <ng-select class="custom-ng-select w-full" [items]="checkOutInfo!.PaymentsMethods" bindLabel="Name"
+                <ng-select class="custom-ng-select" [items]="checkOutInfo!.PaymentsMethods" bindLabel="Name"
                     bindValue="Id" placeholder="Selecciona método de pago" formControlName="paymentMethodId"
                     (change)="applyExtraPaymentDiscount($event)">
                     <ng-template ng-option-tmp let-item="item">
                         <div class="flex flex-col md:flex-row md:justify-between md:items-center">
                             <span class="text-sm">{{item.Name}}</span>
-                            @if(item.DiscountPercentage > 0) {
+                            @if(item.Disccount!== "0") {
                             <span class="text-green-600 text-xs md:text-sm font-medium">
-                                {{item.DiscountPercentage}}% descuento
+                                {{item.Disccount}}% descuento
                             </span>
                             }
                         </div>
@@ -73,7 +73,7 @@
                     <span class="font-medium">{{ form.get('subtotal')?.value | currency }}</span>
                 </div>
 
-                <div class="flex justify-between text-xs md:text-sm">
+                <div class="flex justify-between text-xs md:text-sm" *ngIf="form.get('shippingMethodId')?.value">
                     <span class="text-primary-600">Costo de envío:</span>
                     @if (form.get('shippingCost')?.value) {
                     <span class="font-medium">{{ form.get('shippingCost')?.value | currency }}</span>
@@ -82,26 +82,28 @@
                     }
                 </div>
 
-                <div class="flex justify-between text-xs md:text-sm items-center">
+                <div class="flex justify-between text-xs md:text-sm items-center"
+                    *ngIf="form.get('discountCouponId')?.value">
                     <span class="text-primary-600">Descuento cupón:</span>
                     <div class="flex items-center gap-1 md:gap-2">
-                        <span class="font-medium text-red-600">
+                        <span class="font-medium text-green-600">
                             -{{ form.get('discountCoupon')?.value | currency }}
                             @if(form.get('discountCouponPercentage')?.value) {
                             <span class="text-primary-500">({{ form.get('discountCouponPercentage')?.value }}%)</span>
                             }
                         </span>
                         @if (form.get('discountCoupon')?.value) {
-                        <button type="button" (click)="removeDiscount()" class="text-red-500 hover:text-red-700">
+                        <button type="button" (click)="removeDiscount()" class="text-green-500 hover:text-green-700">
                             <i class="fas fa-times text-xs"></i>
                         </button>
                         }
                     </div>
                 </div>
 
-                <div class="flex justify-between text-xs md:text-sm">
+                <div class="flex justify-between text-xs md:text-sm"
+                    *ngIf="form.get('discountPaymentPercentage')?.value">
                     <span class="text-primary-600">Descuento por pago:</span>
-                    <span class="font-medium text-red-600">
+                    <span class="font-medium text-green-600">
                         -{{ form.get('discountPayment')?.value | currency }}
                         @if(form.get('discountPaymentPercentage')?.value) {
                         <span class="text-primary-500">({{ form.get('discountPaymentPercentage')?.value }}%)</span>

@@ -3,8 +3,9 @@ import { environment } from '../../../../environment/environment';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { map, Observable, of } from 'rxjs';
 import { CompanyInfoVM, ICompanyInfoVM } from '../Interfaces/Config.interface';
-import { SearchConfigList } from '../Interfaces/Config-list.interface';
+import { IConfig, SearchConfigList } from '../Interfaces/Config-list.interface';
 import { ConfigVM } from '../Models/Config-list.model';
+import { ResponseMessages } from '../../Other/Interface/ResponseMessages.Interface';
 
 @Injectable({
   providedIn: 'root',
@@ -45,5 +46,13 @@ export class ConfigService {
       .set('limit', search.Pagination.Limit)
 
     return this._http.get<ConfigVM>(`${environment.apiUrl}/config/getConfig`, { headers, params });
+  }
+
+  saveConfig(newConfig: IConfig): Observable<ResponseMessages> {
+    const token = localStorage.getItem('token'); // Obtiene el token almacenado
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`, // Incluye el token en el encabezado
+    });
+    return this._http.post<ResponseMessages>(`${environment.apiUrl}/config/saveConfig`, newConfig, { headers });
   }
 }

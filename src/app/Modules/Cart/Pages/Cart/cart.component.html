@@ -1,10 +1,10 @@
-<section class="container-gral px-4 w-full overflow-x-hidden" *blockUI="'main'">
-    <div class="flex flex-col-reverse md:flex-row justify-between items-start gap-6 w-full">
-        <div class="container-cart-cards flex flex-col w-full md:w-[70%] overflow-x-auto" *blockUI="'items-cart'">
+<section class="container-gral !px-2 md:px-4 w-full overflow-x-hidden" *blockUI="'main'">
+    <div class="flex flex-col lg:flex-row justify-between items-start md:items-stretch gap-4 md:gap-6">
+        <div class="container-cart-cards flex flex-col w-full lg:w-[70%] overflow-x-auto" *blockUI="'items-cart'">
             <app-table-items-cart [cartItems]="cartItems" class="w-full" />
         </div>
 
-        <div class="container-cart-cards flex flex-col w-full md:w-[30%]">
+        <div class="container-cart-cards flex flex-col w-full lg:w-[30%]">
             <app-cart-summary [cartItems]="cartItems" [cartId]="cartId" class="w-full" />
         </div>
     </div>

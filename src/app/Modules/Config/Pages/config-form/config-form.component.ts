@@ -3,27 +3,28 @@ import { FormErrorComponent } from '../../../Form/Pages/form-error/form-error.co
 import { BlockUI, BlockUIModule, NgBlockUI } from 'ng-block-ui';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ICategoryVM } from '../../../Category/Interfaces/Categories.interface';
 import { CategoryService } from '../../../Category/Services/category.service';
 import { AlertService } from '../../../Other/Services/alert.service';
 import { ResponseMessages } from '../../../Other/Interface/ResponseMessages.Interface';
+import { IConfig } from '../../Interfaces/Config-list.interface';
+import { ConfigService } from '../../Services/config.service';
 
 @Component({
   selector: 'app-config-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, BlockUIModule],
+  imports: [CommonModule, ReactiveFormsModule, BlockUIModule, FormErrorComponent],
   templateUrl: './config-form.component.html',
   styleUrl: './config-form.component.css'
 })
 export class ConfigFormComponent {
-  @BlockUI('category-form') blockUI!: NgBlockUI
-  @Input() category!: ICategoryVM | null;
-  @Output() newCategory = new EventEmitter<ICategoryVM>();
+  @BlockUI('config-form') blockUI!: NgBlockUI
+  @Input() config!: IConfig | null;
+  @Output() newConfig = new EventEmitter<IConfig>();
 
   form!: FormGroup
   loading = true;
 
-  constructor(private _categoryService: CategoryService, private _alertService: AlertService) {
+  constructor(private _configService: ConfigService, private _alertService: AlertService) {
   }
 
   ngOnInit() {
@@ -34,40 +35,40 @@ export class ConfigFormComponent {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (!changes['category'].firstChange) {
-      this.category = changes['category'].currentValue;
+    if (!changes['config'].firstChange) {
+      this.config = changes['config'].currentValue;
       this.createForm();
     }
   }
 
   createForm() {
     this.form = new FormGroup({
-      Image: new FormControl(this.category ? this.category.Image : null),
-      Name: new FormControl(this.category ? this.category.Name : null, Validators.required)
+      Name: new FormControl(this.config ? this.config.Name : null),
+      Value: new FormControl(this.config ? this.config.Value : null, Validators.required)
     })
   }
 
-  uploadCategory() {
+  uploadConfig() {
     if (this.form.invalid) return;
 
     this.blockUI.start();
-    const newCategory = this.getCategory();
-    this._categoryService.saveCategory(newCategory).subscribe((res: ResponseMessages) => {
+    const newConfig = this.getCategory();
+    this._configService.saveConfig(newConfig).subscribe((res: ResponseMessages) => {
       this._alertService.showAlerts(res);
       if (res.HasSuccess) {
-        this.category = newCategory;
-        this.newCategory.emit(newCategory);
+        this.config = newConfig;
+        this.newConfig.emit(newConfig);
       }
       this.blockUI.stop();
     })
   }
 
-  getCategory(): ICategoryVM {
-    const newCategory = {
-      Id: this.category ? this.category.Id : 0,
+  getCategory(): IConfig {
+    const newConfig = {
+      Id: this.config ? this.config.Id : 0,
       Name: this.form.controls['Name'].value,
-      Image: this.form.controls['Image'].value
+      Value: this.form.controls['Value'].value
     }
-    return newCategory;
+    return newConfig;
   }
 }

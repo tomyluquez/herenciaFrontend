@@ -5,4 +5,5 @@ export class CheckoutInfoVM extends ResponseMessages {
     PaymentsMethods!: IPaymentsMethodsVM[];
     ShippingMethods!: IShippingMethodsVM[];
     SubtotalToPaid!: number;
+    MinTotalToFreeShipping!: number;
 }

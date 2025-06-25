@@ -25,7 +25,7 @@ import { EmailJSService } from '../../../Other/Services/emailJS.service';
 @Component({
   selector: 'app-cart-summary',
   standalone: true,
-  imports: [DiscountCouponComponent, CommonModule, DividerComponent, ReactiveFormsModule, NgSelectModule, ModalComponent, ProcessedOrderComponent],
+  imports: [DiscountCouponComponent, CommonModule, ReactiveFormsModule, NgSelectModule, ModalComponent, ProcessedOrderComponent],
   templateUrl: './cart-summary.component.html',
   styleUrl: './cart-summary.component.css'
 })
@@ -43,6 +43,7 @@ export class CartSummaryComponent implements OnInit, OnChanges {
   paymentDiscountPercentage = 0
 
   orderNumber = 0
+  freeDelivery!: number;
 
   form!: FormGroup;
 
@@ -62,15 +63,15 @@ export class CartSummaryComponent implements OnInit, OnChanges {
       if (res.HasErrors) return;
       this.isLoading = false
       this.checkOutInfo = res;
+      this.freeDelivery = res.MinTotalToFreeShipping
       this.initForm();
-      this.fillSubtotals();
     })
   }
 
 
   ngOnChanges(changes: SimpleChanges): void {
     if (!changes['firstChange']) {
-      this.fillSubtotals();
+      this.initForm();
     }
   }
 
@@ -78,17 +79,19 @@ export class CartSummaryComponent implements OnInit, OnChanges {
     this.form = this.fb.group({
       subtotal: [0],
       shippingCost: [0],
-      shippingMethodId: [, Validators.required],
+      shippingMethodId: [null, Validators.required],
       discountCoupon: [0],
       discountCouponPercentage: [0],
       discountCouponId: [0],
       discountPayment: [0],
       discountPaymentPercentage: [0],
-      paymentMethodId: [, Validators.required],
+      paymentMethodId: [null, Validators.required],
       total: [0],
       items: [this.cartItems],
       customerName: this.authService.getCustomerName() || '',
     });
+    this.fillSubtotals();
+
   }
 
   fillSubtotals() {
@@ -117,7 +120,7 @@ export class CartSummaryComponent implements OnInit, OnChanges {
 
   getCurrentShippingCost(subtotal: number): number {
     if (subtotal >= ShippingCostEnum.FREE_COST) return 0;
-    const shippingForm = this.form.get('shippingMethodId')?.value
+    const shippingForm = this.form?.get('shippingMethodId')?.value
     const shippingMethod = shippingForm ? this.checkOutInfo.ShippingMethods.find(s => s.Id == shippingForm) : null;
 
     if (!shippingMethod) return 0;
@@ -133,7 +136,7 @@ export class CartSummaryComponent implements OnInit, OnChanges {
 
     const baseTotal = subtotal + shipping;
 
-    const discount = baseTotal * (couponDiscountPercentage / 100);
+    const discount = subtotal * (couponDiscountPercentage / 100);
     const total = baseTotal - discount - discountPayment;
 
     this.form.patchValue({
@@ -146,21 +149,19 @@ export class CartSummaryComponent implements OnInit, OnChanges {
   }
 
   applyExtraPaymentDiscount(paymentMethod: IPaymentsMethodsVM): void {
-
-    const paymentDiscountPercentage = paymentMethod?.Disccount || 0;
+    const paymentDiscountPercentage = Number(paymentMethod?.Disccount) || 0;
 
     const subtotal = this.form.get('subtotal')?.value || 0;
     const shipping = this.form.get('shippingCost')?.value || 0;
     const discountCoupon = this.form.get('discountCoupon')?.value || 0;
 
-
     const baseTotal = subtotal + shipping;
 
-    const discount = baseTotal * (paymentDiscountPercentage / 100);
+    const discount = subtotal * (paymentDiscountPercentage / 100);
     const total = baseTotal - discount - discountCoupon;
 
     this.form.patchValue({
-      paymentMethodId: paymentMethod.Id,
+      paymentMethodId: paymentMethod ? paymentMethod.Id : null,
       discountPaymentPercentage: paymentDiscountPercentage,
       discountPayment: discount,
       total
@@ -169,7 +170,7 @@ export class CartSummaryComponent implements OnInit, OnChanges {
 
   applyChargeToShipping(shippingMethod: IShippingMethodsVM): void {
     const subtotal = this.form.get('subtotal')?.value
-    if (shippingMethod && subtotal < ShippingCostEnum.FREE_COST) {
+    if (shippingMethod && subtotal < this.freeDelivery) {
       const price = shippingMethod.Price;
       this.form.patchValue({
         shippingMethodId: shippingMethod.Id,
@@ -221,6 +222,10 @@ export class CartSummaryComponent implements OnInit, OnChanges {
   }
 
   getShippingCostText(): string {
+    const shippingMethodId = this.form.get('shippingMethodId')?.value
+    if (!shippingMethodId) return '';
+    const subtotal = this.form.get('subtotal')?.value;
+    if (subtotal >= this.freeDelivery) return 'Envio Gratis!';
     const shippingMethod = this.form.get('shippingMethodId')?.value
     const shippingMethodValue = shippingMethod ? this.checkOutInfo.ShippingMethods.find(s => s.Id == shippingMethod)?.Value || '' : '';
     return shippingMethodValue === 'countryDelivery' ? 'A convenir' : 'Envio Gratis!'

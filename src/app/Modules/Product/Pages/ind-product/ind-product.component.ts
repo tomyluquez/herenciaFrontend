@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../Services/product.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
@@ -26,7 +26,7 @@ import { AlertService } from '../../../Other/Services/alert.service';
   templateUrl: './ind-product.component.html',
   styleUrl: './ind-product.component.css',
 })
-export class IndProductComponent implements OnInit {
+export class IndProductComponent implements OnInit, AfterViewInit {
   @BlockUI() blockUI!: NgBlockUI;
   product!: IProduct;
 
@@ -58,6 +58,10 @@ export class IndProductComponent implements OnInit {
         this.loadingProduct = false;
         this.blockUI.stop();
       });
+  }
+
+  ngAfterViewInit(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   generateBreadcrumItems(): void {

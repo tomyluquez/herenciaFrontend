@@ -1,19 +1,55 @@
+.custom-ng-select {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow: visible;
+  position: relative; /* importante para dropdown positioning */
+}
+
 .custom-ng-select .ng-select-container {
   border-radius: 0.375rem;
   border: 1px solid #d1d5db;
   min-height: 36px;
   padding: 6px 10px;
   font-size: 0.875rem;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+:host ::ng-deep .custom-ng-select .ng-select-container .ng-value-container,
+:host
+  ::ng-deep
+  .custom-ng-select
+  .ng-select-container
+  .ng-value-container
+  .ng-value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap !important;
+  width: 220px;
+  display: block;
 }
 
 .custom-ng-select .ng-dropdown-panel {
+  position: absolute !important; /* <- necesario */
+  z-index: 1000; /* <- aseguramos que esté por encima */
   border-radius: 0.375rem;
   border: 1px solid #d1d5db;
   font-size: 0.875rem;
+  max-width: 100%;
+  background: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .custom-ng-select .ng-option {
   padding: 6px 10px;
+  white-space: normal; /* permite saltos de línea en opciones */
 }
 
 @media (min-width: 768px) {
@@ -25,5 +61,19 @@
 
   .custom-ng-select .ng-option {
     padding: 8px 12px;
+  }
+
+  :host ::ng-deep .custom-ng-select .ng-select-container .ng-value-container,
+  :host
+    ::ng-deep
+    .custom-ng-select
+    .ng-select-container
+    .ng-value-container
+    .ng-value {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap !important;
+    width: 100%;
+    display: block;
   }
 }

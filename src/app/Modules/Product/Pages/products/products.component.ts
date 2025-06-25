@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { CardSkeletonComponent } from '../../../../shared/components/loaders/card-skeleton/card-skeleton.component';
 import { RSidebarComponent } from '../../../../shared/components/rsidebar/rsidebar.component';
 import { RSidebarService } from '../../../Other/Services/rsidebar.service';
@@ -42,7 +42,7 @@ import { AlertService } from '../../../Other/Services/alert.service';
   templateUrl: './products.component.html',
   styleUrl: './products.component.css',
 })
-export class ProductsComponent implements OnInit {
+export class ProductsComponent implements OnInit, AfterViewInit {
   @BlockUI() blockUI!: NgBlockUI;
 
   categories!: NameAndId[];
@@ -71,7 +71,9 @@ export class ProductsComponent implements OnInit {
     private _router: Router,
     private _productNavigation: ProductNavigationService,
     private _variantsService: VariantsService
-  ) { }
+  ) {
+    this._sidebarService.closeSidebar();
+  }
 
   ngOnInit() {
     this.blockUI.start();
@@ -106,6 +108,14 @@ export class ProductsComponent implements OnInit {
 
     })
 
+  }
+
+  ngAfterViewInit() {
+    this.resize()
+  }
+
+  resize() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   init() {
@@ -152,6 +162,8 @@ export class ProductsComponent implements OnInit {
       queryParams: queryParams,
       queryParamsHandling: 'merge', // Mantener otros parámetros de la URL
     });
+    this.resize()
+
   }
 
   // Al cambiar la categoría, actualizar la URL
