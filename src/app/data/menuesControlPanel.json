@@ -36,6 +36,11 @@
       "Icon": "fa-solid fa-gear"
     },
     {
+      "Name": "Cupones",
+      "Href": "#DiscountCoupons",
+      "Icon": "fa-solid fa-ticket"
+    },
+    {
       "Name": "Dashboard",
       "Href": "#Dash",
       "Icon": "fa-solid fa-chart-line"

@@ -65,6 +65,7 @@ export class HeaderComponent {
   ngOnInit(): void {
     this._modalService.closeModal();
     this.menues = menues.Items;
+    this.onResize({ target: window });
   }
 
   @HostListener('window:resize', ['$event'])

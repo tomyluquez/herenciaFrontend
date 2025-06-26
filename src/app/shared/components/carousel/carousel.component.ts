@@ -15,6 +15,10 @@ export class CarouselComponent implements OnChanges {
   isChangingImage: boolean = false;
   currentImageIndex = 0;
   showLightbox: boolean = false;
+
+  touchStartX = 0;
+  touchEndX = 0;
+
   constructor() { }
 
   ngOnChanges() {
@@ -72,6 +76,25 @@ export class CarouselComponent implements OnChanges {
     document.body.style.overflow = '';
   }
 
+  onTouchStart(event: TouchEvent) {
+    this.touchStartX = event.changedTouches[0].screenX;
+  }
 
+
+  onTouchEnd(event: TouchEvent) {
+    this.touchEndX = event.changedTouches[0].screenX;
+    this.handleSwipe();
+  }
+
+  handleSwipe() {
+    const diff = this.touchEndX - this.touchStartX;
+    if (Math.abs(diff) > 50) { // Mínimo movimiento para considerar swipe
+      if (diff < 0) {
+        this.nextImage();
+      } else {
+        this.prevImage();
+      }
+    }
+  }
 
 }

@@ -58,7 +58,7 @@ input[type="number"] {
 }
 
 .container-gral {
-  @apply w-full py-8  px-12 md:px-24;
+  @apply w-full py-8 px-8 md:px-24;
   /* margin-top: var(--header-height); */
   min-height: calc(100vh - var(--header-height) - var(--footer-height));
 }

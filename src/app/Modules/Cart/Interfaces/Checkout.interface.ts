@@ -1,7 +1,7 @@
 export interface IPaymentsMethodsVM {
     Id?: number;
     Name: string;
-    Disccount: number;
+    Disccount: string;
 }
 
 export interface IShippingMethodsVM {

@@ -120,7 +120,6 @@ export class OrderListComponent {
       .getOrders(params)
       .subscribe((res: OrderVM) => {
         if (res.HasErrors) {
-          console.log('hola')
           this.blockUI.stop();
           return;
         }

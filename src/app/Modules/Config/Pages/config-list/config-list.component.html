@@ -1,10 +1,10 @@
 @if(isEdit){
 <app-rsidebar>
-    <app-config-form />
+    <app-config-form [config]="configSelected" (newConfig)="updateConfig()" />
 </app-rsidebar>
 }
 
-<section *blockUI="'stock-list'">
+<section *blockUI="'config-list'">
 
     <div class="flex items-center justify-between">
         <h3 class="title w-[70%]">Configuracion de la tienda</h3>

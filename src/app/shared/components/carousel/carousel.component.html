@@ -1,110 +1,44 @@
-<div class="grid grid-cols-1 md:grid-cols-[120px_1fr] gap-4 md:gap-6">
-    <!-- Miniaturas Verticales (Desktop) -->
-    <div class="hidden md:flex flex-col items-center gap-3 overflow-y-auto custom-scrollbar max-h-[600px] pr-2">
+<!-- Carousel Principal -->
+<div class="relative w-full group">
+    <!-- Imagen Principal con soporte touch -->
+    <div class="relative w-full aspect-[4/5] md:aspect-[8/7] rounded-xl overflow-hidden shadow-xl"
+        (touchstart)="onTouchStart($event)" (touchend)="onTouchEnd($event)">
+
+        <img [src]="imageSelected" alt="Imagen principal del producto"
+            class="w-full h-full object-cover transition-opacity duration-300 cursor-zoom-in"
+            [ngClass]="{'opacity-0': isChangingImage}" (load)="isChangingImage = false" (click)="openLightbox()">
+    </div>
+
+    <!-- Indicadores/Paginación (Mobile) -->
+    @if(images.length > 1) {
+    <div class="flex-center gap-2 mt-4">
         @for (urlImage of images; track urlImage; let index = $index) {
-        <div class="relative w-full aspect-square rounded-lg overflow-hidden border-2 transition-all duration-300 cursor-pointer
-                    {{imageSelected === urlImage ? 'border-primary-500 scale-105' : 'border-transparent hover:border-primary-300'}}"
+        <button class="w-3 h-3 rounded-full transition-all duration-300 focus:outline-none
+                    {{imageSelected === urlImage ? 'bg-primary-600 w-6' : 'bg-gray-300 hover:bg-gray-400'}}"
             (click)="selectImage(index)">
-            <img src="{{urlImage}}" alt="Miniatura {{index + 1}}"
-                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
-            @if(imageSelected === urlImage) {
-            <div class="absolute inset-0 bg-primary-500/20"></div>
-            }
-        </div>
-        }
-    </div>
-
-    <!-- Carousel Principal -->
-    <div class="relative w-full group">
-        <!-- Imagen Principal -->
-        <div class="relative w-full aspect-[4/5] md:aspect-[8/7] rounded-xl overflow-hidden shadow-xl">
-            <img [src]="imageSelected" alt="Imagen principal del producto"
-                class="w-full h-full object-cover transition-opacity duration-300 cursor-zoom-in"
-                [ngClass]="{'opacity-0': isChangingImage}" (load)="isChangingImage = false" (click)="openLightbox()">
-
-            <!-- Botón de zoom al centro -->
-            <!-- <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer"
-                (click)="openLightbox()">
-                <div class="p-3 bg-white/90 rounded-full shadow-lg hover:bg-primary-100 transition-colors">
-                    <i class="fas fa-expand text-primary-600 text-xl"></i>
-                </div>
-            </div> -->
-        </div>
-
-        <!-- Indicadores/Paginación (Mobile) -->
-        @if(images.length > 1) {
-        <div class="flex-center gap-2 mt-4">
-            @for (urlImage of images; track urlImage; let index = $index) {
-            <button class="w-3 h-3 rounded-full transition-all duration-300 focus:outline-none
-                        {{imageSelected === urlImage ? 'bg-primary-600 w-6' : 'bg-gray-300 hover:bg-gray-400'}}"
-                (click)="selectImage(index)">
-            </button>
-            }
-        </div>
-        }
-
-        <!-- Controles de Navegación -->
-        @if(images.length > 1) {
-        <div class="absolute inset-0 flex items-center justify-between px-2 pointer-events-none">
-            <button
-                class="pagination-button pointer-events-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                (click)="prevImage($event)">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            <button
-                class="pagination-button pointer-events-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                (click)="nextImage($event)">
-                <i class="fas fa-chevron-right"></i>
-            </button>
-        </div>
-        }
-
-        <!-- Badge de cantidad de fotos -->
-        <div class="absolute top-3 right-3 bg-white/90 px-2 py-1 rounded-full text-xs font-medium shadow-sm">
-            {{currentImageIndex + 1}}/{{images.length}}
-        </div>
-    </div>
-</div>
-
-<!-- Lightbox Modal -->
-@if(showLightbox) {
-<div class="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4" (click)="closeLightbox()">
-    <div class="relative w-full max-w-6xl max-h-[90vh]" (click)="$event.stopPropagation()">
-        <!-- Botón cerrar -->
-        <button class="absolute -top-10 right-0 text-white hover:text-primary-300 z-10" (click)="closeLightbox()">
-            <i class="fas fa-times text-2xl"></i>
         </button>
+        }
+    </div>
+    }
 
-        <!-- Imagen ampliada -->
-        <div class="relative w-full h-full flex items-center justify-center">
-            <img [src]="imageSelected" alt="Imagen ampliada del producto"
-                class="max-w-full max-h-[80vh] object-contain">
+    <!-- Controles de Navegación -->
+    @if(images.length > 1) {
+    <div class="absolute inset-0 flex items-center justify-between px-2 pointer-events-none">
+        <button
+            class="pagination-button pointer-events-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            (click)="prevImage($event)">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button
+            class="pagination-button pointer-events-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            (click)="nextImage($event)">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+    }
 
-            <!-- Controles navegación lightbox -->
-            @if(images.length > 1) {
-            <button
-                class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white p-4 rounded-full shadow-lg"
-                (click)="prevImage($event)">
-                <i class="fas fa-chevron-left text-primary-600"></i>
-            </button>
-            <button
-                class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white p-4 rounded-full shadow-lg"
-                (click)="nextImage($event)">
-                <i class="fas fa-chevron-right text-primary-600"></i>
-            </button>
-            }
-        </div>
-
-        <!-- Miniaturas inferiores -->
-        <div class="flex justify-center gap-2 mt-4 overflow-x-auto py-2">
-            @for (urlImage of images; track urlImage; let index = $index) {
-            <div class="w-16 h-16 flex-shrink-0 rounded overflow-hidden cursor-pointer border-2
-                        {{imageSelected === urlImage ? 'border-primary-500' : 'border-transparent'}}"
-                (click)="selectImage(index, $event)">
-                <img src="{{urlImage}}" alt="Miniatura {{index + 1}}" class="w-full h-full object-cover">
-            </div>
-            }
-        </div>
+    <!-- Badge de cantidad de fotos -->
+    <div class="absolute top-3 right-3 bg-white/90 px-2 py-1 rounded-full text-xs font-medium shadow-sm">
+        {{currentImageIndex + 1}}/{{images.length}}
     </div>
 </div>
-}

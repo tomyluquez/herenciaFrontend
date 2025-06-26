@@ -199,7 +199,21 @@
             </table>
             }
 
-
+            <!-- Contenedor de productos relacionados -->
+            <div class="container-input">
+                <label class="label-form">Seleccione los productos relacionados</label>
+                <div class="relative">
+                    <div class="icon-input-form">
+                        <i class="fas fa-list"></i>
+                    </div>
+                    <ng-select [ngClass]="!form.controls['RelatedProducts'].valid ? 'input-form-error' : ''"
+                        class="select-form" [items]="relatedProducts" bindLabel="Name" bindValue="Id"
+                        placeholder="Seleccione los productos relacionados" [multiple]="true"
+                        formControlName="RelatedProducts" [searchable]="true">
+                    </ng-select>
+                </div>
+                <app-form-error [control]="form.controls['RelatedProducts']"></app-form-error>
+            </div>
 
             <div>
                 <button class="w-full" [ngClass]="form.invalid ? 'secondary-button-disabled' : 'secondary-button'"

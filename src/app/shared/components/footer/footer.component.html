@@ -1,61 +1,62 @@
-<section class="container-footer text-sm" id="footer">
-
-    <div class="footer container-grid-fit !mt-0">
-        <div class="flex-start-col">
-            <h3 class="title-col-footer">Navegación</h3>
-            <ul class="">
+<section id="footer" class="bg-primary-800 text-primary-100 text-sm py-12 px-6 md:px-16">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+        <!-- Navegación -->
+        <div class="flex flex-col space-y-4">
+            <h3 class="text-xl font-semibold border-b-2 border-primary-400 pb-2 mb-4">Navegación</h3>
+            <ul class="space-y-2">
                 @for (menu of menues; track $index) {
                 <li>
-                    <!-- <i [ngClass]="menu.Icon" class="text-primary"></i> -->
-                    <a [href]="menu.Href">{{menu.Name}}</a>
+                    <a [href]="menu.Href"
+                        class="hover:text-primary-300 transition-colors duration-300">{{menu.Name}}</a>
                 </li>
                 }
             </ul>
         </div>
-        <div class="flex-start-col">
-            <h3 class="title-col-footer">Ayuda</h3>
-            <ul>
-                <li>
-                    <a href="#" class="footer-link">Faq</a>
-                </li>
-                <li>
-                    <a href="#" class="footer-link">Envíos</a>
-                </li>
-                <li>
-                    <a href="#" class="footer-link">Devoluciones</a>
-                </li>
+
+        <!-- Ayuda -->
+        <div class="flex flex-col space-y-4">
+            <h3 class="text-xl font-semibold border-b-2 border-primary-400 pb-2 mb-4">Ayuda</h3>
+            <ul class="space-y-2">
+                <li><a href="#" class="hover:text-primary-300 transition-colors duration-300">Faq</a></li>
+                <li><a href="#" class="hover:text-primary-300 transition-colors duration-300">Envíos</a></li>
+                <li><a href="#" class="hover:text-primary-300 transition-colors duration-300">Devoluciones</a></li>
             </ul>
         </div>
-        <div class="flex-start-col">
-            <h3 class="title-col-footer">Contacto</h3>
-            <ul>
-                <li>
-                    <a href="#" class="footer-link">Dirección</a>
-                </li>
-                <li>
-                    <a href="#" class="footer-link">Telefono</a>
-                </li>
-                <li>
-                    <a href="#" class="footer-link">Mail</a>
-                </li>
+
+        <!-- Contacto -->
+        <div class="flex flex-col space-y-4">
+            <h3 class="text-xl font-semibold border-b-2 border-primary-400 pb-2 mb-4">Contacto</h3>
+            <ul class="space-y-2">
+                <li><a href="#" class="hover:text-primary-300 transition-colors duration-300">Dirección</a></li>
+                <li><a href="#" class="hover:text-primary-300 transition-colors duration-300">Teléfono</a></li>
+                <li><a href="#" class="hover:text-primary-300 transition-colors duration-300">Mail</a></li>
             </ul>
         </div>
-        <div class="flex-start-col">
-            <h3 class="title-col-footer">Suscribete</h3>
-            <p>Recibe nuestras ofertas y novedades</p>
-            <div class="w-1/2 flex-center-col gap-2">
-                <!-- <app-input-text placeholder="Ingresa tu correo" /> -->
-                <button class="secondary-button">Suscribete</button>
-            </div>
+
+        <!-- Suscríbete -->
+        <div class="flex flex-col space-y-4">
+            <h3 class="text-xl font-semibold border-b-2 border-primary-400 pb-2 mb-2">Suscríbete</h3>
+            <p class="text-primary-300">Recibe nuestras ofertas y novedades</p>
+            <form class="flex flex-col sm:flex-row sm:items-center gap-3 w-full max-w-xs">
+                <input type="email" placeholder="Ingresa tu correo"
+                    class="px-4 py-2 rounded-md border border-primary-400 bg-primary-900 text-primary-100 placeholder-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-400 flex-grow" />
+                <button type="submit"
+                    class="bg-primary-400 hover:bg-primary-500 text-primary-900 font-semibold rounded-md px-4 py-2 transition-colors duration-300 w-full sm:w-auto">Suscríbete</button>
+            </form>
         </div>
     </div>
-    <app-divider />
-    <div class="flex-between-wrap">
-        <p>© {{currentYear}} HERENCIA.Todos los derechos reservados</p>
-        <div class="flex-center gap-4">
+
+    <hr class="border-primary-700 my-8" />
+
+    <div
+        class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-primary-400 text-xs gap-4">
+        <p>© {{currentYear}} HERENCIA. Todos los derechos reservados</p>
+        <div class="flex space-x-6 text-lg">
             @if (companyInfo && companyInfo.length > 0) {
             @for (info of companyInfo; track $index) {
-            <a target="_blank" href="{{info.Value}}" class="footer-link"><i [ngClass]="info.Icon"></i></a>
+            <a target="_blank" href="{{info.Value}}" class="hover:text-primary-300 transition-colors duration-300">
+                <i [ngClass]="info.Icon"></i>
+            </a>
             }
             }
         </div>

@@ -1,5 +1,6 @@
 @if(items && items.length > 0){
 <div class="flex-start gap-2 md:gap-4 text-sm mb-8 text-primary-400 flex-wrap">
+    <a class="selectable inline" href="/Home"><i class="fa-solid fa-house text-primary-400"></i></a><span>></span>
     @for (item of items; track $index) {
     <a [ngClass]="item.Href ?'selectable' : 'not-selectable'" class="inline" [href]="item.Href">{{item.Name}}</a><span
         *ngIf="item.Href">></span>

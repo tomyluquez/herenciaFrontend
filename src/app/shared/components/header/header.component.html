@@ -4,7 +4,6 @@
             <ul class="ul-nav-mobile w-full">
                 @for (menu of menues; track $index) {
                 <li>
-                    <!-- <i [ngClass]="menu.Icon" class="text-primary"></i> -->
                     <a [href]="menu.Href">{{menu.Name}}</a>
                 </li>
                 }
@@ -16,48 +15,50 @@
         <app-search-modal />
     </app-modal>
 
+    <header class="header-container w-full max-w-screen px-4 py-2 flex items-center justify-between flex-wrap gap-4">
+        <!-- Botón menú mobile -->
+        <i *ngIf="isMobile" class="fa-solid fa-bars text-primary-400 block lg:hidden" (click)="openMobileMenu()"></i>
 
-    <header class="header-container flex-between">
+        <!-- Título y navegación (desktop) -->
+        <div class="flex items-center gap-4 flex-1">
+            <h3 class="text-lg font-semibold">Herencia</h3>
 
-        <i *ngIf="isMobile" class='fa-solid fa-bars text-primary-400' (click)="openMobileMenu()"></i>
-        <div class="flex-between gap-8">
-            <h3>Herencia</h3>
-
-            <nav *ngIf="!isMobile">
-                <ul class="ul-nav" *ngIf="menues && menues.length > 0">
-                    <!-- Agregar al hacer click en los menues derivar al href y cerrar el sidebar -->
+            <!-- Nav Desktop -->
+            <nav *ngIf="!isMobile" class="hidden lg:block">
+                <ul class="ul-nav flex gap-4" *ngIf="menues && menues.length > 0">
                     @for (menu of menues; track $index) {
-                    <li class="flex-center">
-                        <!-- <i [ngClass]="menu.Icon" class="text-primary"></i> -->
-                        <a [href]="menu.Href">{{menu.Name}}</a>
+                    <li class="flex items-center">
+                        <a [href]="menu.Href" class="text-sm text-primary-800 hover:text-primary-600 transition">
+                            {{menu.Name}}
+                        </a>
                     </li>
                     }
                 </ul>
             </nav>
         </div>
-        <div class="flex-between gap-8">
+
+        <!-- Iconos de acción -->
+        <div class="flex items-center gap-4">
+            <!-- Carrito -->
             <div class="relative">
                 <i class="fa-solid fa-cart-shopping icon" (click)="toggleDropdownCart()"></i>
-
-                <!-- Badge con cantidad -->
                 <div *ngIf="quantityItems > 0"
-                    class="absolute -top-[0.75rem] -right-[0.75rem] min-w-[20px] h-[20px] text-xs rounded-full flex items-center justify-center border border-primary text-primary bg-white shadow-sm">
+                    class="absolute -top-3 -right-3 min-w-[20px] h-[20px] text-xs rounded-full flex items-center justify-center border border-primary text-primary bg-white shadow-sm">
                     {{ quantityItems }}
                 </div>
-
                 <app-cart-dropdown [isOpen]="isOpenDropdownCart" [isLoggin]="isLoggin"
                     (quantityItems)="setQuantityItems($event)" />
             </div>
+
+            <!-- Usuario -->
             <div class="relative">
                 <i class="fa-regular fa-user icon" (click)="toggleDropdownUser()"></i>
                 <app-user-dropdown [isOpen]="isOpenDropdownUser" [isLoggin]="isLoggin" [role]="role"
                     [userName]="userName" />
-
             </div>
+
+            <!-- Buscador -->
             <i class="fa-solid fa-magnifying-glass icon" (click)="openModal()"></i>
         </div>
-
-
     </header>
-
 </block-ui>

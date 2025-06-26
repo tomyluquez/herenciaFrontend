@@ -2,85 +2,128 @@
     <app-processed-order [orderNumber]="orderNumber" />
 </app-modal>
 
-@if(!isLoading){
-<form [formGroup]="form" (ngSubmit)="proceedToPayment()">
-    <app-discount-coupon class="w-full" (discountEmit)="applyDiscuntCoupon($event)" [hasAddedCoupon]="hasAddedCoupon" />
-
-    <!-- Shipping Method Selector -->
-    <div class="w-full mb-4">
-        <label class="block font-semibold mb-1">Método de envío:</label>
-        <ng-select class="w-full" [items]="checkOutInfo!.ShippingMethods" bindLabel="Name" bindValue="Id"
-            placeholder="Selecciona un metodo de envio" formControlName="shippingMethodId"
-            (change)="applyChargeToShipping($event)">
-        </ng-select>
-        <span *ngIf="form.get('shippingMethodId')?.invalid && isSubmitted" class="text-red-500 text-sm">
-            Por favor seleccione un método de envío
-        </span>
+@if(!isLoading) {
+<div class="bg-white rounded-lg md:rounded-xl shadow-lg overflow-hidden max-w-4xl mx-auto my-6">
+    <!-- Encabezado -->
+    <div class="bg-primary-600 text-white px-4 py-3 md:px-6 md:py-4">
+        <h2 class="text-lg md:text-xl font-bold">Finalizar Compra</h2>
+        <p class="text-xs md:text-sm text-primary-100">Revisa y confirma tu pedido</p>
     </div>
 
-    <!-- Payment Method Selector -->
-    <div class="w-full mb-4">
-        <label class="block font-semibold mb-1">Método de pago:</label>
-        <ng-select class="w-full" [items]="checkOutInfo!.PaymentsMethods" bindLabel="Name" bindValue="Id"
-            placeholder="Selecciona un metodo de pago" formControlName="paymentMethodId"
-            (change)="applyExtraPaymentDiscount($event)">
-        </ng-select>
-        <span *ngIf="form.get('paymentMethodId')?.invalid && isSubmitted" class="text-red-500 text-sm">
-            Por favor seleccione un método de pago
-        </span>
+    <div class="p-4 md:p-6 overflow-x-auto">
+        <form [formGroup]="form" (ngSubmit)="proceedToPayment()" class="w-full max-w-full space-y-4 md:space-y-6">
+            <!-- Cupón de descuento -->
+            <app-discount-coupon class="w-full" (discountEmit)="applyDiscuntCoupon($event)"
+                [hasAddedCoupon]="hasAddedCoupon" />
+
+            <!-- Método de envío -->
+            <div class="space-y-1 md:space-y-2 w-full">
+                <label class="block text-xs md:text-sm font-medium text-primary-700">Método de envío</label>
+                <ng-select class="custom-ng-select" [items]="checkOutInfo!.ShippingMethods" bindLabel="Name"
+                    bindValue="Id" placeholder="Selecciona método de envío" formControlName="shippingMethodId"
+                    (change)="applyChargeToShipping($event)">
+                    <ng-template ng-option-tmp let-item="item">
+                        <div class="flex flex-col md:flex-row md:justify-between md:items-center">
+                            <span class="text-sm">{{item.Name}}</span>
+                            <span class="text-primary-600 text-xs md:text-sm font-medium">
+                                {{item.Cost | currency}}
+                            </span>
+                        </div>
+                    </ng-template>
+                </ng-select>
+                @if (form.get('shippingMethodId')?.invalid && isSubmitted) {
+                <p class="text-xs md:text-sm text-red-600 flex items-start mt-1">
+                    <i class="fas fa-exclamation-circle mr-1 mt-0.5 text-xs"></i>
+                    Selecciona un método de envío
+                </p>
+                }
+            </div>
+
+            <!-- Método de pago -->
+            <div class="space-y-1 md:space-y-2 w-full">
+                <label class="block text-xs md:text-sm font-medium text-primary-700">Método de pago</label>
+                <ng-select class="custom-ng-select" [items]="checkOutInfo!.PaymentsMethods" bindLabel="Name"
+                    bindValue="Id" placeholder="Selecciona método de pago" formControlName="paymentMethodId"
+                    (change)="applyExtraPaymentDiscount($event)">
+                    <ng-template ng-option-tmp let-item="item">
+                        <div class="flex flex-col md:flex-row md:justify-between md:items-center">
+                            <span class="text-sm">{{item.Name}}</span>
+                            @if(item.Disccount!== "0") {
+                            <span class="text-green-600 text-xs md:text-sm font-medium">
+                                {{item.Disccount}}% descuento
+                            </span>
+                            }
+                        </div>
+                    </ng-template>
+                </ng-select>
+                @if (form.get('paymentMethodId')?.invalid && isSubmitted) {
+                <p class="text-xs md:text-sm text-red-600 flex items-start mt-1">
+                    <i class="fas fa-exclamation-circle mr-1 mt-0.5 text-xs"></i>
+                    Selecciona un método de pago
+                </p>
+                }
+            </div>
+
+            <!-- Resumen de costos -->
+            <div class="space-y-2 md:space-y-3 border-t border-gray-200 pt-3 md:pt-4">
+                <h3 class="text-sm md:text-base font-medium text-primary-900">Resumen de compra</h3>
+
+                <div class="flex justify-between text-xs md:text-sm">
+                    <span class="text-primary-600">Subtotal:</span>
+                    <span class="font-medium">{{ form.get('subtotal')?.value | currency }}</span>
+                </div>
+
+                <div class="flex justify-between text-xs md:text-sm" *ngIf="form.get('shippingMethodId')?.value">
+                    <span class="text-primary-600">Costo de envío:</span>
+                    @if (form.get('shippingCost')?.value) {
+                    <span class="font-medium">{{ form.get('shippingCost')?.value | currency }}</span>
+                    } @else {
+                    <span class="text-green-600 font-medium">{{getShippingCostText()}}</span>
+                    }
+                </div>
+
+                <div class="flex justify-between text-xs md:text-sm items-center"
+                    *ngIf="form.get('discountCouponId')?.value">
+                    <span class="text-primary-600">Descuento cupón:</span>
+                    <div class="flex items-center gap-1 md:gap-2">
+                        <span class="font-medium text-green-600">
+                            -{{ form.get('discountCoupon')?.value | currency }}
+                            @if(form.get('discountCouponPercentage')?.value) {
+                            <span class="text-primary-500">({{ form.get('discountCouponPercentage')?.value }}%)</span>
+                            }
+                        </span>
+                        @if (form.get('discountCoupon')?.value) {
+                        <button type="button" (click)="removeDiscount()" class="text-green-500 hover:text-green-700">
+                            <i class="fas fa-times text-xs"></i>
+                        </button>
+                        }
+                    </div>
+                </div>
+
+                <div class="flex justify-between text-xs md:text-sm"
+                    *ngIf="form.get('discountPaymentPercentage')?.value">
+                    <span class="text-primary-600">Descuento por pago:</span>
+                    <span class="font-medium text-green-600">
+                        -{{ form.get('discountPayment')?.value | currency }}
+                        @if(form.get('discountPaymentPercentage')?.value) {
+                        <span class="text-primary-500">({{ form.get('discountPaymentPercentage')?.value }}%)</span>
+                        }
+                    </span>
+                </div>
+
+                <div class="border-t border-gray-200 pt-2 md:pt-3 mt-1 md:mt-2 flex justify-between font-medium">
+                    <span class="text-sm md:text-base text-primary-900">Total:</span>
+                    <span class="text-base md:text-lg text-primary-700">{{ form.get('total')?.value | currency }}</span>
+                </div>
+            </div>
+
+            <!-- Botón de compra -->
+            <button type="submit"
+                class="w-full py-2 md:py-3 px-4 bg-primary-800 hover:bg-primary-900 text-white rounded-lg font-bold transition-colors duration-200 flex items-center justify-center gap-2 text-sm md:text-base">
+                <i class="fas fa-lock text-xs md:text-sm"></i>
+                Finalizar compra
+            </button>
+        </form>
     </div>
-
-    <!-- Resumen de costos -->
-    <div class="w-full flex items-center justify-between">
-        <p>Subtotal:</p>
-        <p>{{ form.get('subtotal')?.value | currency: "$" }}</p>
-    </div>
-
-    <div class="w-full flex items-center justify-between">
-        <p>Costo de envío:</p>
-        @if (form.get('shippingCost')?.value) {
-
-        <p>
-
-            {{
-            (form.get('shippingCost')?.value | currency: "$" )
-            }}
-        </p>
-        }@else {
-        <p class="text-green-500">Envio Gratis!</p>
-        }
-    </div>
-
-    <div class="w-full flex items-center justify-between">
-        <p>Descuento del cupon:</p>
-        <div class="flex gap-2 items-center justify-center">
-            <p>
-                {{ form.get('discountCoupon')?.value | currency: "$" }}
-                ({{ form.get('discountCouponPercentage')?.value }}%)
-            </p>
-            @if (form.get('discountCoupon')?.value) {
-            <i class="fa-solid fa-square-minus cursor-pointer" (click)="removeDiscount()"></i>
-            }
-        </div>
-    </div>
-
-    <div class="w-full flex items-center justify-between">
-        <p>Descuento pago en efectivo:</p>
-        <div class="flex gap-2 items-center justify-center">
-            <p>
-                {{ form.get('discountPayment')?.value | currency: "$" }}
-                ({{ form.get('discountPaymentPercentage')?.value }}%)
-            </p>
-        </div>
-    </div>
-
-    <app-divider />
-
-    <div class="w-full flex items-center justify-between">
-        <strong>Total:</strong>
-        <strong>{{ form.get('total')?.value | currency: "$" }}</strong>
-    </div>
-
-    <button class="black-button w-full" type="submit">Finalizar compra</button>
-</form>
+</div>
 }

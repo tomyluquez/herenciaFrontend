@@ -9,6 +9,8 @@ import { TableItemsCartComponent } from '../table-items-cart/table-items-cart.co
 import { CartSummaryComponent } from '../cart-summary/cart-summary.component';
 import { CartService } from '../../Services/cart.service';
 import { UserCartItemsVM } from '../../../User/Models/User.Cart.model';
+import { Router } from '@angular/router';
+import { AlertService } from '../../../Other/Services/alert.service';
 
 @Component({
   selector: 'app-cart',
@@ -26,7 +28,7 @@ export class CartComponent implements OnInit {
   private cartSubscription!: Subscription;
   cartItems: ICartItemsVM[] = [];
 
-  constructor(private _cartService: CartService) { }
+  constructor(private _cartService: CartService, private _router: Router, private _alertService: AlertService) { }
 
   ngOnInit(): void {
     this.mainBlockUI.start('Cargado...');
@@ -44,6 +46,14 @@ export class CartComponent implements OnInit {
       if (!res.HasErrors || !res.HasWarnings) {
         this._cartService.updateCartItems();
       }
+      if (res.Items.length === 0) {
+        this._alertService.openAlert({
+          primaryText: 'Carrito vacio',
+          secondaryText: 'No hay productos en el carrito',
+          type: 'warning'
+        })
+        this._router.navigate(['/Products'])
+      };
       this.loadItems = false;
       this.cartId = res.CartId;
       this.itemsCartBlockUI.stop();

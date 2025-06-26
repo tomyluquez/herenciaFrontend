@@ -6,4 +6,5 @@ export interface IOrder {
     DateCreated: Date;
     customerName: string;
     OrderStatusId: number;
+    CustomerEmail?: string;
 }

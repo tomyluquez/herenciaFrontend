@@ -37,7 +37,7 @@ export class ConfigListComponent {
   statesOptions!: NameAndId[]
 
   isEdit = false
-  configSelected!: IConfig;
+  configSelected!: IConfig | null;
 
   constructor(private _configService: ConfigService, private _rSidebarSerive: RSidebarService) {
   }
@@ -94,7 +94,7 @@ export class ConfigListComponent {
       });
   }
 
-  updateStock() {
+  updateConfig() {
     this.search();
     this.isEdit = false;
     this._rSidebarSerive.closeSidebar();
@@ -103,7 +103,8 @@ export class ConfigListComponent {
   addConfig(configId = 0) {
     if (configId) {
       this.configSelected = this.pagedList.Items.find(i => i.Id === configId)!;
-    }
+    } else this.configSelected = null;
+
     this.isEdit = true;
     this._rSidebarSerive.openSidebar();
   }
