@@ -38,7 +38,7 @@ export class CouponDiscountListComponent {
   statesOptions!: NameAndId[]
 
   isEdit = false
-  couponSelected!: IDiscountCoupon;
+  couponSelected!: IDiscountCoupon | null;
 
   constructor(private _configService: ConfigService, private _rSidebarSerive: RSidebarService) {
     this.form = new FormGroup({
@@ -107,10 +107,11 @@ export class CouponDiscountListComponent {
     this._rSidebarSerive.closeSidebar();
   }
 
-  addCoupon(configId = 0) {
-    if (configId) {
-      this.couponSelected = this.pagedList.Items.find(i => i.Id === configId)!;
-    }
+  addCoupon(couponId = 0) {
+    if (couponId) {
+      this.couponSelected = this.pagedList.Items.find(i => i.Id === couponId)!;
+    } else this.couponSelected = null;
+
     this.isEdit = true;
     this._rSidebarSerive.openSidebar();
   }

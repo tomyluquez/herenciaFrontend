@@ -44,6 +44,7 @@ export class FormProductComponent implements OnInit {
   categories!: NameAndId[]
   sizes!: NameAndId[]
   sizesSelected: IProductVariants[] = [];
+  relatedProducts!: NameAndId[];
 
   constructor(private _route: ActivatedRoute,
     private _productService: ProductService,
@@ -75,6 +76,7 @@ export class FormProductComponent implements OnInit {
 
       this.categories = res.Categories;
       this.sizes = res.Sizes
+      this.relatedProducts = res.RelatedProducts
       this.blockUI.stop();
       if (this.productId) {
         this._productService.getProductById(this.productId).subscribe((res: Products) => {
@@ -112,6 +114,7 @@ export class FormProductComponent implements OnInit {
       IsPromotional: new FormControl(this.product ? this.product.IsPromotional : false),
       PromotionalPrice: new FormControl(this.product ? this.product.PromotionalPrice : 0, []),
       Rentability: new FormControl(this.product ? this.product.Rentability : 0, []),
+      RelatedProducts: new FormControl(this.product ? this.product.RelatedProductIds : [])
     });
 
     this.sizeForm = new FormGroup({
@@ -148,7 +151,8 @@ export class FormProductComponent implements OnInit {
       IsPromotional: this.form.controls['IsPromotional'].value,
       PromotionalPrice: this.form.controls['IsPromotional'].value ? Number(this.form.controls['PromotionalPrice'].value) : 0,
       Variants: this.sizesSelected && this.sizesSelected.length > 0 ? this.sizesSelected : [],
-      Rentability: Number(this.form.controls['Rentability'].value)
+      Rentability: Number(this.form.controls['Rentability'].value),
+      RelatedProductIds: this.form.controls['RelatedProducts'].value
     }
 
     this._productService.saveProduct(newProduct).subscribe((res: ResponseMessages) => {

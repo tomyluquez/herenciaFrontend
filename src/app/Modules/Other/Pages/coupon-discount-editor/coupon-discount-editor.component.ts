@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { BlockUI, BlockUIModule, NgBlockUI } from 'ng-block-ui';
 import { IDiscountCoupon } from '../../Interface/DiscountCoupon.interface';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -15,8 +15,8 @@ import { CommonModule } from '@angular/common';
   templateUrl: './coupon-discount-editor.component.html',
   styleUrl: './coupon-discount-editor.component.css'
 })
-export class CouponDiscountEditorComponent {
-  @BlockUI('discountCoupon-form') blockUI!: NgBlockUI
+export class CouponDiscountEditorComponent implements OnChanges {
+  @BlockUI('coupon-form') blockUI!: NgBlockUI
   @Input() coupon!: IDiscountCoupon | null;
   @Output() newCoupon = new EventEmitter<IDiscountCoupon>();
 
@@ -48,7 +48,7 @@ export class CouponDiscountEditorComponent {
     })
   }
 
-  uploadConfig() {
+  uploadCoupon() {
     if (this.form.invalid) return;
 
     this.blockUI.start();

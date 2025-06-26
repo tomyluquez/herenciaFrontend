@@ -13,6 +13,8 @@ import { IProduct, Products } from '../../Interface/Products.interfaces';
 import { VariantSelected } from '../../../Variant/Interface/Variant.interface';
 import { CartService } from '../../../Cart/Services/cart.service';
 import { AlertService } from '../../../Other/Services/alert.service';
+import { CardComponent } from '../../../../shared/components/Cards/card/card.component';
+import { routesModel } from '../../../../Routes.model';
 
 @Component({
   selector: 'app-ind-product',
@@ -22,6 +24,7 @@ import { AlertService } from '../../../Other/Services/alert.service';
     BreadcrumComponent,
     CarouselComponent,
     SizeSelectorComponent,
+    CardComponent
   ],
   templateUrl: './ind-product.component.html',
   styleUrl: './ind-product.component.css',
@@ -46,21 +49,28 @@ export class IndProductComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.blockUI.start();
-    const productId = this._route.snapshot.params['productId'];
-    this._productsService
-      .getProductById(productId)
-      .subscribe((res: Products) => {
-        if (res.HasErrors || res.HasWarnings) {
-          return;
-        }
-        this.product = res.Items[0];
-        this.generateBreadcrumItems();
-        this.loadingProduct = false;
-        this.blockUI.stop();
-      });
+    this._route.params.subscribe((params) => {
+      this.resize();
+      const productId = params['productId'];
+      this._productsService
+        .getProductById(productId)
+        .subscribe((res: Products) => {
+          if (res.HasErrors || res.HasWarnings) {
+            return;
+          }
+          this.product = res.Items[0];
+          this.generateBreadcrumItems();
+          this.loadingProduct = false;
+          this.blockUI.stop();
+        });
+    });
   }
 
-  ngAfterViewInit(): void {
+  ngAfterViewInit() {
+    this.resize()
+  }
+
+  resize() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -105,5 +115,9 @@ export class IndProductComponent implements OnInit, AfterViewInit {
         this.blockUI.stop();
         this._alertService.showAlerts(res);
       });
+  }
+
+  goToProduct(productId: number) {
+    this._router.navigate([`${routesModel.Products}/product/${productId}`]);
   }
 }

@@ -72,8 +72,15 @@ export interface IProduct {
   IsPromotional?: boolean;
   PromotionalPrice: number;
   Rentability: number;
+  RelatedProductIds?: number[];
+  RelatedProducts?: RelatedProducts[];
 }
 
+export interface RelatedProducts {
+  Id: number;
+  Name: string;
+  Image: string;
+}
 export interface IProductVariants {
   Id: number;
   Stock: number;

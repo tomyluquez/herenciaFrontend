@@ -5,11 +5,13 @@ export class FilteringOptionsProductStockVM extends ResponseMessages {
     Categories: NameAndId[];
     Sizes: NameAndId[];
     Status: NameAndId[];
+    RelatedProducts: NameAndId[]
 
     constructor() {
         super();
         this.Categories = [];
         this.Sizes = [];
         this.Status = [];
+        this.RelatedProducts = [];
     }
 }

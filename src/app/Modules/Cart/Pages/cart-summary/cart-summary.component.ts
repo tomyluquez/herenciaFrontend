@@ -186,6 +186,7 @@ export class CartSummaryComponent implements OnInit, OnChanges {
     const discountPayment = this.form.get('discountPayment')?.value || 0;
 
     this.form.patchValue({
+      discountCouponId: 0,
       discountCoupon: 0,
       discountCouponPercentage: 0,
       total: (subtotal + shipping) - discountPayment
