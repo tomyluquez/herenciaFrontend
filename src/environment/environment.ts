@@ -1,5 +1,5 @@
 export const environment = {
-  apiUrl: 'http://localhost:3002/api/v1',
+  apiUrl: 'https://herencia-api.vercel.app/api/v1',
   frontendUrl: 'http://localhost:4200',
   EMAILJS_PUBLIC_KEY: 'X8U2cIYyDAvK8wpK0',
   EMAILJS_PRIVATE_KEY: 'Rytd9DWlog8Xv7ibN4nWi',
